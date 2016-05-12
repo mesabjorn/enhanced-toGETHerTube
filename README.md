@@ -10,6 +10,7 @@ Visual:
  - Add now playing messages to chat
  - Add now playing to top of video
  - Have a compact layout
+ - 
 Radio:
  - Save and manage a playlist and let the radio feature add them automatically
  - Add a blacklist for videos to be automatically removed
