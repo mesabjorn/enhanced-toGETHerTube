@@ -1,4 +1,4 @@
-# enhanced-toGETHerTube
+# Enhanced-toGETHerTube
 Chrome extension to change visuals and broadcast on togethertube.com
 
 Features:
@@ -19,8 +19,8 @@ Radio:
  - Shuffle playlists
  - 
  
-#Enhanced TogetherTube
-#Copyright (C) 2015 Mesa
+---Enhanced TogetherTube---
+Copyright (C) 2015 Mesa
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
