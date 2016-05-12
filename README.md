@@ -1,5 +1,5 @@
 # enhanced-toGETHerTube
-Change visuals and broadcast with enhance togethertube.
+Chrome extension to change visuals and broadcast on togethertube.com
 
 Features:
 
