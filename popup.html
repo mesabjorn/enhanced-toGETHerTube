@@ -1,0 +1,104 @@
+<!doctype html>
+<!--
+// Enhanced TogetherTube
+ //  Copyright (C) 2015 Mesa
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"This code contains code from http://jsfiddle.net/eltorre/h0d4aqcj/"
+/*****************************************************************/
+ //  Colorizer adds some color to togethertube
+ //  Copyright (C) 2015 eltorre
+ //  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+/*****************************************************************/
+ -->
+<html>
+  <head>
+    <title>Geth</title>
+    <style>
+      body {
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+      }
+      #status {
+        /* avoid an excessively wide status text */
+        white-space: pre;
+        text-overflow: ellipsis;
+        overflow: show;
+        max-width: 400px;
+		min-width: 400px;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+	
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <div id="title">Geth V1.1</div>	
+	<form>
+	<fieldset>
+	<legend>Visuals:</legend>
+	<span title="Check to show the videos"><input type="checkbox" id="cbToggleShowVideo">Show Video</span>
+	<span title="Check to widen chat and hide video"><input type="checkbox" id="cbWideChat">Wide chat</span>	</br>
+	<span title="Check to colorize usernames"><input type="checkbox" id="cbColorizer">Colorize chat</span>	
+	<span title="Check to add timestamps"><input type="checkbox" id="cbTimestamper">Add chat timestamps</span>	</br>
+	<span title="Check to hide thumbnails"><input type="checkbox" id="cbHideThumbs">Minimal Layout</span></br>
+	<span title="Check to show playing song in the chat"><input type="checkbox" id="cbTogglePlaysInChat">Show playing song in chat (beta)</span>	</br>
+	<span title="Check to show playing songs above video"><input type="checkbox" id="cbTogglePlaysOverVid">Show playing song above video (beta)</span>	</br>
+	<span title="Check to enable radio mode"><input type="checkbox" id="cbradio">Radio mode</span></br>
+	</fieldset>
+	<fieldset id="radiofieldset">
+	<legend>Radio:</legend>
+	<span id="onAirSign"><img src="figs/ontheair_disabled.png" height="32" width="128"></span></br>
+	
+	<input type="text" id="tracklist" title="Enter comma seperated titles here" placeholder="Type tracks here..">	
+	<input type="button" id="btnconfirm" value="Confirm playlist" title="Confirm new playlist">
+	<span title="Check to shuffle the order of the playlist"><input type="checkbox" id="cbshuffle">Shuffle</span>
+	<div>
+		<span id="tracktextinfo"></span>
+		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16"></span>
+		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16"></span>
+	</div>
+	<span title="Add songs when playlist gets shorter than this number">Min. playlist length (mod only):
+	<input type="text" id="txtMinPlaylistLength" placeholder="10" size="3"></span></br>
+	<span title="Don't suggest and autoremove songs longer than this number (minutes)" >Maximal song duration (mod only): 
+	<input type="text" id="txtMaxSongLength" placeholder="30" value="30" size="3"></span></br>
+	<input type="button" id="btnEditBanned" value="Manage blacklist" title="Manage blacklist">
+	</fieldset>
+	<fieldset>
+	<legend>Geth:</legend>
+		<span title="Check to launch geth at startup"><input type="checkbox" id="cbToggleRunAtStartup"></span>Launch at start up</br>
+		<input type="button" id="btnStart" value="Start Geth" title="Start Geth">	
+	</fieldset>
+	<!--
+	<fieldset>
+	
+	<span id="btncontrols1"><img src="figs/play.png" title="play" height="32" width="32"></span>
+	<span id="btncontrols2"><img src="figs/pause.png" title="pause" height="32" width="32"></span>
+	
+	</fieldset>
+		-->
+	</form>
+	
+	<div id="status"></div>	
+  </body>
+</html>
+
