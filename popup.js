@@ -104,8 +104,8 @@ function save_options(){
   var radioMode = document.getElementById('cbradio').checked;   
   
 	
-  //var blacklist = ["meme","leafy","and they don't stop coming (raccoovius full version)","wake me up inside skeleton chair meme","killa meme star",
-//	"alright alright alright alright","rick astley","reaction vid","Don't Stop Comin","full album","dubstep","pomf pomf","genitals"];
+  var blacklist = ["meme","leafy","and they don't stop coming (raccoovius full version)","wake me up inside skeleton chair meme","killa meme star",
+	"alright alright alright alright","rick astley","reaction vid","Don't Stop Comin","full album","dubstep","pomf pomf","genitals"];
   
   chrome.storage.local.set({
 	  blacklist:blacklist
