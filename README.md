@@ -1,5 +1,7 @@
 # Enhanced-toGETHerTube
 Chrome extension to change visuals and broadcast on togethertube.com
+Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
+
 
 Features:
 
