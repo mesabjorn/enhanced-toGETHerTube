@@ -22,9 +22,8 @@ Radio:
  - Shuffle playlists
 
 To Do:
- - Removal of playlists function
- - Adding new playlists selection to radio feature
- - 
+ - Removal of playlists function: done
+ - Adding new playlists selection to radio feature :WIP
  
 ---Enhanced TogetherTube---
 Copyright (C) 2015 Mesa
