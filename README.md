@@ -16,10 +16,14 @@ Visual:
  
 
 Radio:
- - Save and manage a playlist and let the radio feature add them automatically
+ - Save and manage playlists and let the radio feature add them automatically
  - Add a blacklist for videos to be automatically removed (and manage it)
  - Remove songs longer than certain duration automatically
  - Shuffle playlists
+
+To Do:
+ - Removal of playlists function
+ - Adding new playlists selection to radio feature
  - 
  
 ---Enhanced TogetherTube---
