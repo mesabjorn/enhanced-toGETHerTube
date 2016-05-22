@@ -24,7 +24,8 @@ function IsManualRemoval(string2){
 	return false;
 }
 
-function IsInBannedList(title){	
+function IsInBannedList(title){
+	if(blacklist.length==0){return false;}	
 	ltitle=title.toLowerCase();	
 	for(i=0;i<blacklist.length;i++){				
 		//console.log("comparing "+ blacklist[i] +" with  "+ltitle);
@@ -132,11 +133,14 @@ function AddSong(){
 	}	
 }
 
+
 function AddSongTitleToVideo(songtitle){
-	if(typeof songTitleTarget=='undefined'){
+	if(document.getElementById("songTitleTarget")==null){
+	//if(typeof songTitleTarget=='undefined'){	
 		target=document.getElementsByClassName('container-non-responsive')[2];
 		row=target.getElementsByClassName('row')[0];
 		insertion = document.createElement("div");
+		insertion.id="songTitleTarget";
 		insertion.innerText='Waiting for queue to change...';
 		songTitleTarget = target.insertBefore(insertion,row);
 	}
@@ -149,7 +153,7 @@ waitfunc=function WaitASecThenCheckForManRemovalAndUpdate(songtitle){
 	if(!IsManualRemoval(songtitle)){		
 		if(titleToChat){AddSongTitleToChat(songtitle);}
 		if(titleToTop){AddSongTitleToVideo(songtitle);}
-		//console.log(songtitle+" is playing now.");
+		console.log(songtitle+" is playing now.");
 	}
 	//listlength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
 	if(radioMode){
@@ -168,8 +172,7 @@ function SetUpGeth(items){
 		target.appendChild(userlist,chat);
 	}
 	
-	prevListLength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
-	//tracks=localItems.tracks;
+	prevListLength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
 	playlistlimit=items.minListLength;
 	shuffle=items.shuffle;
 	minimalLayout=items.hideThumbs;
@@ -193,7 +196,9 @@ function SetUpGeth(items){
 					if(items.hideThumbs){formatList();}					
 				}
 			}		
-			else if(mutation.removedNodes.length >= 1){			
+			else if(mutation.removedNodes.length >= 1){	
+				console.log("Detected removal");						
+			
 				curListLength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
 				m=mutation.removedNodes[0];
 				if(m.nodeName!='#comment'){				
@@ -202,7 +207,7 @@ function SetUpGeth(items){
 					if(curListLength<prevListLength){	
 						//setTimeout(function() {waitfunc(songtitle,items.shuffle);},3000);
 						setTimeout(waitfunc,3000,songtitle);
-						//console.log("Set TimeOut for " + songtitle);						
+						console.log("Set TimeOut for " + songtitle);						
 					}
 				}
 			}
@@ -233,9 +238,8 @@ function SetUpGeth(items){
 		
     if(titleToTop){AddSongTitleToVideo("Waiting for queue to change...")};
     if(minimalLayout){formatList();};	
-	if(items.radioMode){SetRadioState(true);}
-	if(playlistlength<playlistlimit && items.radioMode){
-		
+	if(items.radioMode && tracks.length>0){SetRadioState(true);}
+	if(playlistlength<playlistlimit && items.radioMode && tracks.length>0){		
 		for (var i = 0; i <= (3000*playlistlimit); i += 3000) {
 			setTimeout(AddSong,i);
 		}
@@ -311,30 +315,48 @@ function toggleVideoShow(toggle) {
 }
 
 function toggleWidechat(toggle,toggleShowVid){	
+	toggleShowVid = typeof toggleShowVid !== 'undefined' ? toggleShowVid : toggle==false;	
   	player=document.getElementById("player");
 	if(!toggle){//widen chat means hiding the vid
-		chrome.storage.sync.set({showVideo: true});
-		player.childNodes[1].style.display="inherit";
+		//chrome.storage.sync.set({showVideo: true});
+		//player.childNodes[1].style.display="inherit";
 		player.parentNode.className="col-xs-8";
 		document.getElementsByClassName('panel-chat')[0].parentNode.parentNode.className="col-xs-4";		
 	}
 	else{
-		chrome.storage.sync.set({showVideo: false});
-		player.childNodes[1].style.display="none";
+		//chrome.storage.sync.set({showVideo: false});
+		//player.childNodes[1].style.display="none";
 		player.parentNode.className="col-xs-2";
 		document.getElementsByClassName('panel-chat')[0].parentNode.parentNode.className="col-xs-10";		
 	}
-	//alert("completed toggle wide chat");
+	console.log("completed toggle wide chat");
 }
 
-
-
-function initplaylists(items){
-	tracks=items.tracks;
-	blacklist=items.blacklist;
-	//alert(tracks.length);
+function getPlaylistPosFromListID(ids,findid){	
+	var listpos=-1;
+	for(i=0;i<ids.length;i++){
+		if(ids[i]==findid){
+			listpos=i;
+			break;
+		}		
+	}
+	return listpos;	
 }
-chrome.storage.local.get({tracks:[],blacklist:[]},function(items){initplaylists(items);});
+
+function initplaylists(items,findid){
+	findid = typeof findid !== 'undefined' ? findid : items.playlistIDs[0];	
+	blacklist = typeof items.blacklist !== 'undefined' ? items.blacklist : [];	
+	listind = getPlaylistPosFromListID(items.playlistIDs,findid);
+	if(listind!=-1){
+		tracks=items.playlists[listind];		
+		logArray=[];		//reset log list	
+		trackind=-1; 		//reset counter
+	}
+	else{
+		tracks=[];
+	}	
+}
+chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[]},function(items){initplaylists(items);});
 
 chrome.storage.sync.get({
 		showVideo:false,
@@ -360,8 +382,7 @@ SetRadioState(false);
 
 chrome.runtime.onMessage.addListener(			//handles requests from the popupjs
 function(request, sender, sendResponse){
-		//console.log("caught message!");  
-	    if (request.greeting == "startgeth"){					
+	    if(request.greeting == "startgeth"){					
 			chrome.storage.sync.get({
 			shuffle:false,
 			minListLength:10,
@@ -372,11 +393,14 @@ function(request, sender, sendResponse){
 			radioMode:false,
 			wideChat:false,
 			MaxSongLength:30			
-			}, function(items) {
-				SetUpGeth(items);								
+			}, function(items) {				
+				chrome.storage.local.get({playlists:[],playlistIDs:[]},function(localitems){					
+					initplaylists(localitems,request.playlistid);
+					SetUpGeth(items);
+					console.log("Started geth with playlist:"+ request.playlistid);	
+				});					
 				}
-			);			  
-			
+			);			
 			//sendResponse({farewell: "goodbye"});
 		}
 		else if (request.greeting == "color"){
@@ -388,8 +412,29 @@ function(request, sender, sendResponse){
 			//sendResponse({farewell: "goodbye"});
 		}
 		else if (request.greeting == "toggleWidechat"){
-			toggleWidechat(request.toggleWChat);	
+			toggleWidechat(request.toggleWChat);			
+			//sendResponse({farewell: "goodbye"});
+		}
+		else if (request.greeting == "toggleToTop"){
+			titleToTop = request.toggleToTop;
+			/*if(typeof songTitleTarget!=='undefined' && !titleToTop){
+				songTitleTarget.style.display="none";
+			}
+			else if(titleToTop){
+				AddSongTitleToVideo("Waiting for queue to change...");
+			}*/
+			if(document.getElementById("songTitleTarget")==null && titleToTop){
+				AddSongTitleToVideo("Waiting for queue to change...");
+			}else if(!titleToTop){
+				document.getElementById("songTitleTarget").remove();								
+			}
 			
+			console.log("caught message: "+request.greeting+": "+request.toggleToTop);  
+			//sendResponse({farewell: "goodbye"});
+		}
+		else if (request.greeting == "toggleToChat"){
+			titleToChat = request.toggleToChat;			
+			console.log("caught message: "+request.greeting+": "+request.toggleToChat);  
 			//sendResponse({farewell: "goodbye"});
 		}
 });
