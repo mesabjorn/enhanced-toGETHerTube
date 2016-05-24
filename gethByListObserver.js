@@ -394,7 +394,7 @@ function(request, sender, sendResponse){
 			wideChat:false,
 			MaxSongLength:30			
 			}, function(items) {				
-				chrome.storage.local.get({playlists:[],playlistIDs:[]},function(localitems){					
+				chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[]},function(localitems){					
 					initplaylists(localitems,request.playlistid);
 					SetUpGeth(items);
 					console.log("Started geth with playlist:"+ request.playlistid);	
