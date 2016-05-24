@@ -426,7 +426,9 @@ function(request, sender, sendResponse){
 			if(document.getElementById("songTitleTarget")==null && titleToTop){
 				AddSongTitleToVideo("Waiting for queue to change...");
 			}else if(!titleToTop){
-				document.getElementById("songTitleTarget").remove();								
+				if(document.getElementById("songTitleTarget")!=null){
+					document.getElementById("songTitleTarget").remove();								
+				}								
 			}
 			
 			console.log("caught message: "+request.greeting+": "+request.toggleToTop);  
