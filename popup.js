@@ -107,6 +107,9 @@ function handleOptions(items){
 		
 	document.querySelector('#cbshuffle').checked = items.shuffle;	
 	document.querySelector('#cbHideThumbs').checked = items.hideThumbs;	
+	
+	document.querySelector('#cbHideThumbs').disabled=items.wideChat;
+				
 	document.querySelector('#txtMinPlaylistLength').value = items.minListLength;	
 	document.querySelector('#txtMaxSongLength').value = items.MaxSongLength;
 	
@@ -139,6 +142,7 @@ function handleOptions(items){
 function save_options(){
   var s = document.getElementById('cbToggleShowVideo').checked;
   var wideChat = document.getElementById('cbWideChat').checked;   
+  
   var c = document.getElementById('cbColorizer').checked;  
   var tstamps = document.getElementById('cbTimestamper').checked;  
   
@@ -151,7 +155,9 @@ function save_options(){
   var maxsonglength=document.getElementById('txtMaxSongLength').value;
   var startup = document.getElementById('cbToggleRunAtStartup').checked;   
   var radioMode = document.getElementById('cbradio').checked;   
-  	
+  
+  if(wideChat){thumbs=false;}
+  
   //var blacklist = ["meme","leafy","and they don't stop coming (raccoovius full version)","wake me up inside skeleton chair meme","killa meme star",
 	//"alright alright alright alright","rick astley","reaction vid","Don't Stop Comin","full album","dubstep","pomf pomf","genitals"];
 	
@@ -311,7 +317,8 @@ function setPlaylist(){
 	parts=tracklist.split(",");
 	for(i=0;i<parts.length;i++){
 		if(parts[i].length>0){
-		t[i]=parts[i].replace(/"/g, '');//remove quotes				
+			if(parts[i].indexOf(',')>-1){alert(parts[i]);}
+			t[i]=parts[i].replace(/"/g, '');//remove quotes				
 		}
 	}	
 	chrome.storage.local.get({

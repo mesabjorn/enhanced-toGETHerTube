@@ -28,7 +28,6 @@ function IsInBannedList(title){
 	if(blacklist.length==0){return false;}	
 	ltitle=title.toLowerCase();	
 	for(i=0;i<blacklist.length;i++){				
-		//console.log("comparing "+ blacklist[i] +" with  "+ltitle);
 		if(ltitle.indexOf(blacklist[i].toLowerCase())>=0){
 			return true;
 		}
@@ -36,7 +35,7 @@ function IsInBannedList(title){
 	return false;
 }
 
-function checkAddition(addition){
+function checkAddition(addition){	
 	header=addition.children[0];
 	title=header.getElementsByClassName('ng-binding')[0].innerText.trim();	
 	
@@ -48,7 +47,7 @@ function checkAddition(addition){
 	
 	if(resultSongTimes2>MAX_SONG_LENGTH || isbanned){
 		rmbutton.click(); 
-		//console.log("Removed: "+title+" with length: "+duration);
+		console.log("Removed: "+title+" with length: "+duration);
 	}
 }
 
@@ -163,12 +162,14 @@ waitfunc=function WaitASecThenCheckForManRemovalAndUpdate(songtitle){
 };	
 
 function SetUpGeth(items){	
-	if(items.hideThumbs){
+	if(items.hideThumbs){		
 		toMove = document.getElementsByClassName('col-xs-8 playlist-tabset')[0];
-		chat=document.getElementsByClassName('col-xs-4')[0];
+		//chat=document.getElementsByClassName('col-xs-4')[0];
+		chat = document.getElementsByClassName('panel-chat panel panel-default')[0].parentNode.parentNode;
 		target = document.getElementsByClassName('row')[1];
 		target.insertBefore(toMove,chat);							//move playlist under video
-		userlist=document.getElementsByClassName('col-xs-4')[1];
+		userlist=document.getElementsByClassName('col-xs-4');
+		if(userlist.length==1){userlist=userlist[0];}else{userlist=userlist[1];}
 		target.appendChild(userlist,chat);
 	}
 	
@@ -180,8 +181,7 @@ function SetUpGeth(items){
 	titleToChat=items.tToChat;
 	MAX_SONG_LENGTH=items.MaxSongLength;
 	targetNode=document.getElementsByClassName('videoList');	
-	radioMode=items.radioMode;	
-	
+	radioMode=items.radioMode;		
 	observer = new MutationObserver(function(mutations){
 		mutations.forEach(function(mutation){
 		if(mutation.type == 'childList'){
@@ -197,8 +197,7 @@ function SetUpGeth(items){
 				}
 			}		
 			else if(mutation.removedNodes.length >= 1){	
-				console.log("Detected removal");						
-			
+				//console.log("Detected removal");									
 				curListLength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
 				m=mutation.removedNodes[0];
 				if(m.nodeName!='#comment'){				
@@ -301,7 +300,7 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		
 		var observerConfig={childList:true};var chatEntries=document.querySelectorAll(".panel-chat .chatlog");
 		Colorizeobserver.observe(chatEntries[0],observerConfig);	
-		//console.log("Added colorizer");		
+		//console.log("Added colorizer:"+toggleColorize+"; timestamps: "+toggleTimeStamp);		
 }
 
 function toggleVideoShow(toggle) {	
@@ -329,7 +328,7 @@ function toggleWidechat(toggle,toggleShowVid){
 		player.parentNode.className="col-xs-2";
 		document.getElementsByClassName('panel-chat')[0].parentNode.parentNode.className="col-xs-10";		
 	}
-	console.log("completed toggle wide chat");
+	//console.log("completed toggle wide chat");
 }
 
 function getPlaylistPosFromListID(ids,findid){	
@@ -343,9 +342,10 @@ function getPlaylistPosFromListID(ids,findid){
 	return listpos;	
 }
 
-function initplaylists(items,findid){
+function initplaylists(items,findid){	
 	findid = typeof findid !== 'undefined' ? findid : items.playlistIDs[0];	
 	blacklist = typeof items.blacklist !== 'undefined' ? items.blacklist : [];	
+	console.log('blacklist length: '+blacklist.length);
 	listind = getPlaylistPosFromListID(items.playlistIDs,findid);
 	if(listind!=-1){
 		tracks=items.playlists[listind];		
@@ -392,6 +392,8 @@ function(request, sender, sendResponse){
 			tToChat: false,
 			radioMode:false,
 			wideChat:false,
+			colorize:false,
+			timestamps:false,
 			MaxSongLength:30			
 			}, function(items) {				
 				chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[]},function(localitems){					
@@ -428,15 +430,15 @@ function(request, sender, sendResponse){
 			}else if(!titleToTop){
 				if(document.getElementById("songTitleTarget")!=null){
 					document.getElementById("songTitleTarget").remove();								
-				}								
+				}
 			}
 			
-			console.log("caught message: "+request.greeting+": "+request.toggleToTop);  
+			//console.log("caught message: "+request.greeting+": "+request.toggleToTop);  
 			//sendResponse({farewell: "goodbye"});
 		}
 		else if (request.greeting == "toggleToChat"){
 			titleToChat = request.toggleToChat;			
-			console.log("caught message: "+request.greeting+": "+request.toggleToChat);  
+			//console.log("caught message: "+request.greeting+": "+request.toggleToChat);  
 			//sendResponse({farewell: "goodbye"});
 		}
 });
