@@ -12,19 +12,18 @@ Visual:
  - Add now playing messages to chat 
  - Add now playing to top of video 
  - Have a compact layout
- - Widen the chat (autohides video)
+ - Widen the chat (autohides video) - not compatible with the compact layout!
  
-
 Radio:
  - Save and manage playlists and let the radio feature add them automatically
  - Add a blacklist for videos to be automatically removed (and manage it)
  - Remove songs longer than certain duration automatically
  - Shuffle playlists
+ - Start all of these features when joining a togethertube room
 
 To Do:
- - Removal of playlists function
- - Adding new playlists selection to radio feature
- - 
+ - Removal of playlists function: done
+ - Adding new playlists selection to radio feature :WIP
  
 ---Enhanced TogetherTube---
 Copyright (C) 2015 Mesa

@@ -43,12 +43,21 @@ function updateTracks(){
 		stringinput=list.childNodes[i].childNodes[2].innerText;
 		//stringinput=stringinput.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		newtracks[i]=stringinput;	
-	}
-	
+	}	
 	if(handleBanned){
 		chrome.storage.local.set({blacklist: newtracks}, function() {printItems(newtracks);});
-	}else{
-		chrome.storage.local.set({tracks: newtracks}, function() {printItems(newtracks);});
+	}else{		
+		chrome.storage.local.get({
+		playlists: [],		
+		playlistIDs:[],			
+		}, function(items){			
+			listpos = getPlaylistPosFromListID(items.playlists,items.playlistIDs);
+			var newplaylists = items.playlists;
+			newplaylists[listpos]=newtracks;
+			chrome.storage.local.set({playlists: newplaylists}, function() {printItems(newtracks);});			
+		});
+		
+		//chrome.storage.local.set({tracks: newtracks}, function() {printItems(newtracks);});
 	}
 	renderStatus('Saved the list.');
 }
@@ -110,16 +119,25 @@ function HoverOff(e){
 	}
 }
 
+function SetPlaylistName(name){
+	document.getElementById('title').innerHTML= name+"</br>";	
+}
+
 function printItems(t){
 	tracks=t;
 	list=document.querySelector('#listcontainer');
 	while(list.firstChild){list.removeChild(list.firstChild);}
 	
 	if(t.length==0){
-		document.getElementById('title').innerHTML="Nothing here.</br>";   		
+		SetPlaylistName("There's nothing here.");
 	}
-	else{	
-		document.getElementById('title').innerHTML="Playlist ("+t.length +" titles):"+"</br>";   
+	else{
+		if(handleBanned){
+			SetPlaylistName("Blacklist: ("+t.length +" titles):");		
+		}
+		else{
+			SetPlaylistName("Playlist '"+listName+ "'("+t.length +" titles):");		
+		}
 	}
 	
 	for(i=0;i<t.length;i++){
@@ -163,16 +181,35 @@ function printItems(t){
 	}
 }
 
+function getPlaylistPosFromListID(playlists,ids){
+	//listID
+	var listpos=[];
+	for(i=0;i<playlists.length;i++){
+		if(ids[i]==listID){
+			listpos=i;
+			break;
+		}		
+	}
+	return listpos;
+	
+}
+
 function restore_options(blacklist=false){
   chrome.storage.local.get({
-    tracks:[],
+    playlists: [],
+	playlistNames:[],
+	playlistIDs:[],	
 	blacklist:[]
   }, function(items){
 		if(blacklist){
 			handleBanned=true;			
 			printItems(items.blacklist);		
+			listName='Blacklist';
 		}else{			
-			printItems(items.tracks);		
+			listpos = getPlaylistPosFromListID(items.playlists,items.playlistIDs);
+			listName=items.playlistNames[listpos];	
+			printItems(items.playlists[listpos]);		
+									
 		}
   });  
 }
@@ -185,18 +222,16 @@ function GetGetParameter(val) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	listToShow=GetGetParameter("list");
+	listType=GetGetParameter("list");
+	listID=GetGetParameter("id");	
 	
-	if(listToShow=="normal"){
+	if(listType=="normal"){
 		restore_options();	
 	}
-	else if(listToShow=="banned"){
+	else if(listType=="banned"){
 		restore_options(true);
 	}
 	document.querySelector('#savebutton').addEventListener('click', updateTracks);
 	document.querySelector('#addbutton').addEventListener('click', appendToPlaylist);
 	document.querySelector('#savebutton').style.display='none';
-
-	
-
 });

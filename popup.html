@@ -57,10 +57,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<fieldset>
 	<legend>Visuals:</legend>
 	<span title="Check to show the videos"><input type="checkbox" id="cbToggleShowVideo">Show Video</span>
-	<span title="Check to widen chat and hide video"><input type="checkbox" id="cbWideChat">Wide chat</span>	</br>
+	<span title="Check to widen chat and hide video"><input type="checkbox" id="cbWideChat">Wide chat</span></br>
 	<span title="Check to colorize usernames"><input type="checkbox" id="cbColorizer">Colorize chat</span>	
-	<span title="Check to add timestamps"><input type="checkbox" id="cbTimestamper">Add chat timestamps</span>	</br>
-	<span title="Check to hide thumbnails"><input type="checkbox" id="cbHideThumbs">Minimal Layout</span></br>
+	<span title="Check to add timestamps"><input type="checkbox" id="cbTimestamper">Add chat timestamps</span></br>
+	<span title="Check to minimize listview"><input type="checkbox" id="cbHideThumbs" >Minimal Layout</span></br>
 	<span title="Check to show playing song in the chat"><input type="checkbox" id="cbTogglePlaysInChat">Show playing song in chat (beta)</span>	</br>
 	<span title="Check to show playing songs above video"><input type="checkbox" id="cbTogglePlaysOverVid">Show playing song above video (beta)</span>	</br>
 	<span title="Check to enable radio mode"><input type="checkbox" id="cbradio">Radio mode</span></br>
@@ -68,11 +68,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<fieldset id="radiofieldset">
 	<legend>Radio:</legend>
 	<span id="onAirSign"><img src="figs/ontheair_disabled.png" height="32" width="128"></span></br>
+	<span>Select playlist: <select id="playlistselect" width="200px"></select><input type="checkbox" id="cbshuffle">Shuffle</span>
+	<span id="playlistaddscreen" hidden>
+		Name:<input type="text" id="texttracklistname" title="Enter Name of playlist" placeholder="Playlist Title">	</br>
+		<input type="text" id="texttracklist" title="Enter comma seperated titles here" placeholder="Type tracks here.." height="64px">	
+		<input type="button" id="btnconfirm" value="Create playlist" title="Create new playlist">
+	</span><br/>
 	
-	<input type="text" id="tracklist" title="Enter comma seperated titles here" placeholder="Type tracks here..">	
-	<input type="button" id="btnconfirm" value="Confirm playlist" title="Confirm new playlist">
-	<span title="Check to shuffle the order of the playlist"><input type="checkbox" id="cbshuffle">Shuffle</span>
-	<div>
+	<!--<input type="text" id="tracklist" title="Enter comma seperated titles here" placeholder="Type tracks here..">	
+	<input type="button" id="btnconfirm" value="Confirm playlist" title="Confirm new playlist">-->
+	<span title="Check to shuffle the order of the playlist"></span>
+	<div id="playlisteditingsdiv" hidden>
 		<span id="tracktextinfo"></span>
 		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16"></span>
 		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16"></span>
