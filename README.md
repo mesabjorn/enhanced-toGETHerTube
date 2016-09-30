@@ -15,7 +15,7 @@ Visual:
  - Have a compact layout
  - Widen the chat (autohides video) - not compatible with the compact layout!
  - Chat commands. (/?, /last, /nuke, /progress)
- - If someone suggests an item on blacklist, suggestions are automatically close for some time.
+ - If someone suggests an item on blacklist, suggestions are automatically close for some time (requires permission to change suggestions options).
  - Last fm song discovery (requires last fm api key)
  - New event page accesible through gear icon 
    - Eventlog showing what the extension did
@@ -31,6 +31,8 @@ Radio:
 
 To Do:
   - Adding new playlists selection to radio feature :WIP
+  - Multi-tab support WIP
+ 
  
 ---Enhanced TogetherTube---
 Copyright (C) 2015 Mesa
