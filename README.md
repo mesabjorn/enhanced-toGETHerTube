@@ -2,6 +2,7 @@
 Chrome extension to change visuals and broadcast on togethertube.com
 Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
 
+Current version:  1.5.
 
 Features:
 
@@ -9,21 +10,27 @@ Visual:
  - Show/Hide video (toggleable)
  - Add Colored usernames to chat (toggleable)
  - Add timestamps to messages to chat (toggleable)
- - Add now playing messages to chat 
- - Add now playing to top of video 
+ - Add now playing messages to chat (toggleable)
+ - Add now playing to top of video (toggleable)
  - Have a compact layout
  - Widen the chat (autohides video) - not compatible with the compact layout!
+ - Chat commands. (/?, /last, /nuke, /progress)
+ - If someone suggests an item on blacklist, suggestions are automatically close for some time.
+ - Last fm song discovery (requires last fm api key)
+ - New event page accesible through gear icon 
+   - Eventlog showing what the extension did
+   - Import/exporting of playlists and blacklist in JSON format
+ - Long usernames (trolls) automatically trimmed to 25 characters.
  
 Radio:
- - Save and manage playlists and let the radio feature add them automatically
+ - Save and manage playlists and let the radio feature add them automatically.
  - Add a blacklist for videos to be automatically removed (and manage it)
  - Remove songs longer than certain duration automatically
  - Shuffle playlists
  - Start all of these features when joining a togethertube room
 
 To Do:
- - Removal of playlists function: done
- - Adding new playlists selection to radio feature :WIP
+  - Adding new playlists selection to radio feature :WIP
  
 ---Enhanced TogetherTube---
 Copyright (C) 2015 Mesa
