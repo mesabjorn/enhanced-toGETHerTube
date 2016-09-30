@@ -1,0 +1,64 @@
+<html>
+<head>
+<style>
+      body {
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+		margin-left:25px;
+      }      
+	  #texthelper{
+		background-color: red;
+		color:white;
+	  }
+		#errorbar
+		{
+		position: fixed;
+		top: 0px;
+		font-weight:bold;
+		width:100%;
+		color:white;
+		background-color: red;	
+		margin-left:0px;	
+		padding:10px;
+		}
+		
+		.filterItem{
+			padding:10px;
+			background-color:white;
+			display:inline-block;
+			width:100px;
+			text-align:center;
+			border: 1px solid black;					
+		}
+    </style>
+<script src="loadsettings.js"></script>
+</head>
+<body>
+<div id="errorbar" style="display:none">
+	<div id="errorHelper" ></div>	
+</div>
+<div>Import/Export playlist:</div>
+	<input type="radio" name="modus" id="rImport" value="import"> Import
+	<input type="radio" name="modus" id="rExport" value="export"> Export
+	<input type="button" name="modus" id="btnCopy" value="Copy to clipboard"> 
+
+	<br />
+	<span>
+	<textarea id="resultText" cols="150" rows="25"></textarea>
+	<div id="importHandler"></div>	
+	</span>
+	<br />
+	<span>
+		<div id="header" style="display:inline-block">
+		<span class = "filterItem" isChecked="0" >Suggestions</span>
+		<span class = "filterItem" isChecked="0" >Discoveries</span>
+		<span class = "filterItem" isChecked="0" >Technical</span>		
+		</div>
+		<h1>EventLog:</h1>
+		<div id="eventlog" style="position:relative"></div> 
+	</span>
+	
+</div>
+
+</body>
+</html>

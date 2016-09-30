@@ -24,22 +24,38 @@ function toggleSongToChat(toggleChat,tabId){
 	chrome.tabs.sendMessage(tabId, {greeting: "toggleToChat",toggleToChat: toggleChat}, function(response) {});	
 }
 
+function toggleChatCommands(allowChatCommands,tabId){
+	chrome.tabs.sendMessage(tabId, {greeting: "toggleChatCommands",allowChatCommands: allowChatCommands}, function(response) {});	
+
+}
+function toggleDiscoveryMode(discoveryMode,tabId){
+	chrome.tabs.sendMessage(tabId, {greeting: "toggleDiscoveryMode",discoveryMode: discoveryMode}, function(response) {});
+}
+
+
 //chrome.tabs.executeScript(tabId, {file: "jquery.js"}); //insert file into tab
 function PopulatePlaylistSelector(GoToNew=false){
 	chrome.storage.local.get({
+		activeList:-1,
 		playlists:[],		
 		playlistIDs:[],
 		playlistNames:[]
 	}, function(items){	
 		var playlistdropdown = document.querySelector('#playlistselect');
 		while (playlistdropdown.firstChild) {playlistdropdown.removeChild(playlistdropdown.firstChild);} 	// remove all nodes
+		moveToIndex=0;
 		for(var i=0;i<items.playlistIDs.length;i++){							// repopulate list
 			var optionElement = document.createElement("option");
 			optionElement.setAttribute("playlistid",items.playlistIDs[i]);	
+			
+			if(items.activeList==items.playlistIDs[i]){moveToIndex=i;}
+			
 			optionElement.innerHTML = items.playlistNames[i];
 			playlistdropdown.appendChild(optionElement);
 		}
-		var optionElement = document.createElement("option");
+		playlistdropdown.selectedIndex=moveToIndex;
+		//alert('moved to index: '+items.activeList);
+		var optionElement = document.createElement("option"); //create last option 'new playlist'
 		optionElement.setAttribute("playlistid",-1);
 		optionElement.innerHTML = "Add New";
 		playlistdropdown.appendChild(optionElement);
@@ -49,7 +65,7 @@ function PopulatePlaylistSelector(GoToNew=false){
 			showNewPlaylistScreen(false);
 		}
 		else{
-			SetTrackLength(items.playlistIDs[0]);
+			SetTrackLength(items.playlistIDs[moveToIndex]);
 			}
 	});	
 }
@@ -92,7 +108,8 @@ function handleOptions(items){
 		RunAtStartup:false,
 		tToTop: false,
 		tToChat: false,
-		radioMode:false,		
+		radioMode:false,	
+		discoveryMode:false,		
 		tabId:-1		
 		}, function(items) {		
 			handleOptions(items);
@@ -119,6 +136,9 @@ function handleOptions(items){
 	document.getElementById('cbToggleRunAtStartup').checked = items.RunAtStartup;
 	document.getElementById('cbradio').checked=items.radioMode;
 	
+	document.getElementById('cbDiscovery').checked=items.discoveryMode;	
+	document.getElementById('cbChatCommands').checked=items.allowChatCommands;
+	
 	if(items.radioMode){
 		document.querySelector('#radiofieldset').style.display='inherit';
 	}
@@ -135,6 +155,9 @@ function handleOptions(items){
 		toggleWideChat(items.wideChat,items.tabId);
 		toggleSongToTop(items.tToTop,items.tabId);
 		toggleSongToChat(items.tToChat,items.tabId);
+		toggleChatCommands(items.allowChatCommands,items.tabId);
+		toggleDiscoveryMode(items.discoveryMode,items.tabId);
+
 	}
 	//toggleThumbNails(items.hideThumbs,items.tabId);	
 }
@@ -156,19 +179,10 @@ function save_options(){
   var startup = document.getElementById('cbToggleRunAtStartup').checked;   
   var radioMode = document.getElementById('cbradio').checked;   
   
-  if(wideChat){thumbs=false;}
+  var discoveryMode = document.getElementById('cbDiscovery').checked;   
+  var allowChatCommands = document.getElementById('cbChatCommands').checked;   
   
-  //var blacklist = ["meme","leafy","and they don't stop coming (raccoovius full version)","wake me up inside skeleton chair meme","killa meme star",
-	//"alright alright alright alright","rick astley","reaction vid","Don't Stop Comin","full album","dubstep","pomf pomf","genitals"];
-	
-	
-  //var playlistIDs = [0,1,2,3,4];
-  //var playlistNames =["playlist1","playlist2","playlist3","playlist4","playlist5"];
-  /*chrome.storage.local.set({
-	  blacklist:blacklist,
-	  playlistNames:playlistNames,
-	  playlistIDs:playlistIDs
-	 });  */
+  if(wideChat){thumbs=false;}
   
   chrome.storage.sync.set({
     showVideo: s,
@@ -182,7 +196,9 @@ function save_options(){
 	minListLength:mListLength,
 	hideThumbs: thumbs,
 	wideChat:wideChat,
-	radioMode:radioMode
+	radioMode:radioMode,
+	discoveryMode:discoveryMode,
+	allowChatCommands:allowChatCommands
   }, function() {
     renderStatus('Options saved.');
   });
@@ -205,7 +221,9 @@ function restore_options() {
 	tabId:-1,
 	wideChat:false,
 	radioMode:false,
-	hideThumbs: false	
+	hideThumbs: false,
+	discoveryMode:false,
+	allowChatCommands:false	
   }, function(items) {			
 		handleOptions(items);
   });  
@@ -214,11 +232,29 @@ function restore_options() {
 function StartGeth(){
 	save_options();
 	var selID = document.querySelector('#playlistselect').options[playlistselect.selectedIndex].getAttribute("playlistid");
+	tablist=document.querySelector('#tabselect_list');
+	pushToTabId = parseInt(tablist.children[tablist.selectedIndex].getAttribute("tabid"));
 	//chrome.browserAction.setIcon({path : {"19": "icon.png"}},function(){});
 	chrome.storage.sync.get({
-		tabId:-1,
-		}, function(items){						
-			chrome.tabs.sendMessage(items.tabId, {greeting: "startgeth",playlistid:selID}, function(response){}); 			
+		tabId:-1,		
+		}, function(items){			
+			console.log("pushing to tab: "+pushToTabId);
+			chrome.tabs.sendMessage(items.tabId, {greeting: "startgeth",playlistid:selID}, function(response){});
+//			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
+			
+			chrome.storage.local.get({activeList: -1}, function(localitems) {
+			console.log("current List ID: "+ localitems.activeList+"; selID: "+selID);
+			if(localitems.activeList!=-1 && localitems.activeList!=selID){ //changed to other playlist?
+				chrome.tabs.sendMessage(pushToTabId, {greeting: "whatchaplayin"}, function(response){ //checks playlist id of the tab
+				console.log("Tab "+pushToTabId+" is playing list with id "+response.currentlyPlaying);
+				//if(selID!=response.currentlyPlaying){			//changed playlist for this tab?
+					chrome.tabs.sendMessage(items.tabId, {greeting: "reset"}, function(response){}); //reset it
+				//}
+				});
+			}
+			});
+			chrome.storage.local.set({activeList: selID}, function() {});
+			
 		});
 }
 
@@ -230,7 +266,15 @@ function gettabinfo(){
 		var url = array_of_Tabs[0].url;    
 		var id = array_of_Tabs[0].id; 			
 		chrome.storage.sync.set({tabId: id}, function() {});		
-		if(array_of_Tabs.length>=2){
+		if(array_of_Tabs.length>=1){
+			for(i=0;i<array_of_Tabs.length;i++){
+			tablist=document.querySelector('#tabselect_list');
+			
+			var optionElement = document.createElement("option");
+			optionElement.setAttribute("tabid",array_of_Tabs[i].id);	
+			optionElement.innerHTML = array_of_Tabs[i].url;
+			tablist.appendChild(optionElement);		
+			}			
 			//for(i=0;i<array_of_Tabs.length;i++){alert("Found: "+array_of_Tabs.length+" tab(s). url: "+ array_of_Tabs[i].url+"id: "+array_of_Tabs[i].id);}
 		}
 		}
@@ -259,15 +303,15 @@ function controlPlaylist(e){
 			var newplaylistnames=items.playlistNames;
 			var newplaylistIDs=items.playlistIDs;
 			spliton=-1;
-			console.log("selID: "+selID); 
+			//console.log("selID: "+selID); 
 			for(i=0;i<items.playlists.length;i++){				
-				console.log("checking pl id: "+items.playlistIDs[i]);
+				//console.log("checking pl id: "+items.playlistIDs[i]);
 				if(selID==items.playlistIDs[i]){
 					spliton=i;
 					break;
 				}
 			}
-			console.log("spliton: "+spliton); 
+			//console.log("spliton: "+spliton); 
 			if(spliton!=-1){
 				console.log('Removing playlist with lenght: '+newplaylists[spliton].length);
 				console.log('Removing playlist with ID: '+newplaylistIDs[spliton]);
@@ -382,6 +426,10 @@ function showNewPlaylistScreen(show){
 	document.querySelector('#playlisteditingsdiv').style.display="inherit";}
 }
 
+function OpenSettings(){
+	chrome.tabs.create({ url: "settings.html"});	
+}
+
 document.addEventListener('DOMContentLoaded', function(){
 		
 	document.querySelector('#cbToggleShowVideo').addEventListener('change', save_options);
@@ -400,12 +448,19 @@ document.addEventListener('DOMContentLoaded', function(){
 	document.querySelector('#cbToggleRunAtStartup').addEventListener('change', save_options);	
 	document.querySelector('#cbradio').addEventListener('change', save_options);	
 	
+	document.querySelector('#cbDiscovery').addEventListener('change', save_options);
+	document.querySelector('#cbChatCommands').addEventListener('change', save_options);
+	
 	document.querySelector('#playlistselect').addEventListener('change',UpdatePlaylistSelector);		
 	document.querySelector('#playlistselect').addEventListener('click',ClickPlaylistSelector);	
 	document.querySelector('#editplaylist').addEventListener('click', controlPlaylist);	
 	document.querySelector('#clearplaylist').addEventListener('click', controlPlaylist);	
 	
 	document.querySelector('#btnEditBanned').addEventListener('click', controlPlaylist);	
+	document.querySelector('#settingsIcon').addEventListener('click', OpenSettings);	
+	
+	t=document.getElementById('title');	t.style.float="left";t.style.width='96%';
+
 	
 	gettabinfo();	
 	restore_options();	
@@ -413,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	chrome.storage.onChanged.addListener(function(changes, areaName){
 		var changedItems = Object.keys(changes); 
 		for (item of changedItems) {
-			//restore_options();
+			restore_options();
 			//alert(item + " has changed. Old value: "+changes[item].oldValue+",new value: "+changes[item].newValue);
 		}  
 	});

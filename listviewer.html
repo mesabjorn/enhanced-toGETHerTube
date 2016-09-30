@@ -1,25 +1,44 @@
 <html>
 <head>
 <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-		margin-left:25px;
-      }      
-	  #texthelper{
-		background-color: red;
-		color:white;
-	  }
-    </style>
+#menu
+{
+    position: fixed;
+    top: 0px;
+	width:100%;
+	background-color: #c3c3c3;	
+	margin-left:0px;	
+	padding:10px;
+}
+
+body {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+	font-size: 100%;	
+	margin-top:105px;
+	margin-left:0px;
+}      
+#texthelper{
+	background-color: red;
+	color:white;
+}
+#listcontainer{
+	margin-left:25px;
+	margin-top:125px;
+}
+</style>
+
 <script src="loadpage.js"></script>
 </head>
 <body>
-<span><input id="addinputtext" type="text" placeholder="Add more..."><input id="addbutton" type="button" value="Add more">
-<input id="savebutton" type="button" value="Save"></span>
-<div id="texthelper"></div>
-<div><h4 id="title">Playlist contents:</h4></div>
-<div id="listcontainer">
+<div id="menu">
+	<span>
+		<input id="addinputtext" type="text" placeholder="Add more..."><input id="addbutton" type="button" value="Add more">
+		<input id="savebutton" type="button" value="Save">
+	</span>
+	<div id="texthelper"></div>
+	<div><h4 id="title">Playlist contents:</h4></div>
 </div>
+<div id="listcontainer"></div>
 
 </body>
 </html>

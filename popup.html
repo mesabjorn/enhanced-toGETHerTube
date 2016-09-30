@@ -52,7 +52,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="title">Geth V1.1</div>	
+    <span>
+	<div id="title">Geth V1.4</div>	
+	<span id="settingsIcon"><img src="figs/settings.png" title="Open Settings" height="16" width="16"></span>
+	</span>
 	<form>
 	<fieldset>
 	<legend>Visuals:</legend>
@@ -61,13 +64,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<span title="Check to colorize usernames"><input type="checkbox" id="cbColorizer">Colorize chat</span>	
 	<span title="Check to add timestamps"><input type="checkbox" id="cbTimestamper">Add chat timestamps</span></br>
 	<span title="Check to minimize listview"><input type="checkbox" id="cbHideThumbs" >Minimal Layout</span></br>
-	<span title="Check to show playing song in the chat"><input type="checkbox" id="cbTogglePlaysInChat">Show playing song in chat (beta)</span>	</br>
-	<span title="Check to show playing songs above video"><input type="checkbox" id="cbTogglePlaysOverVid">Show playing song above video (beta)</span>	</br>
+	<span title="Check to show playing song in the chat"><input type="checkbox" id="cbTogglePlaysInChat">Show playing song in chat</span>	</br>
+	<span title="Check to show playing songs above video"><input type="checkbox" id="cbTogglePlaysOverVid">Show playing song above video</span>	</br>
 	<span title="Check to enable radio mode"><input type="checkbox" id="cbradio">Radio mode</span></br>
 	</fieldset>
 	<fieldset id="radiofieldset">
 	<legend>Radio:</legend>
 	<span id="onAirSign"><img src="figs/ontheair_disabled.png" height="32" width="128"></span></br>
+	<span id="tabselect">Select Tab:<select id="tabselect_list" width="200px"></select></span></br>
+
 	<span>Select playlist: <select id="playlistselect" width="200px"></select><input type="checkbox" id="cbshuffle">Shuffle</span>
 	<span id="playlistaddscreen" hidden>
 		Name:<input type="text" id="texttracklistname" title="Enter Name of playlist" placeholder="Playlist Title">	</br>
@@ -83,11 +88,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16"></span>
 		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16"></span>
 	</div>
+	<input type="checkbox" id="cbDiscovery">Discovery mode</span>
+	<input type="checkbox" id="cbChatCommands">Allow chat commands</span><br />
 	<span title="Add songs when playlist gets shorter than this number">Min. playlist length (mod only):
 	<input type="text" id="txtMinPlaylistLength" placeholder="10" size="3"></span></br>
 	<span title="Don't suggest and autoremove songs longer than this number (minutes)" >Maximal song duration (mod only): 
 	<input type="text" id="txtMaxSongLength" placeholder="30" value="30" size="3"></span></br>
 	<input type="button" id="btnEditBanned" value="Manage blacklist" title="Manage blacklist">
+	
 	</fieldset>
 	<fieldset>
 	<legend>Geth:</legend>
