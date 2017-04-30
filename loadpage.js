@@ -10,16 +10,26 @@ function renderStatus(statusText,showtime=5000,permanent=false) {
 handleBanned=false;
 function remtrack(e){
 	nrinlist = e.currentTarget.getAttribute("numberinlist");
-	renderStatus("Removed "+tracks[nrinlist]+'. ');
-	tracks.splice(nrinlist, 1);	
-	printItems(tracks);
-	document.querySelector('#savebutton').style.display='inherit';	
+	//console.log(e.currentTarget.parentNode.innerText);
+	
+	var flagForRemoval=e.currentTarget.parentNode.innerText.trim();
+	console.log(flagForRemoval);
+	var removeIDX=tracks.indexOf(flagForRemoval);
+	console.log(removeIDX);
+		
+	if(removeIDX>-1){
+		renderStatus("Removed "+tracks[removeIDX]+'. ');
+		tracks.splice(removeIDX, 1);
+		printItems(tracks,0,100,true);
+		document.querySelector('#savebutton').style.display='inherit';	
+	}
+	
 }
 
 function appendToPlaylist(){
-	tracklist=document.querySelector('#addinputtext').value;	
+	tracklist=document.querySelector('#addinputtext').value;
 	if(tracklist ==""){return;}
-	t=tracks;
+	var t=tracks;
 	parts=tracklist.split(",");
 	additions=0;
 	for(i=0;i<parts.length;i++){
@@ -28,35 +38,34 @@ function appendToPlaylist(){
 			additions++;
 		}
 	}
-	document.querySelector('#addinputtext').value='';	
+	tracks=t;
+	document.querySelector('#addinputtext').value='';
 	renderStatus('Added '+additions+' titles. ');
-
-	printItems(tracks);		
+	//printItems(tracks);	
 	updateTracks();
 }
 
 function updateTracks(){
 	newtracks=tracks;
-	list=document.getElementById('listcontainer');
-	for(i=0;i<list.childElementCount;i++){
+	//list=document.getElementById('listcontainer');
+	/*for(i=0;i<list.childElementCount;i++){
 		//html = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		stringinput=list.childNodes[i].childNodes[2].innerText;
 		//stringinput=stringinput.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		newtracks[i]=stringinput;	
-	}	
+	}*/	
 	if(handleBanned){
 		chrome.storage.local.set({blacklist: newtracks}, function() {printItems(newtracks);});
 	}else{		
 		chrome.storage.local.get({
 		playlists: [],		
 		playlistIDs:[],			
-		}, function(items){			
+		}, function(items){	
 			listpos = getPlaylistPosFromListID(items.playlists,items.playlistIDs);
 			var newplaylists = items.playlists;
 			newplaylists[listpos]=newtracks;
 			chrome.storage.local.set({playlists: newplaylists}, function() {printItems(newtracks);});			
-		});
-		
+		});		
 		//chrome.storage.local.set({tracks: newtracks}, function() {printItems(newtracks);});
 	}
 	renderStatus('Saved the list.');
@@ -75,6 +84,8 @@ function approvetrack(e){
 			spanParent.childNodes[3].style.display='inherit';
 			spanParent.childNodes[4].style.display='none';		
 			spanParent.setAttribute("isediting","false");
+			tracks[spanParent.getAttribute("numberinlist")]=spanParent.childNodes[2].innerText;
+			console.log("Changed: "+curValue +" to -> "+tracks[spanParent.getAttribute("numberinlist")]);
 			//save();
 		}
 		//console.log(curValue);
@@ -123,42 +134,38 @@ function SetPlaylistName(name){
 	document.getElementById('title').innerHTML= name+"</br>";	
 }
 
-function printItems(t){
-	tracks=t;
+function printItems(t,start,end,clearlist){
 	list=document.querySelector('#listcontainer');
-	while(list.firstChild){list.removeChild(list.firstChild);}
+	if(clearlist){while(list.firstChild){list.removeChild(list.firstChild);}}	//remove all nodes
 	
-	if(t.length==0){
-		SetPlaylistName("There's nothing here.");
-	}
+	if(t.length==0){SetPlaylistName("There's nothing here.");}
 	else{
-		if(handleBanned){
-			SetPlaylistName("Blacklist: ("+t.length +" titles):");		
-		}
-		else{
-			SetPlaylistName("Playlist '"+listName+ "'("+t.length +" titles):");		
-		}
+		if(handleBanned){SetPlaylistName("Blacklist: ("+t.length +" titles):");}
+		else{SetPlaylistName("Playlist '"+listName+ "'("+t.length +" titles):");}
 	}
 	
-	for(i=0;i<t.length;i++){
+	end=Math.min(end,t.length);
+	start=Math.max(0,start);
+	//end=t.length; //shows all
+	for(i=start;i<end;i++){
 		insertspan = document.createElement("span");
 		insertspan.addEventListener("mouseover", HoverOn);
 		insertspan.addEventListener("mouseleave", HoverOff);
 
-		insertspan.setAttribute("numberinlist", i);
+		insertspan.setAttribute("numberinlist", tracks.indexOf(t[i]));
 		insertspan.setAttribute("isediting", false);
 		
-		insertionimg = document.createElement("img");insertionimg.src= "figs/cross.png";insertionimg.style.height='16px';insertionimg.style.width='16px';insertionimg.style.display='none';
-		insertionimg2 = document.createElement("img");insertionimg2.src= "figs/pencil.png";insertionimg2.style.height='16px';insertionimg2.style.width='16px';insertionimg2.style.display='none';
-		insertionimg3 = document.createElement("img");insertionimg3.src= "figs/approve.png";insertionimg3.style.height='16px';insertionimg3.style.width='16px';insertionimg3.style.display='none';
-		insertionimg.setAttribute("numberinlist", i);
-		insertionimg2.setAttribute("numberinlist", i);
-		insertionimg3.setAttribute("numberinlist", i);
+		insertionimg = document.createElement("img");insertionimg.src= "figs/cross.png";insertionimg.style.height='16px';insertionimg.style.width='16px';insertionimg.style.display='none';insertionimg.style.cursor='pointer';
+		insertionimg2 = document.createElement("img");insertionimg2.src= "figs/pencil.png";insertionimg2.style.height='16px';insertionimg2.style.width='16px';insertionimg2.style.display='none';insertionimg2.style.cursor='pointer';
+		insertionimg3 = document.createElement("img");insertionimg3.src= "figs/approve.png";insertionimg3.style.height='16px';insertionimg3.style.width='16px';insertionimg3.style.display='none';insertionimg3.style.cursor='pointer';
+		insertionimg.setAttribute("numberinlist",i);
+		insertionimg2.setAttribute("numberinlist",i);
+		insertionimg3.setAttribute("numberinlist",i);
 		insertionimg3.style.display='none';
 		
 		insertinput = document.createElement("input");
 		insertinput.type="text";
-		insertinput.value=tracks[i];
+		insertinput.value=t[i];
 		insertinput.style.display='none';
 		insertinput.addEventListener("keydown", approvetrack);
 		
@@ -181,8 +188,20 @@ function printItems(t){
 	}
 }
 
-function getPlaylistPosFromListID(playlists,ids){
-	//listID
+window.addEventListener('scroll', function(e) {
+   //console.log(window.scrollY);
+   if(UserIsSearching)return;
+   if(window.scrollY + document.body.clientHeight > document.body.offsetHeight) {
+       //console.log("near bottom!");
+	   list=document.querySelector('#listcontainer');
+	   start=parseInt(list.childNodes[list.childElementCount-1].getAttribute('numberinlist'))+1;
+	   end=start+100;
+	   console.log("Showing till:"+end);
+	   printItems(tracks,start,end,false); // dont clear list
+   }
+});
+
+function getPlaylistPosFromListID(playlists,ids){//listID
 	var listpos=[];
 	for(i=0;i<playlists.length;i++){
 		if(ids[i]==listID){
@@ -190,8 +209,7 @@ function getPlaylistPosFromListID(playlists,ids){
 			break;
 		}		
 	}
-	return listpos;
-	
+	return listpos;	
 }
 
 function restore_options(blacklist=false){
@@ -203,28 +221,49 @@ function restore_options(blacklist=false){
   }, function(items){
 		if(blacklist){
 			handleBanned=true;			
-			printItems(items.blacklist);		
+			tracks=items.blacklist;
 			listName='Blacklist';
 		}else{			
 			listpos = getPlaylistPosFromListID(items.playlists,items.playlistIDs);
-			listName=items.playlistNames[listpos];	
-			printItems(items.playlists[listpos]);		
-									
+			listName=items.playlistNames[listpos];
+			tracks=items.playlists[listpos];									
 		}
+		printItems(tracks,0,100,false);	
   });  
 }
 
 function GetGetParameter(val) {
     var result = "Not found",tmp = [];
-    location.search.substr(1).split("&")
-	.forEach(function (item) {tmp = item.split("=");if (tmp[0] === val) result = decodeURIComponent(tmp[1]);});
+    location.search.substr(1).split("&").forEach(function (item) {tmp = item.split("=");if (tmp[0] === val) result = decodeURIComponent(tmp[1]);});
     return result;
+}
+
+UserIsSearching=false;
+function searchInTracks(){
+	var results = 0;
+	query = document.getElementById("searchfield").value.toLowerCase().trim();
+	if(query.length==0){UserIsSearching=false;printItems(tracks,0,100,true);}
+	if(query.length<=2){return;}
+	searchResult=[];
+	UserIsSearching=true;
+	for (var i = 0; i < tracks.length; i++) {
+		var t = tracks[i].toLowerCase();
+	    t = t.replace(/ +(?= )/g, '');
+	    query = query.replace(/ +(?= )/g, '');
+	    if (t.indexOf(query) != -1) {
+	      //addEntry(tracks[i]);
+		 // console.log(tracks[i]);
+	      results += 1;
+		  searchResult[searchResult.length]=tracks[i];		  
+	    }
+	  }
+	printItems(searchResult,0,searchResult.length,true);					  	
+	console.log("finished searching "+searchResult.length+" results!");
 }
 
 document.addEventListener('DOMContentLoaded', function() {
 	listType=GetGetParameter("list");
 	listID=GetGetParameter("id");	
-	
 	if(listType=="normal"){
 		restore_options();	
 	}
@@ -234,4 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('#savebutton').addEventListener('click', updateTracks);
 	document.querySelector('#addbutton').addEventListener('click', appendToPlaylist);
 	document.querySelector('#savebutton').style.display='none';
+	document.querySelector('#searchfield').addEventListener("keyup", searchInTracks);
+	document.querySelector('#searchfield').focus();
+
 });

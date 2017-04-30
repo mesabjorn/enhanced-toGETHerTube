@@ -1,3 +1,71 @@
+versionString ='Geth V1.52';
+
+//Lastfm scrobbling
+EnableScrobbling = true;
+APIKEY		=	'';
+APISecret 	=	'';
+function getUrlParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+
+function authenticate(){
+	if(!docCookies.hasItem('lastfmkey') && !docCookies.hasItem('gettingsessionkey')){
+		docCookies.setItem('gettingsessionkey', 'true');
+		window.location.replace("http://www.last.fm/api/auth/?api_key="+APIKEY+"&cb="+window.location.href);
+	}
+	if(!docCookies.hasItem('lastfmkey') && docCookies.hasItem('gettingsessionkey')){
+		token = getUrlParameter('token');
+		signing=hex_md5('api_key'+APIKEY+'methodauth.getSessiontoken'+token+APISecret)+'';
+		$.get("https://ws.audioscrobbler.com/2.0/?method=auth.getSession&token="+token+"&api_key="+APIKEY+"&api_sig="+signing, function(data){
+		  $xml = $(data);
+		  key = $xml.find('key').text();
+		  docCookies.setItem('lastfmkey',key,{expires:10000,path:'/',domain:'.togethertube.com'});
+		  docCookies.removeItem('gettingsessionkey');
+		});	
+	}
+	//else{console.log('Authentication set.');}
+}
+
+function ScrobbleTrack(songtitle){
+	authenticate();	
+	indexInTracks = getTracksSongMatch(songtitle);
+	if(indexInTracks>-1){
+	detectedSong = tracks[indexInTracks];
+		
+	var filteredsong = detectedSong.replace(/\(.*\)/i, "");
+	var songparts= filteredsong.split("-");var artist=songparts[0];var track = songparts[1];
+	
+	info = [];info["track"] = track;info["artist"] = artist;
+	//info["duration"] = 180;
+	startedplaying = Math.round(+new Date()/1000);
+
+	signing=hex_md5('api_key'+APIKEY+'artist'+info["artist"]+'methodtrack.scrobblesk'+docCookies.getItem('lastfmkey')+'timestamp'+
+		startedplaying+'track'+info["track"]+APISecret)+'';
+  	$.ajax(
+	{
+		type : 'POST',
+		url : 'https://ws.audioscrobbler.com/2.0/',
+		data : 'method=track.scrobble'+
+           '&artist='+info["artist"]+
+           '&track='+info["track"]+
+           '&timestamp='+startedplaying+
+           '&api_key='+APIKEY+
+           '&sk='+docCookies.getItem('lastfmkey')+
+           '&api_sig='+signing,
+		success : function(data){console.log("Scrobbled: "+artist+" - "+track);},
+		error : function(code, message){console.log("Scrobbling failed: "+code+": "+message);}
+	});
+	}
+	else{console.log("Scrobbling failed. No such song in tracks.");}
+}
+
 //RNG
 function RNG(seed) {
   // LCG using GCC's constants
@@ -26,38 +94,123 @@ function GetRandomTrackInd(){
 }
 //END RNG
 
+function HandleNuke(){
+	printArrayToConsole(lastGethPlay,'lastGethPlay');
+	last10 = lastGethPlay.splice(-25,25);
+	printArrayToConsole(last10,'last10');
+	var nukes=0;
+	var vids=document.getElementsByClassName('videoListEntry')//get entries;
+	playlistlength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
+	userIsOnPage=getUserIsOnVidListPage();
+	doAmtOfvids=Math.min(playlistlength-((userIsOnPage-1)*10),10);
+	for(i = 0;i<last10.length;i++){last10[i]=last10[i].trim();}				//trim all entries
+	for(i = 0;i<doAmtOfvids;i++){
+		vidname=vids[i].children[0].getElementsByTagName('h5')[0].innerText.trim();
+		if(last10.indexOf(vidname)==-1){ 											//song in list is not part of last 10 geth suggests
+			vids[i].children[0].getElementsByClassName('btn btn-default btn-xs btn-remove-playlist-item')[0].click(); //remove non-geth suggested video
+			nukes++;
+			console.log('Gonna nuke video: \''+ vidname +'\'.');
+		}
+		else{
+			console.log('Not nuking video: \''+ vidname +'\'.');
+		}
+	}
+	lastGethPlay=lastGethPlay.concat(last10);
+	printArrayToConsole(lastGethPlay,'lastGethPlay');	
+	playlistlength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
+
+	if(playlistlength<playlistlimit && radioMode && tracks.length>0){		
+		for (var i = 0; i <= (6000*playlistlimit); i += 6000) {
+			setTimeout(AddSong,i);
+		}
+	}	
+	ToggleUserSuggest(false);
+}
+
+function GetTop500Track(){
+	//monday ended at 454	
+	if(titleToTop && thisPagePlaylistID=="533879269"){ //id confirms to CR Top 500 -2014
+		var currentTrack = document.getElementById('songTitleTarget').innerText;
+		foundTrack = getTracksSongMatch (currentTrack);
+		console.log('currentTrack = '+ currentTrack+'; foundtrack = '+foundTrack);
+		var message = '[Geth]:';
+		if(foundTrack>=0){
+			top500pos = tracks.length - foundTrack;
+			message += 'Currently playing the top 500, this is number: '+ top500pos + '!';
+			console.log('top500pos: '+top500pos);
+		}
+		else{
+			message += '\''+currentTrack+ '\' not found in current playlist.';
+		}
+		console.log(message);
+		SubmitAChatMessage(message);
+	}
+}
+
+function TestIfCurrentTrackIsInPlaylist(){
+	if(titleToTop){
+		var currentTrack = document.getElementById('songTitleTarget').innerText;
+		foundTrack = getTracksSongMatch (currentTrack);
+		console.log('currentTrack = '+ currentTrack+'; foundtrack = '+foundTrack);
+		var message = '[Geth]:';
+		if(foundTrack>=0){
+			message += 'Closest playlist match: \''+ tracks[foundTrack]+'\'.';						
+		}
+		else{
+			message += '\''+currentTrack+ '\' not found in current playlist.';
+		}
+		SubmitAChatMessage(message);
+	}
+	else{
+		console.log("TestIfCurrentTrackIsInPlaylist for /isthisingeth requires song title to be added to top of video.")
+	}	
+}
+
 //chatbot
 AllowChatCommands=false;DiscoveryMode=false;
-commands = ['?','help','progress','nuke','last'];longestCommand=8;
+commands = ['?','help','progress','nuke','new','shuffle','testnuke','inplaylist','top500'];longestCommand=10;
 LastCommandDate=new Date();LastCommandDate.setSeconds(LastCommandDate.getSeconds()-10);
 function handleCommand(commandIndex){
 	if(AllowChatCommands){
 	switch(commandIndex) {
-    case 0:
-        SubmitAChatMessage('[Geth]: Monitored by Geth V1.4.');
+    case 0:					// /?
+        SubmitAChatMessage('[Geth]: Monitored by '+versionString+'.');
 		//console.log("switched on commandind: "+ commandIndex);
-        break;  
-	case 1:
-		SubmitAChatMessage('[Geth]: Monitored by Geth V1.4. Allowed commands: /?, /help, /progress,/last and /nuke');
+        break;
+	case 1:					// /help
+		SubmitAChatMessage('[Geth]: Monitored by '+versionString+'. Allowed commands: /?, /help, /progress, /new, /shuffle, /nuke and /inplaylist');
 		break;
-	case 2:
+	case 2:					// /progress
         SubmitAChatMessage('[Geth]: Playing playlist "'+playlistName+'" of which '+logArray.length+ ' of '+tracks.length+ ' tracks have been suggested.');
-		break;	
-	case 3:
-        SubmitAChatMessage('[Geth]: Nuking suggestions.');ToggleUserSuggest(false);
 		break;
-	case 4:	
+	case 3:					// /nuke
+		//HandleNuke();
+		ToggleUserSuggest(false);
+		break;
+	case 4:					// /new
 		offset=Math.round(Math.random()*10);
-        SubmitAChatMessage("[Geth]: Recently added to playlist: '"+tracks[tracks.length-1-offset]+"'.");		
+        SubmitAChatMessage("[Geth]: Recently added to playlist: '"+tracks[tracks.length-1-offset]+"'.");
+		break;	
+	case 5:					// /shuffle, shuffles songs without broadcaster's vote
+		SubmitAChatMessage("[Geth]: Shuffling playlist.");		
+		ShufflePlaylist();
+		break;
+	case 6:					// /testnuke, beta
+		HandleNuke();
+        SubmitAChatMessage('[Geth]: Nuking suggestions.');
+		break;
+	case 7:					// /inplaylist
+		TestIfCurrentTrackIsInPlaylist(); 		
+		break;
+	case 8:					// /top500
+		GetTop500Track();
 		break;		
     default:
         console.log("unknown command");
 	}
 	LastCommandDate=new Date();
 	}
-	else{
-		console.log("Chat commands disabled.");
-	}
+	else{console.log("Chat commands disabled.");}
 }
 
 function checkGethCommands(command){	
@@ -84,22 +237,57 @@ btn.setAttribute("data-ng-submit","sendMessage(chatEntry); chatEntry = '';");
 btn.setAttribute("id","btnType");btn.style.display='none';
 f.appendChild(btn);
 var event = new Event('change');	
-function SubmitAChatMessage(message){
-	
+function SubmitAChatMessage(message){	
 	formControls=document.getElementsByClassName('form-control')
 	for(i=0;i<formControls.length;i++){
 	if(formControls[i].hasAttribute('placeholder')){
 		if(formControls[i].getAttribute('placeholder')==="Share your thoughts..."){
+				entrybox = formControls[i];
+				currentValue = formControls[i].value;
 				formControls[i].value=message;
 				formControls[i].dispatchEvent(event);																			//init change without jquery
 		}
 	}	
 	}
 	document.getElementById('btnType').click();	
+	entrybox.value=currentValue; // restore text when the user was typing
 	
 	//console.log("submitted message: "+ message);
 }
 //end chatbot
+
+//shuffle playlist
+function ShuffleArray(a) { //shuffles an array
+    var j, x, i;
+    for (i = a.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }	
+}
+
+function ShufflePlaylist(){ //randomly upvotes some songs
+candidates = document.getElementsByClassName('fa fa-thumbs-o-up');
+var candidates = Array.prototype.slice.call( candidates );
+
+if(candidates.length>10){candidates=candidates.slice(0,10);}
+ShuffleArray(candidates);
+
+candidates2=[];
+for(i=0;i<candidates.length;i++){
+	if(Math.random()>0.5){
+		candidates[i].click();
+		candidates2[candidates2.length] = candidates[i].parentElement.parentElement.children[1].children[0];
+		//console.log("Voted for "+candidates[i].parentElement.parentElement.parentElement.parentElement.parentElement.children[0].innerText);		
+	}
+}
+setTimeout(RemoveUpvotes,1000,candidates2);
+}
+function RemoveUpvotes(inArray){ //removes the upvotes from the songs	
+	for(i=0;i<inArray.length;i++){inArray[i].click();}
+	//console.log("Unvoted for "+inArray[i].parentElement.parentElement.parentElement.parentElement.parentElement.children[0].innerText);		
+}
 
 //GetSimilarTracks
 
@@ -112,25 +300,74 @@ function PerformDiscoverySearch(songname){
 		console.log("Performing discovery for "+artist + "-" + track);
 }
 
-function getTracksSongMatch(song){ //gets closest match in current playlist
+/*function getTracksSongMatch(song){ //gets closest match in current playlist
+	song=song.replace(/\,/g,'');//remove commas
+	song=song.toLowerCase();
+	song = song.replace('-',' ').replace(/\s{2,}/g,' ').replace('.','');
+	console.log("Performing query for:"+song);	
 	hitcounter=[];
 	for(i=0;i<tracks.length;i++){
-		listentry=tracks[i].toLowerCase();	
-		song=song.toLowerCase();
+		listentry=tracks[i].toLowerCase().replace(/\(.*\)/i,""); //remove text between brackets
 		strparts=song.split(" ");
 		hitcounter[i]=0;
 		for(j=0;j<strparts.length;j++){	
-			if(listentry.indexOf(strparts[j])>-1){
-				hitcounter[i]=hitcounter[i]+1;		
-			}	
+			if(listentry.indexOf(strparts[j])>-1 && strparts[j]!='a' && strparts[j]!='and'&& strparts[j]!='the'&& strparts[j]!='to'){
+				//console.log(strparts[j]+' found in '+listentry + ' at pos '+ listentry.indexOf(strparts[j]));
+				hitcounter[i]=hitcounter[i]+1;					
+			}
 		}	
 	}
-	return indexOfMax(hitcounter); //get index where max value is found (closest match)
+	return indexOfMax(hitcounter);//get index where max value is found (closest match)
+}*/
+
+function getTracksSongMatch(song){												//gets closest match in current playlist
+	song=song.replace(/\,/g,'');												//remove commas from youtube title
+	song=song.toLowerCase();
+	song = song.replace(/-/g,'').replace(/\s{2,}/g,' ').replace('.','');		//replace '-', multiple spaces and dots
+	song=song+" ";																//add a space
+	console.log("Performing query for: "+song);
+	hitcounter=[];	
+	for(i=0;i<tracks.length;i++){												//go over playlist
+		listentry=tracks[i].toLowerCase().replace(/\(.*\)/i,""); 				//remove text between brackets
+		listentry=listentry.replace(/-/g,'').replace(/\s{2,}/g,' ').trim();		//replace '-', multiple spaces and dots
+		trparts=listentry.split(" ");											//split on spaces
+		hitcounter[i]=0;
+		for(j=0;j<trparts.length;j++){											//for all words in tracks title (eg G3 - Foxy Lady)
+				if(song.indexOf(trparts[j]+" ")>-1){
+					hitcounter[i]=hitcounter[i]+1;					
+					//if(i==1276){console.log('found '+trparts[j]);}
+				}
+		}			
+	}
+	return indexOfMax(hitcounter);//get index where max value is found (closest match)
 }
 
 function indexOfMax(arr) { //gets index of max value
-	if (arr.length === 0) {return -1;} max = arr[0];maxIndex = 0;
+	if (arr.length === 0) {return -1;} max = arr[0];maxIndex = -1;
 	for (var i = 1; i < arr.length; i++) {if (arr[i] > max) {maxIndex = i;max = arr[i];}}	
+	//if(max<=2){maxIndex=-1;}	
+	matches=[];filtmatches=[];
+	for(i=0;i<hitcounter.length;i++){
+		if(hitcounter[i]==max){
+			matches[matches.length]=tracks[i];
+			filtmatches[filtmatches.length]=tracks[i].replace(/-/g,'').replace(/\s{2,}/g,' ').replace(/\(.*\)/i,"");
+		}
+	}	
+	maxIndex=-1;bestMatch=0;
+	for(i=0;i<filtmatches.length;i++){
+		threshold=0.5;
+		filtmatchsplitlength = filtmatches[i].split(" ").length;
+		matchPercent = max/filtmatchsplitlength;
+		
+		if(filtmatchsplitlength<=3){threshold=.99;}
+		if(filtmatchsplitlength==4){threshold=.74;}
+
+		//console.log("matchPercent: "+ matchPercent+" with '"+tracks[tracks.indexOf(matches[i])]+"'(Threshold: "+threshold+").");
+		if(matchPercent>threshold && matchPercent>bestMatch){
+			maxIndex=tracks.indexOf(matches[i]);
+			bestMatch=matchPercent;
+		}		
+	}	
 	return maxIndex;
 }
 
@@ -173,34 +410,34 @@ function GetNewTrack(songs){ //go through playlist to see if discovery was new.
 	}
 }
 
-
-APIKEY=-1;//
 function getSimilar(ain,tin){
-var songs=[];
-if(APIKEY!=-1){
-url = "https://ws.audioscrobbler.com/2.0/?method=track.getSimilar&artist="+ain+"&track="+tin+"&api_key="+APIKEY;
-	$.get(url, function (data) {
-		$xml = $(data);
-		$t = $xml.find('track');
-		tt = $t.next().children("name");
-		aa = $t.next().children("artist").children("name");
-	
-		for (var i = 0; i < tt.length; i++) {songs[i]=aa[i].innerHTML + " - " + tt[i].innerHTML;}
+	var songs=[];
+	if(APIKEY.length>0){
+		url = "https://ws.audioscrobbler.com/2.0/?method=track.getSimilar&artist="+ain+"&track="+tin+"&api_key="+APIKEY;
+		$.get(url, function (data) {
+			$xml = $(data);
+			$t = $xml.find('track');
+			tt = $t.next().children("name");
+			aa = $t.next().children("artist").children("name");
+		
+			for (var i = 0; i < tt.length; i++){
+				songs[i]=aa[i].innerHTML + " - " + tt[i].innerHTML;
+			}
 
-		//for (var i = 0; i < songs.length; i++) {console.log(songs[i]);}
-		if(songs.length>0){
-			similarSong = GetNewTrack(songs);	
-			setTimeout(AddSong,1000,similarSong);console.log("Suggested "+ similarSong+" through discovery!");
-		}
-		else{console.log("Discovery resulted nothing!");setTimeout(AddSong,1000);console.log("Suggested "+ ain +"-"+ tin+"!");}		
-	});
-	//return songs;	
+			//for (var i = 0; i < songs.length; i++) {console.log(songs[i]);}
+			if(songs.length>0){
+				similarSong = GetNewTrack(songs);	
+				setTimeout(AddSong,1000,similarSong);console.log("Suggested "+ similarSong+" through discovery!");
+			}
+			else{console.log("Discovery resulted nothing!");setTimeout(AddSong,1000);console.log("Suggested "+ ain +"-"+ tin+"!");}		
+		});
+		//return songs;	
+	}
+	else{
+		console.log('No last fm api key supplied, discovery won\'t work. (http://www.last.fm/api/account/create)');
+		DiscoveryMode=false;
+	}
 }
-else{
-	alert('No last fm api key supplied discovery won\'t work. (http://www.last.fm/api/account/create)');
-}
-}
-//
 
 optionsWindow=-1;
 function ToggleUserSuggestHelper(toggle,target){
@@ -260,12 +497,8 @@ function getHour() {
     d = new Date();
     hour = d.getHours();
     min = d.getMinutes();
-    if (hour < 10) {
-        hour = "0" + hour;
-    }
-    if (min < 10) {
-        min = "0" + min;
-    }
+    if (hour < 10) {hour = "0" + hour;}
+    if (min < 10) {min = "0" + min;}
     return "[" + hour + ":" + min + "]";
 }
 
@@ -285,7 +518,7 @@ function IsManualRemoval(string2){
 function IsInBannedList(title){
 	if(blacklist.length==0){return false;}	
 	ltitle=title.toLowerCase();	
-	for(i=0;i<blacklist.length;i++){				
+	for(i=0;i<blacklist.length;i++){			
 		if(ltitle.indexOf(blacklist[i].toLowerCase())>=0){
 			return true;
 		}
@@ -352,12 +585,12 @@ function WriteEventLogEntry(entry){
 	chrome.storage.local.set({eventLog:eventLog}, function(){});	
 }
 
-function printArrayToConsole(arr){text='';for(q=0;q<arr.length;q++){if(q<arr.length-1){text+=arr[q]+","}else{text+=arr[q]}}console.log("arr=["+text+"];");	}
+function printArrayToConsole(arr,arrname='arr'){text='';for(q=0;q<arr.length;q++){if(q<arr.length-1){text+="\""+arr[q]+"\","}else{text+="\""+arr[q]+"\""}}console.log(arrname+"=["+text+"];");	}
 
 shuffle=false;
 PrevSongWasRecovery=false;
 function AddSong(songToAdd=""){
-	itemsPerPage = 0 ;		// start index for search tab (may change if site alters)
+	itemsPerPage = 0;		// start index for search tab (may change if site alters)
 	serviceMode = 2; 		// set service mode = youtube (2), dailymotion (4), soundcloud (6) or vimeo (8)
 	initItemsPerPage = 10;	//initial items per page
 	//MAX_SONG_LENGTH = 30; 	//in minutes minutes
@@ -399,16 +632,16 @@ function AddSong(songToAdd=""){
 		for(i=itemsPerPage;i<buttonlist.length;i++){ 															//skip first itemsPerPage (=10) results from the upcoming videos list						
 			if(resultSongTimes[i]<MAX_SONG_LENGTH){				
 				buttonlist[i].getElementsByClassName('btn btn-success btn-block')[0].click(); 					// click vote button and confirm song addition
-						
 				suggestedSongName = timeSpans[i].parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('ng-binding')[0].innerText.trim();				
-				
+				lastGethPlay[lastGethPlay.length]=suggestedSongName.replace(/\s{2,}/g,' ');
 				if(DiscoveryMode && PrevSongWasRecovery){										
 						SubmitAChatMessage("[GETH]: '"+suggestedSongName+"' was added through GETH discovery mode.");
 						suggestedSongName+="*";
 						PrevSongWasRecovery=false;					
 				}				
-				lastGethPlay[lastGethPlay.length]=suggestedSongName;
+				//lastGethPlay[lastGethPlay.length]=suggestedSongName.replace(/[\*]$/g,'');
 				WriteEventLogEntry("Suggested: "+suggestedSongName);				
+				//printArrayToConsole(lastGethPlay);	
 				break;
 			}
 		}
@@ -418,10 +651,10 @@ function AddSong(songToAdd=""){
 			//printArrayToConsole(logArray);
 			//}
 		});		
-	}	
+	}
 }
 
-function SetLogArray(items){	
+function SetLogArray(items){
 	logArray = typeof items.logArray !== 'undefined' ? items.logArray : [];	
 	eventLog = typeof items.eventLog !== 'undefined' ? items.eventLog : [];	
 	eventLog=eventLog.slice(eventLog.length-100,eventLog.length);	
@@ -448,6 +681,7 @@ waitfunc=function WaitASecThenCheckForManRemovalAndUpdate(songtitle){
 	if(!IsManualRemoval(songtitle)){		
 		if(titleToChat){AddSongTitleToChat(songtitle);}
 		if(titleToTop){AddSongTitleToVideo(songtitle);}
+		if(EnableScrobbling){ScrobbleTrack(songtitle);}
 		//console.log(songtitle+" is playing now.");
 	}
 	//listlength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
@@ -479,7 +713,7 @@ function SetUpGeth(items){
 	
 	AllowChatCommands=items.allowChatCommands;
 	DiscoveryMode=items.discoveryMode;
-	
+	if(DiscoveryMode){		APIKEY = items.lastFmKey.key;	}
 	chrome.storage.local.get({logArray:[],eventLog:[]},function(items){SetLogArray(items);});
 	
 	prevListLength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
@@ -490,7 +724,15 @@ function SetUpGeth(items){
 	titleToChat=items.tToChat;
 	MAX_SONG_LENGTH=items.MaxSongLength;
 	targetNode=document.getElementsByClassName('videoList');	
-	radioMode=items.radioMode;		
+	radioMode=items.radioMode;
+	EnableScrobbling = items.scrobbling;	
+	if(EnableScrobbling){
+		APIKEY = items.lastFmKey.key;
+		APISecret = items.lastFmKey.secret;
+		console.log('Scrobbling to last.fm: '+EnableScrobbling+". With key: "+APIKEY+" and secret: "+APISecret);
+		authenticate(); //authenticate with last fm
+	}
+
 	observer = new MutationObserver(function(mutations){
 		mutations.forEach(function(mutation){
 		if(mutation.type == 'childList'){
@@ -500,8 +742,8 @@ function SetUpGeth(items){
 					if(radioMode){
 					madd=mutation.addedNodes[0];
 					checkAddition(madd);	
-					t=madd.children[0].getElementsByClassName('ng-binding')[0].innerText.trim();					
-					RemoveGethVotes(t); //remove votes for this title only
+					t=madd.children[0].getElementsByClassName('ng-binding')[0].innerText.trim();			//get song youtube title		
+					RemoveGethVotes(t); 																	//remove votes for this title only
 					}
 					if(items.hideThumbs){formatList();}					
 				}
@@ -532,10 +774,8 @@ function SetUpGeth(items){
 	listlength=document.getElementsByClassName('badge ng-binding')[0];
 
     observerlist = new MutationObserver(function(mutations){
-    mutations.forEach(function(mutation){	
-	    if(mutation.type == 'characterData'){
-		    prevListLength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
-	}
+    mutations.forEach(function(mutation){
+	if(mutation.type == 'characterData'){prevListLength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);}
     });   
     });  
     observerConfiglist={characterData: true,subtree: true};
@@ -595,9 +835,44 @@ for(i=0;i<doAmtOfvids;i++){
 		header.appendChild(buttonseg);
 		buttonseg.style.display='inline-block';
 		example.getElementsByClassName('content')[0].style.display='none';
+		title = example.children[0].children[0].innerText.trim();
+		if(lastGethPlay.indexOf(title)>=0){ //is not suggested by geth
+			//example.style.color='red';
+			if(radioMode){
+				example.children[0].children[0].children[0].style.color='red';
+				example.children[0].children[0].children[0].title='Suggested by geth.';
+			}
+		}
 	}
 	catch(e){}
 }
+}
+
+function openA(evt){ // event handler for HandleChatMessage
+	e = evt.target;
+	if(e.hasAttribute("postdata")){
+		if(e.getAttribute("wasurl")=="true"){
+			//console.log("was url");
+			e.parentElement.innerHTML = "<a href='"+e.getAttribute("postdata")+"'>"+e.getAttribute("postdata")+"</a>";
+		}else{
+			e.parentElement.innerText = e.getAttribute("postdata");
+		}		
+	}	
+}
+
+function HandleChatMessage(msgElement){ //trims too long chat messages and allows user to expand them
+	var msg = aNode.parentElement.children[1].innerText.trim();
+	var wasUrl = msg.indexOf("http")==0||msg.indexOf("www.")==0;
+	var lMsg = msg.length;
+	var maxMessageLength = 250;
+	if(lMsg>maxMessageLength){
+		aNode.parentElement.children[1].innerText = aNode.parentElement.children[1].innerText.substr(0,maxMessageLength);
+		
+		var a = document.createElement("a");a.href="#";a.addEventListener('click',openA);		a.setAttribute("postdata",msg);
+		a.setAttribute("wasurl",wasUrl);
+		a.innerText="...more >>>";
+		aNode.parentElement.children[1].appendChild(a);
+	}		
 }
 
 function HandleColorizer(toggleColorize,toggleTimeStamp){			
@@ -608,9 +883,10 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		if (mutation.addedNodes.length > 0){
 			nodes = mutation.addedNodes[0];			
 			aNode = nodes.childNodes[2];
-			if (aNode.childNodes.length == 9){nodeNumber = 7;} else {nodeNumber = 5;}	
+			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 11;}	
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
+			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
 			if(toggleColorize){if(aNode.nodeType==1){
 				if(aNode.childNodes[nodeNumber].innerText.length>25){
 					aNode.childNodes[nodeNumber].innerText=aNode.childNodes[nodeNumber].innerText.slice(0,25);
@@ -698,6 +974,7 @@ chrome.storage.sync.get({
 		radioMode:false,
 		discoveryMode:false,
 		allowChatCommands:false,
+		lastFmKey:[],
 		minListLength:10		
 		}, function(items){			   
 			if(items.RunAtStartup){
@@ -723,18 +1000,33 @@ function(request, sender, sendResponse){
 			colorize:false,
 			timestamps:false,
 			discoveryMode:false,
+			scrobbling:false,
 			allowChatCommands:false,
+			lastFmKey:[],
 			MaxSongLength:30			
-			}, function(items) {				
-				chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[],playlistNames:[]},function(localitems){					
+			}, function(items){			
+				chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[],playlistNames:[]},function(localitems){
 					initplaylists(localitems,request.playlistid);
 					thisPagePlaylistID=request.playlistid;
 					SetUpGeth(items);
-					console.log("Started geth with playlist:"+ request.playlistid);	
+					console.log("Started geth with playlist:"+ request.playlistid);
+					/*
+					console.log(typeof(thisPagePlaylistID));
+					
+					b=thisPagePlaylistID=="965170890";
+					console.log(b);/*
+					
+					console.log("	Scrobbling:"+items.scrobbling);
+					console.log("	allowChatCommands:"+items.allowChatCommands);
+					console.log("	MaxSongLength:"+items.MaxSongLength);*/
 				});					
 				}
 			);			
 			//sendResponse({farewell: "goodbye"});
+			var initVidList=document.getElementsByClassName('videoListEntry')//get entries;
+			playlistlength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
+			for(i=0;i<playlistlength;i++){lastGethPlay[i]=initVidList[i].children[0].getElementsByTagName('h5')[0].innerText.trim();} //set start list as last geth plays too
+			printArrayToConsole(lastGethPlay,'lastGethPlay');
 		}
 		else if (request.greeting == "color"){
 			HandleColorizer(request.colorize,request.timestamps);	
@@ -762,10 +1054,11 @@ function(request, sender, sendResponse){
 		else if (request.greeting == "toggleChatCommands"){AllowChatCommands = request.allowChatCommands;}
 		else if (request.greeting == "toggleDiscoveryMode"){DiscoveryMode=request.discoveryMode;}
 		else if (request.greeting == "whatchaplayin"){sendResponse({currentlyPlaying: thisPagePlaylistID});}
-		else if (request.greeting == "reset"){				
+		else if (request.greeting == "reset"){
 			logArray=[];
-			chrome.storage.local.set({logArray: []}, function(){});
+			chrome.storage.local.set({logArray: logArray}, function(){});
 			console.log("Reset logArray");
-			
 		}
 });
+
+console.log(APIKEY);console.log(APISecret);

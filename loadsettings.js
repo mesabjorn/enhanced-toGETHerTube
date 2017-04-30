@@ -36,16 +36,36 @@ function GetJSONExportString(playlists,listnames){
 return jsonstring;
 }
 
-function runExport(){
+function runExport(playlistNames=""){
 	chrome.storage.local.get({playlists:[],playlistNames:[],blacklist:[]}, function(items){
 		
 		if(typeof(items.blacklist)!=="undefined"){ //blacklist = empty?
 			items.playlists[items.playlists.length]=items.blacklist;		
 			items.playlistNames[items.playlistNames.length]="blacklist";
+		}
+		playlists=[];
+		if(playlistNames==""){
+			playlists=items.playlists; //all
+			playlistNames = items.playlistNames;
+		}else{ // manual selection
+		console.log("using manually selected playlists to export!");
+			for(i=0;i<playlistNames.length;i++){
+				for(j=0;j<items.playlistNames.length;j++){
+					console.log("Check box playlist name:" + playlistNames[i] +" vs " + items.playlistNames[j]);
+					if(items.playlistNames[j]==playlistNames[i]){		
+						console.log(playlistNames[i] +"==" + items.playlistNames[j]);
+						playlists[playlists.length] = items.playlists[j];
+						console.log();						
+						break;
+					}
+				}
+			}
 		}		
-		document.getElementById('resultText').value = GetJSONExportString(items.playlists,items.playlistNames);
+		//document.getElementById('resultText').value = GetJSONExportString(items.playlists,items.playlistNames);
+		document.getElementById('resultText').value = GetJSONExportString(playlists,playlistNames);
 		console.log("Exporting..");
-	});
+		ParseJSON();
+	});	
 }
 
 String.prototype.hashCode = function () { //hashcode for unique playlist indexing
@@ -71,6 +91,25 @@ function CopyToClipboard(){
 	}
 }
 
+function synchlists(){
+	url = 'https://raw.githubusercontent.com/mesabjorn/enhanced-toGETHerTube/master/playlists/playlists.txt';
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+	if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+		console.log(xhr.responseText);	
+		obj = JSON.parse(xhr.responseText);		
+		document.getElementById('resultText').value = xhr.responseText;
+		document.getElementById('rImport').click();
+		var playlists = obj.playlists[0];
+		arrnames=Object.keys(playlists);var arr=[];
+		for(i=0;i<arrnames.length;i++){
+			arr[i]=Object.keys(playlists).map(function(k){return playlists[k]})[i];
+		}		
+	}
+	};
+	xhr.open('GET', url);
+	xhr.send();
+}
 
 newplaylists=[];
 newplaylistIDs=[];
@@ -79,27 +118,28 @@ newplaylistNames=[];
 function ImportSelected(){ //checks for conflicting names 
 	target=document.getElementById('importHandler');importlists = target.children;
 	newplaylists = [];
-	doubleNames=[];arrnames=[];
+	doubleNames=[];arrnames=[];ImportLists=[]; // ImportLists holds indexes of arr to import, corresponds to length of arrnames
 	chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[],playlistNames:[]},function(items){
 		newplaylists=items.playlists;
 		newplaylistIDs=items.playlistIDs;
 		newplaylistNames=items.playlistNames;
 		newblacklist=[];
-		console.log(newplaylistNames);
+		//console.log(newplaylistNames);
 		for(i=0;i<importlists.length-1;i++){ //skip approve button
 			if(importlists[i].children[0].checked==true){			
-				arrnames[i]=importlists[i].children[2].value;
-				console.log(importlists[i].children[2].value);
+				arrnames[arrnames.length]=importlists[i].children[2].value;
+				ImportLists[ImportLists.length]=i;
+				//console.log(importlists[i].children[2].value);
 				if(newplaylistNames.indexOf(importlists[i].children[2].value)>-1){ 				//double list name
 					importlists[i].children[1].style.display="none";
 					importlists[i].children[2].style.display="inherit";					
 					importlists[i].style.backgroundColor="red";					
 					WriteMessage("Found conflicting playlistnames, please enter unique and new names for playlists.",false);
-					doubleNames[doubleNames.length]=i;
-					console.log("Found double name in pos: "+i);
+					doubleNames[doubleNames.length]=i;					//duplicate name
+					//console.log("Found double name in pos: "+i);
 				}				
 				else{
-					listlength = importlists[i].children[1].getAttribute("listlength");					
+					listlength = importlists[i].children[1].getAttribute("listlength");			
 					importlists[i].children[1].innerText=importlists[i].children[2].value+": "+listlength+" items.";
 					importlists[i].children[2].style.display="none";					
 					importlists[i].style.backgroundColor="white";					
@@ -108,22 +148,22 @@ function ImportSelected(){ //checks for conflicting names
 				}
 			}
 		}
-		console.log(doubleNames);
+		//console.log(doubleNames);
 		if(doubleNames.length==0){		
 					 //updates names of arrays
 			hasblacklist=false;
-			for(i=0;i<arr.length;i++){
-				if(arrnames[i].toLocaleLowerCase()=="blacklist"){
-					newblacklist = arr[i];
+			for(i=0;i<arrnames.length;i++){
+				if(arrnames[i].toLowerCase()=="blacklist"){
+					newblacklist = arr[ImportLists[i]];
 					hasblacklist=true;
 				}
 				else{
-					newplaylists[newplaylists.length]=arr[i];
+					newplaylists[newplaylists.length]=arr[ImportLists[i]];
 					//newplaylistIDs=newplaylistIDs.concat(arrnames[i].hashCode());
 					//newplaylistNames=newplaylistNames.concat(arrnames[i]);		
 					newplaylistNames[newplaylistNames.length] = arrnames[i];
 					newplaylistIDs[newplaylistIDs.length] = arrnames[i].hashCode();
-					console.log('Added: '+newplaylistNames[newplaylistNames.length-1]+'; length: '+newplaylists[newplaylists.length-1].length+'; hash: '+newplaylistIDs[newplaylistIDs.length-1]);
+					//console.log('Added: '+newplaylistNames[newplaylistNames.length-1]+'; length: '+newplaylists[newplaylists.length-1].length+'; hash: '+newplaylistIDs[newplaylistIDs.length-1]);
 				}
 			}
 			chrome.storage.local.set({playlists:newplaylists,playlistIDs:newplaylistIDs,playlistNames:newplaylistNames},function(){});
@@ -150,6 +190,21 @@ function ImportSelected(){ //checks for conflicting names
 	}
 }*/
 
+function checkExportThing(){
+	var children = document.getElementById('importHandler').children;
+	var plnames = [];
+	for(i=0;i<children.length;i++){
+		if(children[i].children[0].checked){
+			var plname = children[i].children[1].innerText;
+			
+			plname = plname.substring(0,plname.indexOf(":"));
+			plnames[plnames.length]=plname;
+			console.log(plname+" is checked for exporting.");
+		}		
+	}	
+	runExport(plnames);
+}
+
 function FillSideList(arrnames,arr){
 	target=document.getElementById('importHandler');
 	while (target.firstChild) {target.removeChild(target.firstChild);}	
@@ -168,56 +223,70 @@ function FillSideList(arrnames,arr){
 		newRow.appendChild(document.createElement("br"));			
 		
 		if(i%2==1){newRow.style.backgroundColor='e5e5e5';}
+		
+		if(document.getElementById("rExport").checked==true){
+			newRow.addEventListener('click', checkExportThing);
+		}		
 		target.appendChild(newRow);		
-	}	
-	b=document.createElement('input');	b.setAttribute('type','button');
-	b.setAttribute('value','Approve');
-	b.addEventListener('click',ImportSelected);
-	target.appendChild(b);	
+	}
+	if(document.getElementById("rImport").checked==true){
+		b=document.createElement('input');	b.setAttribute('type','button');
+		b.setAttribute('value','Approve');	b.addEventListener('click',ImportSelected);
+		target.appendChild(b);	
+	}
 }	
 
-function runImport(){	
+function ParseJSON(){
+	document.getElementById('resultText').style.float='left';
+	document.getElementById('resultText').cols=72;
+	document.getElementById('resultText').style.marginRight='40px';
+	document.getElementById('importHandler').style.display='block';
+	document.getElementById('importHandler').style.height="400px";
 	try{
 		if(document.getElementById('resultText').value!=""){
-		obj=JSON.parse(document.getElementById('resultText').value);		
-		obj2=obj.playlists[0];
-		arrnames=Object.keys(obj2);arr=[];
-		for(i=0;i<arrnames.length;i++){arr[i]=Object.keys(obj2).map(function(k){return obj2[k]})[i];}
-		FillSideList(arrnames,arr);	
-		console.log("Detected "+arrnames.length+" playlists.");
-		console.log("Name: "+arrnames[0]);
+			obj=JSON.parse(document.getElementById('resultText').value);		
+			obj2=obj.playlists[0];
+			arrnames=Object.keys(obj2);arr=[];
+			for(i=0;i<arrnames.length;i++){arr[i]=Object.keys(obj2).map(function(k){return obj2[k]})[i];}
+			FillSideList(arrnames,arr);	
+			console.log("Detected "+arrnames.length+" playlists.");
+			//console.log("Name: "+arrnames[0]);
 		}
 		else{
 			target=document.getElementById('importHandler');while (target.firstChild) {target.removeChild(target.firstChild);}	
-		}
+		}	
 	}
 	catch(e){
-		console.log("Couldnt parse. Invalid JSON?");
+		console.log("Couldnt parse. Invalid JSON?:" + e);
 		target=document.getElementById('importHandler');while (target.firstChild) {target.removeChild(target.firstChild);}	
 	}
 }
 
-function RunModus(){	
-	if(document.getElementById('rImport').checked===true){
+/*function RunModus(){	
+	
+	runImport();
+	/*if(document.getElementById('rImport').checked===true){
 		//document.getElementById('resultText').style.width='400px';
 		//runImport();		
-		document.getElementById('resultText').style.float='left';
-		document.getElementById('resultText').cols=72;
-		document.getElementById('resultText').style.marginRight='40px';
-		document.getElementById('importHandler').style.display='block';
-		document.getElementById('importHandler').style.height="400px";			
+		//document.getElementById('resultText').style.float='left';
+		//document.getElementById('resultText').cols=72;
+		//document.getElementById('resultText').style.marginRight='40px';
+		//document.getElementById('importHandler').style.display='block';
+		//document.getElementById('importHandler').style.height="400px";			
 		runImport();
 	}
 	else{
-		///document.getElementById('resultText').style.width='800px';
+		//document.getElementById('resultText').style.width='800px';
 		//runExport();		
-		document.getElementById('resultText').style.float='none';
-		document.getElementById('resultText').style.marginRight='0px';
-		document.getElementById('resultText').cols=150;
-		document.getElementById('importHandler').style.display='none';
+		//document.getElementById('resultText').style.float='none';
+		//document.getElementById('resultText').style.marginRight='0px';
+		//document.getElementById('resultText').cols=150;
+		//document.getElementById('importHandler').style.display='none';
+		//document.getElementById('importHandler').style.display='block';
+		//document.getElementById('importHandler').style.height="400px";
 		runExport();
 	}
-}
+}*/
 
 function getDateString(d){
 	datestr = ("0"+d.getDate()).slice(-2) +"-"+ ("0"+(d.getMonth()+1)).slice(-2)+" "+ 
@@ -246,8 +315,10 @@ function eventLogBuilder(){
 	}
 }
 
-function ToggleFilter(){
-	el=event.target;	
+function ToggleFilter(e){
+	var el = e || window.event;
+	el = el.target;
+	//console.log(el);
 	clickedbutton = el.innerHTML;
 	if(el.getAttribute('ischecked')==0){
 		el.setAttribute('ischecked',1);
@@ -270,40 +341,97 @@ function ToggleFilter(){
 	eventLogBuilder();
 }
 
-document.addEventListener('DOMContentLoaded', function() {	
-	document.getElementById('rExport').checked=true;
-	//document.getElementById('btnStart').addEventListener('click', RunModus);
-	
-	
-	document.getElementById('rExport').addEventListener('click', RunModus);
-	document.getElementById('rImport').addEventListener('click', RunModus);
-	
-	document.getElementById('resultText').addEventListener('keyup', RunModus);	
+function ToggleFold(e){
+	var el = e || window.event;
+	el = el.target;	//console.log(el);
+	//console.log(el.tagName);
+	if(el.tagName!='H1'){return;}
+	el=el.parentNode;
+	var children = el.children;
+	setAs = 'none';
+	if(children[1].style.display=='none'){
+		setAs = 'inherit';
+	}
+	for(j=1;j<children.length;j++){
+		children[j].style.display=setAs;
+	}
+	//console.log('children set to '+ setAs);
 
-	document.getElementById('resultText').style.float='none';
-	document.getElementById('resultText').style.marginRight='0px';
-	document.getElementById('importHandler').style.display='none';
+}
+
+function SaveLFMCredentials(e){
+	var k = document.getElementById('lfmkey').value.trim();
+	var s = document.getElementById('lfmsecret').value.trim();
+	var LFKEY = {key:k, secret:s};	
+	chrome.storage.sync.set({lastFmKey:LFKEY}, function(){		
+		WriteMessage("Saved lfm keys!",true);
+	});
+}
+
+
+function CheckLastFmInput(){
+	console.log('checking input '+document.getElementById('lfmkey').value.length+'; '+document.getElementById('lfmkey').value.length);
+	if(document.getElementById('lfmkey').value.length==32 && document.getElementById('lfmsecret').value.length==32){
+		document.getElementById('ind_approve').style.display="inline";
+	}
+	else{
+		document.getElementById('ind_approve').style.display="none";		
+	}	
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('rExport').checked=true;
+	document.getElementById('rExport').addEventListener('click', ParseJSON);
+	document.getElementById('rImport').addEventListener('click', ParseJSON);
+	document.getElementById('resultText').addEventListener('keyup', ParseJSON);	
+
+	document.getElementById('resultText').style.float='left';
+	document.getElementById('resultText').cols=72;
+	document.getElementById('resultText').style.marginRight='40px';
+	document.getElementById('importHandler').style.display='block';
+	document.getElementById('importHandler').style.height="400px";
 	
 	fItems = document.getElementsByClassName('filterItem');
-	fItems[0].addEventListener('click',ToggleFilter);
-	fItems[1].addEventListener('click',ToggleFilter);
-	fItems[2].addEventListener('click',ToggleFilter);	
+	fItems[0].addEventListener('click',function(){ToggleFilter(event)});
+	fItems[1].addEventListener('click',function(){ToggleFilter(event)});
+	fItems[2].addEventListener('click',function(){ToggleFilter(event)});	
 		
 	document.getElementById('btnCopy').addEventListener('click',CopyToClipboard);	
-		
+	
+	document.getElementById('lfmkey').addEventListener('keyup',CheckLastFmInput);
+	document.getElementById('lfmsecret').addEventListener('keyup',CheckLastFmInput);
+	document.getElementById('ind_approve').addEventListener('click',SaveLFMCredentials);	
+	document.getElementById('ind_approve').addEventListener('mouseover',function(){this.width="28";this.height="28";});	
+	document.getElementById('ind_approve').addEventListener('mouseout',function(){this.width="24";this.height="24";});	
+
+	document.getElementById('btnSynch').addEventListener('click',synchlists);	 // synch lists online btn	
+	
+	var foldables=document.getElementsByClassName('foldable');
+	for(var i=0;i<foldables.length;i++){
+		var children = foldables[i].children;
+		for(j=1;j<children.length;j++){
+			children[j].style.display='none'; //console.log('child '+ j + 'set to none');			
+		}
+		foldables[i].addEventListener('click',function(){ToggleFold(event)});	
+	}
+	
 	runExport();
 	chrome.storage.local.get({eventLog:[]}, function(items){
-		eventLog = typeof items.eventLog !== 'undefined' ? items.eventLog : [];			
-		
+		eventLog = typeof items.eventLog !== 'undefined' ? items.eventLog : [];
 		eventLog.reverse();
-		eventLogBuilder();
-		/*for (i=0;i<eventLog.length;i++){
-			console.log("eventlog "+ i +": "+ eventLog[i][0]);
-		}*/
-
-		
+		eventLogBuilder();		
 	});
-	fItems[0].click();
-	fItems[1].click();
-	fItems[2].click();
+			
+	chrome.storage.sync.get({lastFmKey:[]}, function(items){
+		//console.log(typeof(items.lastFmKey.key)=="undefined");
+		if(typeof(items.lastFmKey.key)!="undefined"){//key exists
+			document.getElementById('lfmkey').value = items.lastFmKey.key;
+			document.getElementById('lfmsecret').value = items.lastFmKey.secret;
+		}
+		else{
+			document.getElementById('lfmkey').placeholder = "Enter 32 char key.";
+			document.getElementById('lfmsecret').placeholder = "Enter 32 char secret.";
+		}		
+	});	
+	fItems[0].click();	fItems[1].click();	fItems[2].click();
 });

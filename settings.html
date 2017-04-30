@@ -30,6 +30,16 @@
 			text-align:center;
 			border: 1px solid black;					
 		}
+		.foldable{border:solid 1px black;padding-bottom:15px;}
+		.foldable h1:hover{color:#4e4f51;}
+		
+		.foldable h1{
+			cursor:pointer;
+		}		
+		.foldable *{
+			margin-left:25px;
+		}
+		
     </style>
 <script src="loadsettings.js"></script>
 </head>
@@ -37,28 +47,42 @@
 <div id="errorbar" style="display:none">
 	<div id="errorHelper" ></div>	
 </div>
-<div>Import/Export playlist:</div>
-	<input type="radio" name="modus" id="rImport" value="import"> Import
-	<input type="radio" name="modus" id="rExport" value="export"> Export
-	<input type="button" name="modus" id="btnCopy" value="Copy to clipboard"> 
-
-	<br />
-	<span>
-	<textarea id="resultText" cols="150" rows="25"></textarea>
-	<div id="importHandler"></div>	
-	</span>
-	<br />
-	<span>
-		<div id="header" style="display:inline-block">
-		<span class = "filterItem" isChecked="0" >Suggestions</span>
-		<span class = "filterItem" isChecked="0" >Discoveries</span>
-		<span class = "filterItem" isChecked="0" >Technical</span>		
-		</div>
-		<h1>EventLog:</h1>
-		<div id="eventlog" style="position:relative"></div> 
-	</span>
-	
+<div class="foldable"><h1>Last Fm Settings:</h1>
+	<div>
+	API key:<input type="text" id="lfmkey" style="margin-left:10px"></input>	
+	API secret:<input type="text" id="lfmsecret" style="margin-left:10px"></input>
+	<img src="figs/approve.png" height="24px" width="24px" id="ind_approve" style="margin-left:10px;display:none;cursor:pointer;"></input>
+	</div>
 </div>
+
+
+<div class="foldable"><h1>Import/Export playlist:</h1>
+	<div>	
+		<input type="radio" name="modus" id="rImport" value="import"> Import </input>
+		<input type="radio" name="modus" id="rExport" value="export"> Export </input>
+		<input type="button" name="modus" id="btnCopy" value="Copy to clipboard"> 
+	</div>
+	<span><textarea id="resultText" cols="150" rows="25"></textarea><div id="importHandler"></div></span>
+	<br />
+</div>
+
+<span>
+	<div class="foldable"><h1>Online lists:</h1>
+	<input type="button" id="btnSynch" value="Get lists">	
+	</div>
+</span>	
+
+<span>
+	<div class="foldable"><h1>EventLog:</h1>
+	<div id="header" style="display:inline-block">
+	<span class = "filterItem" isChecked="0" >Suggestions</span>
+	<span class = "filterItem" isChecked="0" >Discoveries</span>
+	<span class = "filterItem" isChecked="0" >Technical</span>		
+	</div>
+	<div id="eventlog" style="position:relative"></div> 
+	</div>
+</span>	
+
 
 </body>
 </html>

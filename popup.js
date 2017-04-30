@@ -1,3 +1,4 @@
+versionString ='Geth V1.52';
 function renderStatus(statusText,showtime=750,permanent=false) {
     var status = document.getElementById('status');
     status.textContent = statusText;
@@ -66,7 +67,7 @@ function PopulatePlaylistSelector(GoToNew=false){
 		}
 		else{
 			SetTrackLength(items.playlistIDs[moveToIndex]);
-			}
+		}
 	});	
 }
 
@@ -108,7 +109,8 @@ function handleOptions(items){
 		RunAtStartup:false,
 		tToTop: false,
 		tToChat: false,
-		radioMode:false,	
+		radioMode:false,
+		scrobbling:false,		
 		discoveryMode:false,		
 		tabId:-1		
 		}, function(items) {		
@@ -149,6 +151,13 @@ function handleOptions(items){
 	if(items.ontheair){document.querySelector('#onAirSign').childNodes[0].src = 'figs/ontheair.png';}
 	else{document.querySelector('#onAirSign').childNodes[0].src = 'figs/ontheair_disabled.png';}
 	
+	LastFmImg = document.getElementById('Togglelastfm').children[0];
+	if(items.scrobbling){	
+		LastFmImg.src = "figs/last-fm-logo.png"; 					//enable it	  
+	}else{
+		LastFmImg.src = "figs/last-fm-logo_disabled.png";			//or disable it	  
+	}
+	
 	if(items.tabId!=-1){	
 		toggleVideoShow(items.showVideo,items.tabId);
 		toggleColorizer(items.colorize,items.timestamps,items.tabId);	
@@ -157,9 +166,30 @@ function handleOptions(items){
 		toggleSongToChat(items.tToChat,items.tabId);
 		toggleChatCommands(items.allowChatCommands,items.tabId);
 		toggleDiscoveryMode(items.discoveryMode,items.tabId);
-
-	}
+	}	
 	//toggleThumbNails(items.hideThumbs,items.tabId);	
+}
+
+function ToggleLastFmButton(){
+  if(document.getElementById('Togglelastfm').children[0].src.indexOf('last-fm-logo_disabled.png')>-1){	//index is >-1 so element shows disabled
+  	chrome.storage.sync.get({lastFmKey:[]}, function(items){
+		console.log(typeof(items.lastFmKey.key)=="undefined");
+		if(typeof(items.lastFmKey.key)=="undefined"){//key not entered?
+			console.log(typeof(items.lastFmKey.key)=="undefined");
+
+			renderStatus('Enter last fm details on settings page.',3000);
+			return;
+		}
+		else{
+			document.getElementById('Togglelastfm').children[0].src = "figs/last-fm-logo.png"; 				//enable it	  		
+			save_options();
+		}
+	});	  
+  }else{
+	  document.getElementById('Togglelastfm').children[0].src = "figs/last-fm-logo_disabled.png";		//or disable it	  
+	  save_options();
+  }
+  
 }
 
 function save_options(){
@@ -182,6 +212,17 @@ function save_options(){
   var discoveryMode = document.getElementById('cbDiscovery').checked;   
   var allowChatCommands = document.getElementById('cbChatCommands').checked;   
   
+  //console.log(document.getElementById('Togglelastfm').children[0].src);
+  
+  if(document.getElementById('Togglelastfm').children[0].src.indexOf('last-fm-logo_disabled.png')>-1){	//index is >-1 so element shows disabled
+	  //document.getElementById('Togglelastfm').children[0].src = "figs/last-fm-logo.png"; 				//enable it
+	  scrobble = false;
+  }else{
+	  //document.getElementById('Togglelastfm').children[0].src = "figs/last-fm-logo_disabled.png";		//or disable it
+	  scrobble = true;
+  }
+  //console.log('scrobbling (scrobble) is: '+scrobble+' in save_options in popup.js');
+  
   if(wideChat){thumbs=false;}
   
   chrome.storage.sync.set({
@@ -198,9 +239,11 @@ function save_options(){
 	wideChat:wideChat,
 	radioMode:radioMode,
 	discoveryMode:discoveryMode,
+	scrobbling:scrobble,
 	allowChatCommands:allowChatCommands
   }, function() {
-    renderStatus('Options saved.');
+	    //console.log('Scrobbling (scrobble) is: '+scrobble+' is saved in storage');
+		renderStatus('Options saved.');
   });
   handleOptions(0); //handle with current settings, to make it realtime  
 }
@@ -223,6 +266,7 @@ function restore_options() {
 	radioMode:false,
 	hideThumbs: false,
 	discoveryMode:false,
+	scrobbling:false,
 	allowChatCommands:false	
   }, function(items) {			
 		handleOptions(items);
@@ -239,7 +283,6 @@ function StartGeth(){
 		tabId:-1,		
 		}, function(items){			
 			console.log("pushing to tab: "+pushToTabId);
-			chrome.tabs.sendMessage(items.tabId, {greeting: "startgeth",playlistid:selID}, function(response){});
 //			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
 			
 			chrome.storage.local.get({activeList: -1}, function(localitems) {
@@ -247,14 +290,12 @@ function StartGeth(){
 			if(localitems.activeList!=-1 && localitems.activeList!=selID){ //changed to other playlist?
 				chrome.tabs.sendMessage(pushToTabId, {greeting: "whatchaplayin"}, function(response){ //checks playlist id of the tab
 				console.log("Tab "+pushToTabId+" is playing list with id "+response.currentlyPlaying);
-				//if(selID!=response.currentlyPlaying){			//changed playlist for this tab?
-					chrome.tabs.sendMessage(items.tabId, {greeting: "reset"}, function(response){}); //reset it
-				//}
+				chrome.tabs.sendMessage(items.tabId, {greeting: "reset"}, function(response){}); //reset it				
 				});
 			}
 			});
-			chrome.storage.local.set({activeList: selID}, function() {});
-			
+			chrome.tabs.sendMessage(items.tabId, {greeting: "startgeth",playlistid:selID}, function(response){});
+			chrome.storage.local.set({activeList: selID}, function() {});			
 		});
 }
 
@@ -282,6 +323,16 @@ function gettabinfo(){
 			renderStatus("!No togetherTube tab detected!",1000,true)
 		}
 	});
+}
+
+function clearLogArray(e){
+	chrome.storage.sync.get({
+		tabId:-1,		
+		}, function(items){			
+			chrome.tabs.sendMessage(items.tabId, {greeting: "reset"}, function(response){}); //reset it				
+			renderStatus("Cleared logarray!");
+		}
+	);
 }
 
 function controlPlaylist(e){
@@ -313,7 +364,7 @@ function controlPlaylist(e){
 			}
 			//console.log("spliton: "+spliton); 
 			if(spliton!=-1){
-				console.log('Removing playlist with lenght: '+newplaylists[spliton].length);
+				console.log('Removing playlist with length: '+newplaylists[spliton].length);
 				console.log('Removing playlist with ID: '+newplaylistIDs[spliton]);
 				console.log('Removing playlist with name: '+newplaylistnames[spliton]);
 				newplaylists.splice(spliton, 1);	
@@ -362,7 +413,7 @@ function setPlaylist(){
 	for(i=0;i<parts.length;i++){
 		if(parts[i].length>0){
 			if(parts[i].indexOf(',')>-1){alert(parts[i]);}
-			t[i]=parts[i].replace(/"/g, '');//remove quotes				
+			t[i]=parts[i].replace(/"/g, '').trim();//remove quotes				
 		}
 	}	
 	chrome.storage.local.get({
@@ -456,11 +507,15 @@ document.addEventListener('DOMContentLoaded', function(){
 	document.querySelector('#editplaylist').addEventListener('click', controlPlaylist);	
 	document.querySelector('#clearplaylist').addEventListener('click', controlPlaylist);	
 	
-	document.querySelector('#btnEditBanned').addEventListener('click', controlPlaylist);	
+	document.querySelector('#btnEditBanned').addEventListener('click', controlPlaylist);
+	document.querySelector('#btnClearLog').addEventListener('click', clearLogArray);
+	
 	document.querySelector('#settingsIcon').addEventListener('click', OpenSettings);	
+		
+	document.querySelector('#Togglelastfm').addEventListener('click', ToggleLastFmButton);
 	
 	t=document.getElementById('title');	t.style.float="left";t.style.width='96%';
-
+	onair=document.getElementById('onAirSign');	onair.style.float="left";onair.style.width='80%';
 	
 	gettabinfo();	
 	restore_options();	
@@ -472,6 +527,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			//alert(item + " has changed. Old value: "+changes[item].oldValue+",new value: "+changes[item].newValue);
 		}  
 	});
+	
+	document.querySelector('#title').innerText = versionString;
 		
 });
 

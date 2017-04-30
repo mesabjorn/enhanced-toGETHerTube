@@ -53,8 +53,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </head>
   <body>
     <span>
-	<div id="title">Geth V1.5</div>	
-	<span id="settingsIcon"><img src="figs/settings.png" title="Open Settings" height="16" width="16"></span>
+	<div id="title"></div>	
+	<span id="settingsIcon"><img src="figs/settings.png" title="Open Settings" height="16" width="16" style="cursor: pointer;"></span>
 	</span>
 	<form>
 	<fieldset>
@@ -70,7 +70,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</fieldset>
 	<fieldset id="radiofieldset">
 	<legend>Radio:</legend>
-	<span id="onAirSign"><img src="figs/ontheair_disabled.png" height="32" width="128"></span></br>
+	<span>
+		<div id="onAirSign"><img src="figs/ontheair_disabled.png" height="32" width="128"></div>
+		<span id="Togglelastfm"><img  src="figs/last-fm-logo_disabled.png" title="Toggle last.fm scrobbling" height="16" width="64" style="cursor: pointer;"></span><br /><br />
+	</span>
+		
 	<span id="tabselect">Select Tab:<select id="tabselect_list" width="200px"></select></span></br>
 
 	<span>Select playlist: <select id="playlistselect" width="200px"></select><input type="checkbox" id="cbshuffle">Shuffle</span>
@@ -85,8 +89,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<span title="Check to shuffle the order of the playlist"></span>
 	<div id="playlisteditingsdiv" hidden>
 		<span id="tracktextinfo"></span>
-		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16"></span>
-		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16"></span>
+		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16" style="cursor: pointer;"></span>
+		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16" style="cursor: pointer;"></span>
 	</div>
 	<input type="checkbox" id="cbDiscovery">Discovery mode</span>
 	<input type="checkbox" id="cbChatCommands">Allow chat commands</span><br />
@@ -94,7 +98,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<input type="text" id="txtMinPlaylistLength" placeholder="10" size="3"></span></br>
 	<span title="Don't suggest and autoremove songs longer than this number (minutes)" >Maximal song duration (mod only): 
 	<input type="text" id="txtMaxSongLength" placeholder="30" value="30" size="3"></span></br>
+	<span>
 	<input type="button" id="btnEditBanned" value="Manage blacklist" title="Manage blacklist">
+	<input type="button" id="btnClearLog" value="Clear LogArray" title="Clear played list.">
+	</span>
 	
 	</fieldset>
 	<fieldset>
@@ -111,6 +118,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</fieldset>
 		-->
 	</form>
+	
+	
 	
 	<div id="status"></div>	
   </body>
