@@ -2,7 +2,25 @@
 Chrome extension to change visuals and broadcast on togethertube.com
 Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
 
-Current version:  1.5.
+Current version:  1.52.
+
+Changes:
+19-10-2016 V1.51
+		Geth's chat messages no longer wipe text when the user was typing something.
+		Youtube icon of geth suggested songs are red to indicate it was suggested by geth.
+		Added lastfm scrobbling (beta)
+		Updated playlist editor 
+			- No longer loads full list in one go, but adds when user scrolls to the bottom
+			- Added a search option
+		New commands:
+			/inplaylist: 	checks if current playing track is in playlist.
+			/shuffle: 		pseudo-shuffles queue.
+			/nuke:			removes non-geth suggested tracks then closes suggestions.
+			
+28-04-2017 V1.52
+		Chat messages exceeding 250 characters are automatically trimmed and can be expanded by the user by clicking
+		on 'more'.
+  Changed colorizer and timestamp code to adapt to the chat changes.
 
 Features:
 
@@ -14,9 +32,10 @@ Visual:
  - Add now playing to top of video (toggleable)
  - Have a compact layout
  - Widen the chat (autohides video) - not compatible with the compact layout!
- - Chat commands. (/?, /last, /nuke, /progress)
+ - Chat commands. (/?, /last, /nuke, /progress,/nuke,/new',/shuffle',/testnuke,/inplaylist
  - If someone suggests an item on blacklist, suggestions are automatically close for some time (requires permission to change suggestions options).
  - Last fm song discovery (requires last fm api key)
+ - Last fm song scrobbling (requires last fm api key/secret)
  - New event page accesible through gear icon 
    - Eventlog showing what the extension did
    - Import/exporting of playlists and blacklist in JSON format
