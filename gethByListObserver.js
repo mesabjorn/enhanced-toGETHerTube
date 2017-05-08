@@ -1,4 +1,4 @@
-versionString ='Geth V1.52';
+versionString ='Geth V1.52.1';
 
 //Lastfm scrobbling
 EnableScrobbling = true;
@@ -883,7 +883,7 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		if (mutation.addedNodes.length > 0){
 			nodes = mutation.addedNodes[0];			
 			aNode = nodes.childNodes[2];
-			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 11;}	
+			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 15;}	
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
 			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
