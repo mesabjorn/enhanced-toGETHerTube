@@ -1,10 +1,11 @@
 # Enhanced-toGETHerTube
+
+# H2 Getting Started
 Chrome extension to change visuals and broadcast on togethertube.com
 Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
 
 Current version:  1.52.2
-
-Changes:
+# H2 Changes:
 * 12-07-2017 V1.52.2
   * Event log now shows what got suggested from what playlist entry
 * 08-05-2017 V1.52.1		
@@ -17,17 +18,17 @@ Changes:
   * Changed colorizer and timestamp code to adapt to the chat changes.
   
 
-19-10-2016 V1.51
-		Geth's chat messages no longer wipe text when the user was typing something.
-		Youtube icon of geth suggested songs are red to indicate it was suggested by geth.
-		Added lastfm scrobbling (beta)
-		Updated playlist editor 
-			- No longer loads full list in one go, but adds when user scrolls to the bottom
-			- Added a search option
-		New commands:
-			/inplaylist: 	checks if current playing track is in playlist.
-			/shuffle: 		pseudo-shuffles queue.
-			/nuke:			removes non-geth suggested tracks then closes suggestions.
+* 19-10-2016 V1.51
+  * Geth's chat messages no longer wipe text when the user was typing something.
+  * Youtube icon of geth suggested songs are red to indicate it was suggested by geth.
+  * Added lastfm scrobbling (beta)
+  * Updated playlist editor 
+    * No longer loads full list in one go, but adds when user scrolls to the bottom
+    * Added a search option
+  * New commands:
+    * /inplaylist: 	checks if current playing track is in playlist.
+    * /shuffle: 		pseudo-shuffles queue.
+    * /nuke:			removes non-geth suggested tracks then closes suggestions.
 			
 
 
