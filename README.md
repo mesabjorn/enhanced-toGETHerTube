@@ -2,7 +2,18 @@
 Chrome extension to change visuals and broadcast on togethertube.com
 Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
 
-Current version:  1.52.
+Current version:  1.52.2
+
+28-04-2017
+V1.52
+		Chat messages exceeding 250 characters are automatically trimmed and can be expanded by the user by clicking
+		on 'more'.
+08-05-2017
+V1.52.1 
+		Fixed colorizer nodes to correct for page changes.
+12-07-2017
+V1.52.2
+		Event log now shows what got suggested from what playlist entry
 
 Changes:
 19-10-2016 V1.51
