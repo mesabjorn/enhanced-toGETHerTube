@@ -1,11 +1,15 @@
 # Enhanced-toGETHerTube
 
-# H2 Getting Started
+## Getting Started
 Chrome extension to change visuals and broadcast on togethertube.com
-Instruction and demo of use: https://www.youtube.com/watch?v=k-_7ifroYwc
+Instruction and demo of use:
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=k-_7ifroYwc
+" target="_blank"><img src="http://img.youtube.com/vi/k-_7ifroYwc/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 Current version:  1.52.2
-# H2 Changes:
+## Changes:
 * 12-07-2017 V1.52.2
   * Event log now shows what got suggested from what playlist entry
 * 08-05-2017 V1.52.1		
@@ -32,7 +36,7 @@ Current version:  1.52.2
 			
 
 
-Features:
+## Features:
 
 Visual:
  - Show/Hide video (toggleable)
