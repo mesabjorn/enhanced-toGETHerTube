@@ -1,4 +1,4 @@
-versionString ='Geth V1.52';
+versionString ='Geth V1.52.2';
 function renderStatus(statusText,showtime=750,permanent=false) {
     var status = document.getElementById('status');
     status.textContent = statusText;
@@ -283,18 +283,18 @@ function StartGeth(){
 		tabId:-1,		
 		}, function(items){			
 			console.log("pushing to tab: "+pushToTabId);
-//			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
+			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
 			
 			chrome.storage.local.get({activeList: -1}, function(localitems) {
 			console.log("current List ID: "+ localitems.activeList+"; selID: "+selID);
 			if(localitems.activeList!=-1 && localitems.activeList!=selID){ //changed to other playlist?
 				chrome.tabs.sendMessage(pushToTabId, {greeting: "whatchaplayin"}, function(response){ //checks playlist id of the tab
 				console.log("Tab "+pushToTabId+" is playing list with id "+response.currentlyPlaying);
-				chrome.tabs.sendMessage(items.tabId, {greeting: "reset"}, function(response){}); //reset it				
+				chrome.tabs.sendMessage(pushToTabId, {greeting: "reset"}, function(response){}); //reset it				
 				});
 			}
 			});
-			chrome.tabs.sendMessage(items.tabId, {greeting: "startgeth",playlistid:selID}, function(response){});
+			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});
 			chrome.storage.local.set({activeList: selID}, function() {});			
 		});
 }
@@ -402,34 +402,36 @@ String.prototype.hashCode = function () { //hashcode for unique playlist indexin
     return Math.abs(hash);
 };
 
-
 function setPlaylist(){
-	tracklist=document.querySelector('#texttracklist').value.trim();	
-	playlistname=document.querySelector('#texttracklistname').value.trim();
+	var tracklist = document.querySelector('#texttracklist').value.trim();
+	var playlistname = document.querySelector('#texttracklistname').value.trim();
 	if(tracklist ==""){renderStatus('List cannot be empty!',1000);return;}
 	if(playlistname ==""){renderStatus('Title cannot be empty!',1000);return;}
-	t=[];
-	parts=tracklist.split(",");
+	var t=[];var parts=tracklist.split(",");
 	for(i=0;i<parts.length;i++){
 		if(parts[i].length>0){
 			if(parts[i].indexOf(',')>-1){alert(parts[i]);}
-			t[i]=parts[i].replace(/"/g, '').trim();//remove quotes				
+			t[i]=parts[i].replace(/"/g, '').trim();//remove quotes		
 		}
-	}	
+	}
+	var newplaylist = {name:playlistname,tracks:t,id:playlistname.hashCode(),logarray:[]};
+	console.log(JSON.stringify(newplaylist));
+	
 	chrome.storage.local.get({
 	playlists: [],
 	tracks: [],
 	playlistNames:[],
-	playlistIDs:[]	
+	playlistIDs:[],
+	PlayListObj:[]
 	}, function(items){
 		if(chrome.runtime.lastError){alert(chrome.runtime.lastError.message);return;}	
 		
-		var newId = playlistname.hashCode();//Math.floor(Math.random()*1000); //should be unique
+		var newId = playlistname.hashCode();
 		var listInd = items.playlists.length; //get amount of playlists
 		var newplaylists = items.playlists;
 		var newplaylistIDs=items.playlistIDs;
 		var newplaylistNames=items.playlistNames;
-						
+								
 		newplaylists[listInd]=t;		
 		newplaylistIDs[listInd]=newId;
 		newplaylistNames[listInd]=playlistname;

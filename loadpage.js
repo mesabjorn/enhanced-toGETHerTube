@@ -12,18 +12,17 @@ function remtrack(e){
 	nrinlist = e.currentTarget.getAttribute("numberinlist");
 	//console.log(e.currentTarget.parentNode.innerText);
 	
-	var flagForRemoval=e.currentTarget.parentNode.innerText.trim();
-	console.log(flagForRemoval);
-	var removeIDX=tracks.indexOf(flagForRemoval);
-	console.log(removeIDX);
-		
+	var flagForRemoval=e.currentTarget.parentNode.innerText;
+	//console.log(e.currentTarget.parentNode.getAttribute("numberinlist"));
+	console.log("'"+flagForRemoval+"'");
+	var removeIDX=tracks.indexOf(flagForRemoval); //alt: e.currentTarget.parentNode.getAttribute("numberinlist");
+	console.log(removeIDX);		
 	if(removeIDX>-1){
 		renderStatus("Removed "+tracks[removeIDX]+'. ');
 		tracks.splice(removeIDX, 1);
 		printItems(tracks,0,100,true);
 		document.querySelector('#savebutton').style.display='inherit';	
-	}
-	
+	}	
 }
 
 function appendToPlaylist(){

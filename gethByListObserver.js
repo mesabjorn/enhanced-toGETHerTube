@@ -1,4 +1,4 @@
-versionString ='Geth V1.52.1';
+versionString ='Geth V1.52.2';
 
 //Lastfm scrobbling
 EnableScrobbling = true;
@@ -250,9 +250,8 @@ function SubmitAChatMessage(message){
 	}	
 	}
 	document.getElementById('btnType').click();	
-	entrybox.value=currentValue; // restore text when the user was typing
-	
-	//console.log("submitted message: "+ message);
+	entrybox.value=currentValue; // restore text when the user was typing	
+	console.log("submitted message: "+ message);
 }
 //end chatbot
 
@@ -551,6 +550,7 @@ function AddSongTitleToChat(songtitle){
 	insertSongTochat.innerHTML=timestamp;
 	msgs=chat.children;
 	lastmsg=msgs[msgs.length-1];
+	insertSongTochat.style="font-style:normal";
 	lastmsg.appendChild(insertSongTochat);	
 }
 
@@ -629,7 +629,7 @@ function AddSong(songToAdd=""){
 
 		buttonlist = document.getElementsByClassName("voteStatus"); 											//get the upvote buttons
 		
-		for(i=itemsPerPage;i<buttonlist.length;i++){ 															//skip first itemsPerPage (=10) results from the upcoming videos list						
+		for(i=itemsPerPage;i<buttonlist.length;i++){														//skip first itemsPerPage (=10) results from the upcoming videos list						
 			if(resultSongTimes[i]<MAX_SONG_LENGTH){				
 				buttonlist[i].getElementsByClassName('btn btn-success btn-block')[0].click(); 					// click vote button and confirm song addition
 				suggestedSongName = timeSpans[i].parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('ng-binding')[0].innerText.trim();				
@@ -637,11 +637,14 @@ function AddSong(songToAdd=""){
 				if(DiscoveryMode && PrevSongWasRecovery){										
 						SubmitAChatMessage("[GETH]: '"+suggestedSongName+"' was added through GETH discovery mode.");
 						suggestedSongName+="*";
-						PrevSongWasRecovery=false;					
-				}				
-				//lastGethPlay[lastGethPlay.length]=suggestedSongName.replace(/[\*]$/g,'');
-				WriteEventLogEntry("Suggested: "+suggestedSongName);				
-				//printArrayToConsole(lastGethPlay);	
+						PrevSongWasRecovery=false;		
+						WriteEventLogEntry("Suggested: "+suggestedSongName);			
+				}	
+				else{
+					//lastGethPlay[lastGethPlay.length]=suggestedSongName.replace(/[\*]$/g,'');
+					WriteEventLogEntry("Suggested: "+suggestedSongName+" (from "+tracks[logArray[logArray.length-2]]+")");				
+					//printArrayToConsole(lastGethPlay);	
+				}
 				break;
 			}
 		}
@@ -875,6 +878,17 @@ function HandleChatMessage(msgElement){ //trims too long chat messages and allow
 	}		
 }
 
+function getNameNodeNumber(msg){
+	var nameInd = 0;
+	for(var i=0;i<msg.childNodes.length;i++){
+		if(msg.childNodes[i].nodeType==1){
+			//console.log(msg.childNodes[i].innerText);
+			nameInd = i;
+		}
+	}
+	return nameInd;
+}
+
 function HandleColorizer(toggleColorize,toggleTimeStamp){			
 		if((typeof Colorizeobserver !== 'undefined')){Colorizeobserver.disconnect();}		
 		String.prototype.hashCode=function (){var hash=0,i,chr,len;if(this.length===0)return hash;for(i=0,len=this.length;i<len;i++){chr=this.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;};function getHue(text){hash=Math.abs(text.hashCode());hue=Math.floor(hash%360);hash=hash/256;light=Math.floor(hash%40)+30;return "hsl("+hue+",75%,"+light+"%)";}
@@ -883,7 +897,10 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		if (mutation.addedNodes.length > 0){
 			nodes = mutation.addedNodes[0];			
 			aNode = nodes.childNodes[2];
-			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 15;}	
+			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 15;}
+			
+			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
+			
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
 			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
@@ -892,12 +909,10 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 					aNode.childNodes[nodeNumber].innerText=aNode.childNodes[nodeNumber].innerText.slice(0,25);
 				}
 			}}
-			
 			if(toggleTimeStamp){if(aNode.nodeType==1){div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";aNode.childNodes[nodeNumber].appendChild(div);}}
 		}
 		});
-		});
-		
+		});		
 		var observerConfig={childList:true};var chatEntries=document.querySelectorAll(".panel-chat .chatlog");
 		Colorizeobserver.observe(chatEntries[0],observerConfig);	
 		//console.log("Added colorizer:"+toggleColorize+"; timestamps: "+toggleTimeStamp);		
@@ -1056,7 +1071,7 @@ function(request, sender, sendResponse){
 		else if (request.greeting == "whatchaplayin"){sendResponse({currentlyPlaying: thisPagePlaylistID});}
 		else if (request.greeting == "reset"){
 			logArray=[];
-			chrome.storage.local.set({logArray: logArray}, function(){});
+			//chrome.storage.local.set({logArray: logArray}, function(){});
 			console.log("Reset logArray");
 		}
 });
