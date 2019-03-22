@@ -1,4 +1,4 @@
-versionString ='Geth V1.52.2';
+versionString ='Geth V1.53.4';
 function renderStatus(statusText,showtime=750,permanent=false) {
     var status = document.getElementById('status');
     status.textContent = statusText;
@@ -15,6 +15,10 @@ function toggleVideoShow(toggleVideo,tabId) {
 
 function toggleWideChat(toggleWideChat,tabId) {
   	chrome.tabs.sendMessage(tabId, {greeting: "toggleWidechat",toggleWChat: toggleWideChat}, function(response) {});	
+}
+
+function togglePauseWhenAlone(togglePause,tabId) {
+  	chrome.tabs.sendMessage(tabId, {greeting: "togglePauseWhenAlone",togglePause: togglePause}, function(response) {});	
 }
 
 function toggleSongToTop(toggleTop,tabId){
@@ -111,6 +115,7 @@ function handleOptions(items){
 		tToChat: false,
 		radioMode:false,
 		scrobbling:false,		
+		pauseWhenAlone:false,	
 		discoveryMode:false,		
 		tabId:-1		
 		}, function(items) {		
@@ -141,6 +146,8 @@ function handleOptions(items){
 	document.getElementById('cbDiscovery').checked=items.discoveryMode;	
 	document.getElementById('cbChatCommands').checked=items.allowChatCommands;
 	
+	document.getElementById('cbpausealone').checked=items.pauseWhenAlone;
+	
 	if(items.radioMode){
 		document.querySelector('#radiofieldset').style.display='inherit';
 	}
@@ -166,6 +173,7 @@ function handleOptions(items){
 		toggleSongToChat(items.tToChat,items.tabId);
 		toggleChatCommands(items.allowChatCommands,items.tabId);
 		toggleDiscoveryMode(items.discoveryMode,items.tabId);
+		togglePauseWhenAlone(items.pauseWhenAlone,items.tabId)
 	}	
 	//toggleThumbNails(items.hideThumbs,items.tabId);	
 }
@@ -212,6 +220,8 @@ function save_options(){
   var discoveryMode = document.getElementById('cbDiscovery').checked;   
   var allowChatCommands = document.getElementById('cbChatCommands').checked;   
   
+  var pauseWhenAlone = document.getElementById('cbpausealone').checked;  
+  //console.log("pauseWhenAlone: "+pauseWhenAlone);
   //console.log(document.getElementById('Togglelastfm').children[0].src);
   
   if(document.getElementById('Togglelastfm').children[0].src.indexOf('last-fm-logo_disabled.png')>-1){	//index is >-1 so element shows disabled
@@ -240,6 +250,7 @@ function save_options(){
 	radioMode:radioMode,
 	discoveryMode:discoveryMode,
 	scrobbling:scrobble,
+	pauseWhenAlone:pauseWhenAlone,
 	allowChatCommands:allowChatCommands
   }, function() {
 	    //console.log('Scrobbling (scrobble) is: '+scrobble+' is saved in storage');
@@ -267,6 +278,7 @@ function restore_options() {
 	hideThumbs: false,
 	discoveryMode:false,
 	scrobbling:false,
+	pauseWhenAlone:false,
 	allowChatCommands:false	
   }, function(items) {			
 		handleOptions(items);
@@ -283,7 +295,7 @@ function StartGeth(){
 		tabId:-1,		
 		}, function(items){			
 			console.log("pushing to tab: "+pushToTabId);
-			chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
+			//chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
 			
 			chrome.storage.local.get({activeList: -1}, function(localitems) {
 			console.log("current List ID: "+ localitems.activeList+"; selID: "+selID);
@@ -313,7 +325,12 @@ function gettabinfo(){
 			
 			var optionElement = document.createElement("option");
 			optionElement.setAttribute("tabid",array_of_Tabs[i].id);	
-			optionElement.innerHTML = array_of_Tabs[i].url;
+			taburl = array_of_Tabs[i].url.split("/");
+			roomname = taburl[taburl.length-1];
+			if(roomname.indexOf('?')>-1){
+				roomname = roomname.substr(0,roomname.indexOf('?'));
+			}
+			optionElement.innerHTML = roomname;
 			tablist.appendChild(optionElement);		
 			}			
 			//for(i=0;i<array_of_Tabs.length;i++){alert("Found: "+array_of_Tabs.length+" tab(s). url: "+ array_of_Tabs[i].url+"id: "+array_of_Tabs[i].id);}
@@ -504,6 +521,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	document.querySelector('#cbDiscovery').addEventListener('change', save_options);
 	document.querySelector('#cbChatCommands').addEventListener('change', save_options);
 	
+	document.querySelector('#cbpausealone').addEventListener('change', save_options);
+	
 	document.querySelector('#playlistselect').addEventListener('change',UpdatePlaylistSelector);		
 	document.querySelector('#playlistselect').addEventListener('click',ClickPlaylistSelector);	
 	document.querySelector('#editplaylist').addEventListener('click', controlPlaylist);	
@@ -530,7 +549,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		}  
 	});
 	
-	document.querySelector('#title').innerText = versionString;
-		
+	document.querySelector('#title').innerText = versionString;		
 });
 

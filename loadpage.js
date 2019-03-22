@@ -15,12 +15,12 @@ function remtrack(e){
 	var flagForRemoval=e.currentTarget.parentNode.innerText;
 	//console.log(e.currentTarget.parentNode.getAttribute("numberinlist"));
 	console.log("'"+flagForRemoval+"'");
-	var removeIDX=tracks.indexOf(flagForRemoval); //alt: e.currentTarget.parentNode.getAttribute("numberinlist");
+	var removeIDX=e.currentTarget.parentNode.getAttribute("numberinlist");//tracks.indexOf(flagForRemoval);
 	console.log(removeIDX);		
 	if(removeIDX>-1){
 		renderStatus("Removed "+tracks[removeIDX]+'. ');
 		tracks.splice(removeIDX, 1);
-		printItems(tracks,0,100,true);
+		e.currentTarget.parentNode.style.display='None'
 		document.querySelector('#savebutton').style.display='inherit';	
 	}	
 }
@@ -96,8 +96,7 @@ function approvetrack(e){
 }
 
 function edittrack(e){	
-	spanParent=e.currentTarget.parentNode;
-	//console.log(spanParent.outerHTML);
+	spanParent = e.currentTarget.parentNode;	
 	//console.log(spanParent.hasAttribute('isediting'));
 	//console.log(spanParent.getAttribute("isediting"));
 	if(spanParent.getAttribute("isediting")=="false"){		
@@ -150,8 +149,9 @@ function printItems(t,start,end,clearlist){
 		insertspan = document.createElement("span");
 		insertspan.addEventListener("mouseover", HoverOn);
 		insertspan.addEventListener("mouseleave", HoverOff);
-
-		insertspan.setAttribute("numberinlist", tracks.indexOf(t[i]));
+		insertspan.addEventListener('click', edittrack);			
+		
+		insertspan.setAttribute("numberinlist", tracks.indexOf(t[i].replace(/<\/?[^>]+(>|$)/g, "")));
 		insertspan.setAttribute("isediting", false);
 		
 		insertionimg = document.createElement("img");insertionimg.src= "figs/cross.png";insertionimg.style.height='16px';insertionimg.style.width='16px';insertionimg.style.display='none';insertionimg.style.cursor='pointer';
@@ -164,8 +164,9 @@ function printItems(t,start,end,clearlist){
 		
 		insertinput = document.createElement("input");
 		insertinput.type="text";
-		insertinput.value=t[i];
+		insertinput.value=t[i].replace(/<\/?[^>]+(>|$)/g, "");
 		insertinput.style.display='none';
+		insertinput.style.width = "33%";
 		insertinput.addEventListener("keydown", approvetrack);
 		
 		insertionimg.addEventListener('click', remtrack);	
@@ -173,7 +174,7 @@ function printItems(t,start,end,clearlist){
 		insertionimg3.addEventListener('click', approvetrack);	
 		
 		insertdiv = document.createElement("span");		
-		insertdiv.innerText = t[i];
+		insertdiv.innerHTML = t[i];
 		
 		insertspan.insertBefore(insertionimg,insertspan.childNodes[0]);
 		insertspan.appendChild(insertinput);	
@@ -253,9 +254,12 @@ function searchInTracks(){
 	      //addEntry(tracks[i]);
 		 // console.log(tracks[i]);
 	      results += 1;
-		  searchResult[searchResult.length]=tracks[i];		  
+			//		  searchResult[searchResult.length]=tracks[i];		  
+			var qindex = t.indexOf(query);						
+			searchResult[searchResult.length]=tracks[i].substr(0,qindex)+'<b>'+tracks[i].substr(qindex,query.length)+'</b>'+tracks[i].substr(qindex+query.length,tracks[i].length);			
 	    }
-	  }
+	}
+	searchResult = searchResult.sort();
 	printItems(searchResult,0,searchResult.length,true);					  	
 	console.log("finished searching "+searchResult.length+" results!");
 }

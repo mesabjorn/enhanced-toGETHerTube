@@ -1,9 +1,10 @@
-versionString ='Geth V1.52.2';
+versionString ='Geth V1.52.4';
 
 //Lastfm scrobbling
 EnableScrobbling = true;
 APIKEY		=	'';
 APISecret 	=	'';
+
 function getUrlParameter(sParam){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -25,6 +26,7 @@ function authenticate(){
 		signing=hex_md5('api_key'+APIKEY+'methodauth.getSessiontoken'+token+APISecret)+'';
 		$.get("https://ws.audioscrobbler.com/2.0/?method=auth.getSession&token="+token+"&api_key="+APIKEY+"&api_sig="+signing, function(data){
 		  $xml = $(data);
+		  console.log($xml);
 		  key = $xml.find('key').text();
 		  docCookies.setItem('lastfmkey',key,{expires:10000,path:'/',domain:'.togethertube.com'});
 		  docCookies.removeItem('gettingsessionkey');
@@ -42,12 +44,21 @@ function ScrobbleTrack(songtitle){
 	var filteredsong = detectedSong.replace(/\(.*\)/i, "");
 	var songparts= filteredsong.split("-");var artist=songparts[0];var track = songparts[1];
 	
+	if(track.trim()=="in the USSR" && songtitle.indexOf("ussr")==-1){				//make exception for beatles - in the ussr
+		console.log("Scrobbling failed. No such song in tracks. (ussr)");
+		return;
+	}
+	
 	info = [];info["track"] = track;info["artist"] = artist;
 	//info["duration"] = 180;
 	startedplaying = Math.round(+new Date()/1000);
 
 	signing=hex_md5('api_key'+APIKEY+'artist'+info["artist"]+'methodtrack.scrobblesk'+docCookies.getItem('lastfmkey')+'timestamp'+
 		startedplaying+'track'+info["track"]+APISecret)+'';
+		
+	console.log('api_key'+APIKEY+'artist'+info["artist"]+'methodtrack.scrobblesk'+docCookies.getItem('lastfmkey')+'timestamp'+
+	startedplaying+'track'+info["track"]+APISecret+'');
+		
   	$.ajax(
 	{
 		type : 'POST',
@@ -60,7 +71,10 @@ function ScrobbleTrack(songtitle){
            '&sk='+docCookies.getItem('lastfmkey')+
            '&api_sig='+signing,
 		success : function(data){console.log("Scrobbled: "+artist+" - "+track);},
-		error : function(code, message){console.log("Scrobbling failed: "+code+": "+message);}
+		error : function(code, message){
+			console.log(code.responseText);
+			console.log("Scrobbling failed: "+code+": "+message);
+		}
 	});
 	}
 	else{console.log("Scrobbling failed. No such song in tracks.");}
@@ -167,8 +181,9 @@ function TestIfCurrentTrackIsInPlaylist(){
 }
 
 //chatbot
+var lastClapDate = new Date(); lastClapDate.setTime(lastClapDate.getTime()-3600000); //set to 1hr ago
 AllowChatCommands=false;DiscoveryMode=false;
-commands = ['?','help','progress','nuke','new','shuffle','testnuke','inplaylist','top500'];longestCommand=10;
+commands = ['?','help','progress','nuke','new','shuffle','testnuke','inplaylist','clap'];longestCommand=10;
 LastCommandDate=new Date();LastCommandDate.setSeconds(LastCommandDate.getSeconds()-10);
 function handleCommand(commandIndex){
 	if(AllowChatCommands){
@@ -203,8 +218,13 @@ function handleCommand(commandIndex){
 		TestIfCurrentTrackIsInPlaylist(); 		
 		break;
 	case 8:					// /top500
-		GetTop500Track();
-		break;		
+		//GetTop500Track();		
+		if(Math.abs(lastClapDate.getTime() - new Date().getTime())/1000>3600){		
+			AddSong(songToAdd="The Dubliners Whiskey in the Jar");
+			SubmitAChatMessage('[Geth]: Suggesting whiskey in the jar \\o/');		
+			lastClapDate = new Date();
+		}
+		break;
     default:
         console.log("unknown command");
 	}
@@ -267,21 +287,21 @@ function ShuffleArray(a) { //shuffles an array
 }
 
 function ShufflePlaylist(){ //randomly upvotes some songs
-candidates = document.getElementsByClassName('fa fa-thumbs-o-up');
-var candidates = Array.prototype.slice.call( candidates );
+	candidates = document.getElementsByClassName('fa fa-thumbs-o-up');
+	var candidates = Array.prototype.slice.call( candidates );
 
-if(candidates.length>10){candidates=candidates.slice(0,10);}
-ShuffleArray(candidates);
+	if(candidates.length>10){candidates=candidates.slice(0,10);}
+	ShuffleArray(candidates);
 
-candidates2=[];
-for(i=0;i<candidates.length;i++){
-	if(Math.random()>0.5){
-		candidates[i].click();
-		candidates2[candidates2.length] = candidates[i].parentElement.parentElement.children[1].children[0];
-		//console.log("Voted for "+candidates[i].parentElement.parentElement.parentElement.parentElement.parentElement.children[0].innerText);		
+	candidates2=[];
+	for(i=0;i<candidates.length;i++){
+		if(Math.random()>0.5){
+			candidates[i].click();
+			candidates2[candidates2.length] = candidates[i].parentElement.parentElement.children[1].children[0];
+			//console.log("Voted for "+candidates[i].parentElement.parentElement.parentElement.parentElement.parentElement.children[0].innerText);		
+		}
 	}
-}
-setTimeout(RemoveUpvotes,1000,candidates2);
+	setTimeout(RemoveUpvotes,1000,candidates2);
 }
 function RemoveUpvotes(inArray){ //removes the upvotes from the songs	
 	for(i=0;i<inArray.length;i++){inArray[i].click();}
@@ -374,6 +394,7 @@ function GetNewTrack(songs){ //go through playlist to see if discovery was new.
 	for(i=0;i<songs.length;i++){	//for all songs from last fm
 		isNew=true;	
 		for(j=0;j<tracks.length;j++){	//check all songs in tracklist
+			//console.log(tracks[j]);
 			songname=tracks[j];
 					
 			var songparts= songname.toLowerCase().replace(/\(.*\)/i, "").split("-");
@@ -439,11 +460,11 @@ function getSimilar(ain,tin){
 }
 
 optionsWindow=-1;
-function ToggleUserSuggestHelper(toggle,target){
-	frame=document.getElementById('settingsFrame');
+function ToggleUserSuggestHelper(toggle){
+	var frame=document.getElementById('settingsFrame');
 
 	frame.contentDocument.getElementsByClassName('list-group')[0].children[1].click()
-	toggles=frame.contentDocument.getElementsByClassName('permission-toggle-link');
+	var toggles=frame.contentDocument.getElementsByClassName('permission-toggle-link');
 
 	if(toggle){ //enable suggesting
 		if(toggles[30].childNodes[1].className.indexOf('fa-square-o')>-1){//Registered user can suggest new video is unchecked?
@@ -455,6 +476,7 @@ function ToggleUserSuggestHelper(toggle,target){
 		//console.log(getHour()+"Enabled suggesting");
 		SubmitAChatMessage("[Geth]"+getHour()+"Enabled suggestions.");
 		WriteEventLogEntry("System: Enabled suggesting.");
+		AllowChatCommands=true; //should be set to geth option value
 	}
 	else{//disabling suggesting
 		if(toggles[30].childNodes[1].className.indexOf('fa-check')>-1){//Registered user can suggest new video is checked?
@@ -466,30 +488,30 @@ function ToggleUserSuggestHelper(toggle,target){
 		//console.log(getHour()+"Disabled suggesting");
 		SubmitAChatMessage("[Geth]"+getHour()+"Disabled suggestions.");
 		WriteEventLogEntry("System: Disabled suggesting.");
+		AllowChatCommands=false;
+
 	}
 	frame.contentDocument.getElementsByTagName('button')[1].click(); //click save	
 }
 
 function ToggleUserSuggest(toggle){ //creates the iframe
-	frame=document.getElementById('settingsFrame');
-	waitTime=100;
+	var frame=document.getElementById('settingsFrame');
+	var waitTime=100;
+	var target=document.getElementsByClassName('content-wrapper')[0]
 	if(frame==null){
-	target=document.getElementsByClassName('content-wrapper')[0]
 	node=document.createElement('iframe');
 	node.name="theFrame";
 	frame=target.appendChild(node);
 	frame.style.display="none";
 	frame.style.width="600px";
 	frame.style.height="400px";
-
 	frame.id="settingsFrame";
-	
 	roomname=document.location.pathname;
 	optionsWindow=window.open("https://togethertube.com"+roomname+"/settings","theFrame");
 	waitTime=5000;
 	}	
-	setTimeout(ToggleUserSuggestHelper,waitTime,toggle,target);
-	setTimeout(ToggleUserSuggestHelper,900*1000,!toggle,target);
+	setTimeout(ToggleUserSuggestHelper,waitTime,toggle);
+	setTimeout(ToggleUserSuggestHelper,900*1000,!toggle);
 }
 
 function getHour() {
@@ -565,19 +587,23 @@ lastGethPlay=[];
 function RemoveGethVotes(title=""){														//removes geth's autovotes		
 	gethVotes=[];
 	eltjes=document.getElementsByClassName('voteStatus');
-	//p = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);		
+	//p = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);		 //playlist length
 		
 	for(q=0;q<Math.min(eltjes.length,10);q++){								
 	foundTitle=eltjes[q].parentNode.parentNode.parentNode.parentNode.children[0].innerText.trim();
-	flag=title==foundTitle;
+	//flag=title==foundTitle;
 		
 	if(foundTitle==title){
 		//console.log('Removing vote for: ' + title);
 		voteString=eltjes[q].getElementsByClassName('ng-binding')[0].textContent; //innerText?
-		votebutton=eltjes[q].getElementsByClassName('btn')[0];		
-		if(voteString.startsWith("1")){votebutton.click();}		//remove vote	
+		votebutton=eltjes[q].getElementsByClassName('btn')[0];
+		if(voteString.startsWith("1")){votebutton.click();}		//remove vote		
 	}		
 	}
+	var v = eltjes[Math.min(eltjes.length,10)-1];
+	voteString=eltjes[Math.min(eltjes.length,10)-1].getElementsByClassName('ng-binding')[0].textContent; //innerText?
+	votebutton=eltjes[Math.min(eltjes.length,10)-1].getElementsByClassName('btn')[0];
+	//if(voteString.startsWith("0")){votebutton.click();}		//upvote final song in list if this has 0 votes.
 }
 
 function WriteEventLogEntry(entry){
@@ -610,9 +636,25 @@ function AddSong(songToAdd=""){
 		}
 		if(logArray.length==tracks.length){logArray=[];}; 														//reset logarray if all songs have been played once		
 		while(logArray.indexOf(trackind)>=0){trackind=GetRandomTrackInd();}
-		searchbar.value=tracks[trackind];																		//search for random track		
 		
-		if(songToAdd.length>0){searchbar.value=songToAdd;}		
+		var trackText = tracks[trackind];		
+		var trackTextServiceInd = trackText.indexOf("#");
+		var  service = "";
+		if(trackTextServiceInd>=0){
+			service = trackText.substr(trackTextServiceInd,trackTextServiceInd.length);
+			trackText = trackText.substr(0,trackTextServiceInd-1);
+		}	
+				
+		if(service.length>0){
+			if(service=="dailymotion"){serviceMode=4;}
+			else if(service=="soundcloud"){serviceMode=6;}
+			else if(service=="videmo"){serviceMode=8;}
+			else{serviceMode=2;}
+		}
+		
+		searchbar.value=trackText;																				//search for random track		
+		
+		if(songToAdd.length>0){searchbar.value=songToAdd;console.log("Added "+songToAdd+" to searchbar.");}		
 		if(DiscoveryMode && Math.random()>0.9 && songToAdd.length==0){PerformDiscoverySearch(tracks[trackind]); return;}	//one in ten songs is geth discovered		
 		
 		if(trackind>tracks.length){trackind=tracks.length;}  													//out of range error handler
@@ -688,7 +730,7 @@ waitfunc=function WaitASecThenCheckForManRemovalAndUpdate(songtitle){
 		//console.log(songtitle+" is playing now.");
 	}
 	//listlength=parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);
-	if(radioMode){
+	if(radioMode){f
 		AddSong();
 		SetRadioState(true);		
 	}
@@ -701,7 +743,50 @@ function clearConsoleEveryHour() {return window.setInterval( function() {
 		console.clear();};	
 	}, 3600000);};
 
-function SetUpGeth(items){	
+function AddPlayerConnErrorWatcher(){
+	var errconnnode=[];	
+	var connerrornodes=document.getElementsByClassName('player-overlay ng-scope ng-hide')[0].parentNode.children;
+	for(var i=0;i<connerrornodes.length;i++){
+		var a=(connerrornodes[i].getAttribute("data-ng-hide"))
+		var b=(connerrornodes[i].getAttribute("data-ng-show"))
+		if(a=="websocket.connectionErrorEncountered"||b=="websocket.connectionErrorEncountered"){
+			errconnnode = connerrornodes[i];
+			break;
+		}	
+	}
+	
+	var observer = new MutationObserver(function(mutations){
+		//console.log(mutations[0].target.innerText.trim());
+		if(mutations[0].target.innerText.indexOf("Connection Error")>-1){
+			console.log("Encountered connection error!");	
+			WriteEventLogEntry("System: Player Connection errror.");
+			var cururl = location.href;
+			var newpar = cururl.indexOf('?')==-1;
+			if(newpar){cururl+="?";}
+			
+			disconnecttype = "disconnected=1";
+			if(typeof($('.player-overlay-wrapper')[0])=="undefined"){
+				disconnecttype = "disconnected=2";
+			}				
+			
+			if(cururl.indexOf('disconnected')>-1){
+				location.replace(cururl);
+			}else{
+				if(newpar){
+					location.replace(cururl+disconnecttype);
+				}
+				else{
+					location.replace(cururl+disconnecttype);
+				}
+			}			
+		}
+	});   
+	var observerConfig={attributeOldValue: true,attributes:true};
+	observer.observe(errconnnode, observerConfig);	
+}
+
+	
+function SetUpGeth(items){
 	if(items.hideThumbs){		
 		toMove = document.getElementsByClassName('col-xs-8 playlist-tabset')[0];
 		//chat=document.getElementsByClassName('col-xs-4')[0];
@@ -729,6 +814,7 @@ function SetUpGeth(items){
 	targetNode=document.getElementsByClassName('videoList');	
 	radioMode=items.radioMode;
 	EnableScrobbling = items.scrobbling;	
+	pauseWhenAlone = items.pauseWhenAlone;
 	if(EnableScrobbling){
 		APIKEY = items.lastFmKey.key;
 		APISecret = items.lastFmKey.secret;
@@ -736,17 +822,18 @@ function SetUpGeth(items){
 		authenticate(); //authenticate with last fm
 	}
 
-	observer = new MutationObserver(function(mutations){
+	var observer = new MutationObserver(function(mutations){
 		mutations.forEach(function(mutation){
 		if(mutation.type == 'childList'){
-			//console.log("Mutation detected!");
+//			console.log("Mutation detected!");
 			if (mutation.addedNodes.length >= 1) {
 				if (mutation.addedNodes[0].nodeName != '#text') {
 					if(radioMode){
-					madd=mutation.addedNodes[0];
-					checkAddition(madd);	
-					t=madd.children[0].getElementsByClassName('ng-binding')[0].innerText.trim();			//get song youtube title		
-					RemoveGethVotes(t); 																	//remove votes for this title only
+						//console.log(mutation.addedNodes);
+						madd=mutation.addedNodes[0];
+						checkAddition(madd);	
+						t=madd.children[0].getElementsByClassName('ng-binding')[0].innerText.trim();			//get song youtube title		
+						RemoveGethVotes(t); 																	//remove votes for this title only
 					}
 					if(items.hideThumbs){formatList();}					
 				}
@@ -776,7 +863,7 @@ function SetUpGeth(items){
 	UNVOTEALL=true;
 	listlength=document.getElementsByClassName('badge ng-binding')[0];
 
-    observerlist = new MutationObserver(function(mutations){
+    var observerlist = new MutationObserver(function(mutations){
     mutations.forEach(function(mutation){
 	if(mutation.type == 'characterData'){prevListLength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);}
     });   
@@ -787,7 +874,10 @@ function SetUpGeth(items){
 	toggleVideoShow(items.showVideo);		
 	HandleColorizer(items.colorize,items.timestamps);		
 	toggleWidechat(items.wideChat,items.showVideo);		
+	handlePauseAlone(items.pauseWhenAlone);		
 		
+	AddPlayerConnErrorWatcher();
+	
     if(titleToTop){AddSongTitleToVideo("Waiting for queue to change...")};
     if(minimalLayout){formatList();};	
 	if(items.radioMode && tracks.length>0){SetRadioState(true);}
@@ -856,10 +946,8 @@ function openA(evt){ // event handler for HandleChatMessage
 	if(e.hasAttribute("postdata")){
 		if(e.getAttribute("wasurl")=="true"){
 			//console.log("was url");
-			e.parentElement.innerHTML = "<a href='"+e.getAttribute("postdata")+"'>"+e.getAttribute("postdata")+"</a>";
-		}else{
-			e.parentElement.innerText = e.getAttribute("postdata");
-		}		
+			e.parentElement.innerHTML = "<a href='"+e.getAttribute("postdata")+" 'target='_blank'>"+e.getAttribute("postdata")+"</a>";
+		}else{e.parentElement.innerText = e.getAttribute("postdata");}		
 	}	
 }
 
@@ -945,6 +1033,53 @@ function toggleWidechat(toggle,toggleShowVid){
 	}
 	//console.log("completed toggle wide chat");
 }
+var UserObserver;
+function handlePauseAlone(pauseWAlone){
+	//console.log("handlePauseAlone: "+pauseWAlone);	
+	//console.log("type of userobserver " + typeof(UserObserver));
+	//console.log("userobserver == null: " + UserObserver);
+	if(pauseWAlone == true && UserObserver == null){ //enable pausing
+		var target = document.getElementsByClassName('user-list')[0];
+		var PauseButton = document.getElementsByClassName("nav navbar-nav")[3].children[0].children[1];
+		var PlayButton = document.getElementsByClassName("nav navbar-nav")[3].children[0].children[0];
+
+		UserObserver = new MutationObserver(function (mutations) {
+			PlayVisible = (PlayButton.className == "btn btn-default navbar-btn");
+			PauseVisible = (PauseButton.className == "btn btn-default navbar-btn");
+			allmuts=mutations;
+			var numberOfUsers = target.children.length;
+			
+			//mutations.forEach(function (mutation) {
+			for(var i =0;i<mutations.length;i++){
+				//console.log("Parsing mutation: "+i);
+				
+					mutation = mutations[i];
+					if(mutation.addedNodes.length>0){
+						//console.log(mutation.addedNodes[0].nodeType);
+						if(mutation.addedNodes[0].nodeType==1 && PlayVisible && numberOfUsers==2){
+							PlayButton.click();
+							WriteEventLogEntry("System: Initiated play.")
+							break;						
+						}
+					}
+					else{
+						if(mutation.removedNodes[0].nodeType==1 && PauseVisible && numberOfUsers==1){
+							PauseButton.click();		
+							WriteEventLogEntry("System: Paused player.")
+							//console.log(mutation.removedNodes[0].nodeType);
+							break;
+						}
+					}
+			}
+			});	
+		var observerConfig={childList:true};
+		UserObserver.observe(target,observerConfig);
+		console.log("Added a userchange observer");
+	}
+	else if(pauseWAlone == false && UserObserver!=null){
+		UserObserver.disconnect();
+	}
+}
 
 function getPlaylistPosFromListID(ids,findid){	
 	var listpos=-1;
@@ -991,9 +1126,18 @@ chrome.storage.sync.get({
 		allowChatCommands:false,
 		lastFmKey:[],
 		minListLength:10		
-		}, function(items){			   
-			if(items.RunAtStartup){
-				SetUpGeth(items);				
+		}, function(items){
+			console.log("loaded geth");			
+			var disconntype = getUrlParameter("disconnected");
+			if(items.RunAtStartup || disconntype>0){
+				SetUpGeth(items);
+				console.log("Ran geth through autostart!");				
+				
+				if(disconntype==2){
+					$('.player-overlay-wrapper')[0].remove();
+					console.log("Removed player automatically");
+				}					
+				
 			}
 		}
 );
@@ -1016,6 +1160,7 @@ function(request, sender, sendResponse){
 			timestamps:false,
 			discoveryMode:false,
 			scrobbling:false,
+			pauseWhenAlone:false,
 			allowChatCommands:false,
 			lastFmKey:[],
 			MaxSongLength:30			
@@ -1053,6 +1198,12 @@ function(request, sender, sendResponse){
 		}
 		else if (request.greeting == "toggleWidechat"){
 			toggleWidechat(request.toggleWChat);			
+			//console.log("received toggleWidechat");
+			//sendResponse({farewell: "goodbye"});
+		}
+		else if (request.greeting == "togglePauseWhenAlone"){
+			handlePauseAlone(request.togglePause);			
+			//console.log("received togglepausewalone");
 			//sendResponse({farewell: "goodbye"});
 		}
 		else if (request.greeting == "toggleToTop"){
@@ -1076,4 +1227,4 @@ function(request, sender, sendResponse){
 		}
 });
 
-console.log(APIKEY);console.log(APISecret);
+//console.log(APIKEY);console.log(APISecret);
