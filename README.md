@@ -8,8 +8,14 @@ Instruction and demo of use:
 " target="_blank"><img src="http://img.youtube.com/vi/k-_7ifroYwc/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
-Current version:  1.52.2
+Current version:  1.52.4
 ## Changes:
+* 22-03-2019 V1.52.2
+	* Bug fixes and text changes
+	* Toggleable night mode
+	* Auto-restart for disconnected players (broadcasters only)
+	* Pause when you're the only listener (broadcasters only)
+
 * 12-07-2017 V1.52.2
   * Event log now shows what got suggested from what playlist entry
 * 08-05-2017 V1.52.1		
