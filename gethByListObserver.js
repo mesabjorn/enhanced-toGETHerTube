@@ -977,6 +977,12 @@ function getNameNodeNumber(msg){
 	return nameInd;
 }
 
+function replyTo(text) {
+  var chatBox = document.querySelectorAll("[data-ng-model='chatEntry']")[0];
+  chatBox.value = text;
+  chatBox.focus();
+}
+
 function HandleColorizer(toggleColorize,toggleTimeStamp){			
 		if((typeof Colorizeobserver !== 'undefined')){Colorizeobserver.disconnect();}		
 		String.prototype.hashCode=function (){var hash=0,i,chr,len;if(this.length===0)return hash;for(i=0,len=this.length;i<len;i++){chr=this.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;};function getHue(text){hash=Math.abs(text.hashCode());hue=Math.floor(hash%360);hash=hash/256;light=Math.floor(hash%40)+30;return "hsl("+hue+",75%,"+light+"%)";}
@@ -985,10 +991,13 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		if (mutation.addedNodes.length > 0){
 			nodes = mutation.addedNodes[0];			
 			aNode = nodes.childNodes[2];
-			if (aNode.childNodes.length == 15){nodeNumber = 13;} else {nodeNumber = 15;}
+			
+			textNodeIndex = nodes.childNodes.length - 2;
+			text = nodes.childNodes[textNodeIndex].innerHTML;
 			
 			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
-			
+			name = aNode.childNodes[nodeNumber].innerHTML;
+			console.log(name);
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
 			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
@@ -997,7 +1006,16 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 					aNode.childNodes[nodeNumber].innerText=aNode.childNodes[nodeNumber].innerText.slice(0,25);
 				}
 			}}
-			if(toggleTimeStamp){if(aNode.nodeType==1){div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";aNode.childNodes[nodeNumber].appendChild(div);}}
+			if(toggleTimeStamp){
+				if(aNode.nodeType==1){
+					div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";
+					div.setAttribute('data-reply', "[" + name + ": " + text + "] >> ");
+					div.onclick = function(event) {
+					text = event.target.getAttribute('data-reply');
+					replyTo(text);
+				};
+				aNode.childNodes[nodeNumber].appendChild(div);}
+			}
 		}
 		});
 		});		
