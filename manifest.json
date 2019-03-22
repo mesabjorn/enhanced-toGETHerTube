@@ -3,7 +3,7 @@
 
   "name": "Enhanced ToGETHerTube",
   "description": "",
-  "version": "1.52",
+  "version": "1.53",
 
   "browser_action": {
     "default_icon": "icon.png",

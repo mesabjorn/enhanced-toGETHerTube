@@ -995,6 +995,11 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 			
 			textNodeIndex = nodes.childNodes.length - 2;
 			text = nodes.childNodes[textNodeIndex].innerText;
+			html = nodes.childNodes[textNodeIndex].innerHTML;
+			regexHtml = /\[(.*?)\] \&gt;\&gt;/;
+			regexText = /\[(.*?)\] >>/;
+			html = html.replace(regexHtml, '<i><b>$&</b></i>');
+			nodes.childNodes[textNodeIndex].innerHTML = html;
 			
 			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
 			name = aNode.childNodes[nodeNumber].innerText;
@@ -1011,7 +1016,7 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 				if(aNode.nodeType==1){
 					div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";
 					div.style.cursor = "pointer";
-					div.setAttribute('data-reply', "[" + name + ": " + text + "] >> ");
+					div.setAttribute('data-reply', "[ " + name + ": " + text.replace(regexText, '') + " ] >> ");
 					div.onclick = function(event) {
 					text = event.target.getAttribute('data-reply');
 					replyTo(text);

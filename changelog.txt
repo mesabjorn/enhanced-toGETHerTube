@@ -15,3 +15,7 @@ V1.51
 V1.52
 		Chat messages exceeding 250 characters are automatically trimmed and can be expanded by the user by clicking
 		on 'more'.
+		
+22-03-2019
+V1.53
+		Reply Functionality.
