@@ -114,7 +114,6 @@ function handleOptions(items){
 		tToTop: false,
 		tToChat: false,
 		radioMode:false,
-		nightMode:false,
 		scrobbling:false,		
 		pauseWhenAlone:false,	
 		discoveryMode:false,		
@@ -143,7 +142,6 @@ function handleOptions(items){
 	
 	document.getElementById('cbToggleRunAtStartup').checked = items.RunAtStartup;
 	document.getElementById('cbradio').checked=items.radioMode;
-	document.getElementById('cbnight').checked=items.nightMode;
 	
 	document.getElementById('cbDiscovery').checked=items.discoveryMode;	
 	document.getElementById('cbChatCommands').checked=items.allowChatCommands;
@@ -218,7 +216,6 @@ function save_options(){
   var maxsonglength=document.getElementById('txtMaxSongLength').value;
   var startup = document.getElementById('cbToggleRunAtStartup').checked;   
   var radioMode = document.getElementById('cbradio').checked;   
-  var nightMode = document.getElementById('cbnight').checked;   
   
   var discoveryMode = document.getElementById('cbDiscovery').checked;   
   var allowChatCommands = document.getElementById('cbChatCommands').checked;   
@@ -251,7 +248,6 @@ function save_options(){
 	hideThumbs: thumbs,
 	wideChat:wideChat,
 	radioMode:radioMode,
-	nightMode:nightMode,
 	discoveryMode:discoveryMode,
 	scrobbling:scrobble,
 	pauseWhenAlone:pauseWhenAlone,
@@ -279,7 +275,6 @@ function restore_options() {
 	tabId:-1,
 	wideChat:false,
 	radioMode:false,
-	nightMode:false,
 	hideThumbs: false,
 	discoveryMode:false,
 	scrobbling:false,
@@ -297,14 +292,9 @@ function StartGeth(){
 	pushToTabId = parseInt(tablist.children[tablist.selectedIndex].getAttribute("tabid"));
 	//chrome.browserAction.setIcon({path : {"19": "icon.png"}},function(){});
 	chrome.storage.sync.get({
-		tabId:-1,
-		nightMode:false,		
+		tabId:-1,		
 		}, function(items){			
 			console.log("pushing to tab: "+pushToTabId);
-			if(items.nightMode){
-				chrome.tabs.insertCSS(items.tabId,{file:"nightmode.css"});
-			}
-			
 			//chrome.tabs.sendMessage(pushToTabId, {greeting: "startgeth",playlistid:selID}, function(response){});			//for multitab
 			
 			chrome.storage.local.get({activeList: -1}, function(localitems) {
@@ -527,7 +517,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	document.querySelector('#tracktextinfo').innerText = '';
 	document.querySelector('#cbToggleRunAtStartup').addEventListener('change', save_options);	
 	document.querySelector('#cbradio').addEventListener('change', save_options);	
-	document.querySelector('#cbnight').addEventListener('change', save_options);	
 	
 	document.querySelector('#cbDiscovery').addEventListener('change', save_options);
 	document.querySelector('#cbChatCommands').addEventListener('change', save_options);

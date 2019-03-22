@@ -5,9 +5,6 @@ EnableScrobbling = true;
 APIKEY		=	'';
 APISecret 	=	'';
 
-
-
-
 function getUrlParameter(sParam){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -523,7 +520,7 @@ function getHour() {
     min = d.getMinutes();
     if (hour < 10) {hour = "0" + hour;}
     if (min < 10) {min = "0" + min;}
-    return " [" + hour + ":" + min + "]";
+    return "[" + hour + ":" + min + "]";
 }
 
 function IsManualRemoval(string2){
@@ -999,7 +996,8 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 			text = nodes.childNodes[textNodeIndex].innerHTML;
 			
 			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
-			name = aNode.childNodes[nodeNumber].innerHTML;			
+			name = aNode.childNodes[nodeNumber].innerHTML;
+			console.log(name);
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
 			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
@@ -1185,15 +1183,11 @@ function(request, sender, sendResponse){
 			lastFmKey:[],
 			MaxSongLength:30			
 			}, function(items){			
-				
 				chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[],playlistNames:[]},function(localitems){
 					initplaylists(localitems,request.playlistid);
 					thisPagePlaylistID=request.playlistid;
 					SetUpGeth(items);
 					console.log("Started geth with playlist:"+ request.playlistid);
-					
-					
-					
 					/*
 					console.log(typeof(thisPagePlaylistID));
 					

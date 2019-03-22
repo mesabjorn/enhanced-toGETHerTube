@@ -17,12 +17,10 @@
     {
       "matches": ["https://togethertube.com/rooms/*"],
 	  "exclude_matches": ["https://togethertube.com/rooms"],
-	  "js": ["jquery-2.2.3.min.js","md5.js","gethByListObserver.js"],	  
+	  "js": ["jquery-2.2.3.min.js","md5.js","gethByListObserver.js"],
+	  "css": ["nightmode.css"],
 	  "run_at":"document_end"
     }
-  ],
-  "web_accessible_resources": [
-    "nightmode.css"
   ],
   "permissions": [
 	"activeTab",
