@@ -5,6 +5,10 @@ function renderStatus(statusText,showtime=750,permanent=false) {
     if(!permanent){setTimeout(function() {status.textContent = '';}, showtime);}
 }
 
+function toggleNightMode(toggleNightMode,tabId) {
+  	chrome.tabs.sendMessage(tabId, {greeting: "nightMode",toggleNightMode: toggleNightMode}, function(response) {});	
+}
+
 function toggleColorizer(toggleColor,toggleTimeStamp,tabId) {
   	chrome.tabs.sendMessage(tabId, {greeting: "color",colorize: toggleColor,timestamps: toggleTimeStamp}, function(response) {});	
 }
@@ -101,7 +105,8 @@ function SetTrackLength(playlistid){
 function handleOptions(items){
 	if(items==0){ //no updated items?
 		chrome.storage.sync.get({
-		showVideo:false,
+		nightMode:false,
+		showVideo:true,
 		wideChat:false,
 		colorize:false,
 		timestamps:false,
@@ -123,7 +128,7 @@ function handleOptions(items){
 		});  		
 		return;
 	}
-	
+	document.querySelector('#cbToggleNightMode').checked = items.nightMode;
 	document.querySelector('#cbToggleShowVideo').checked = items.showVideo;
 	document.querySelector('#cbWideChat').checked = items.wideChat;
 	document.querySelector('#cbColorizer').checked = items.colorize;
@@ -166,6 +171,7 @@ function handleOptions(items){
 	}
 	
 	if(items.tabId!=-1){	
+		toggleNightMode(items.nightMode,items.tabId);
 		toggleVideoShow(items.showVideo,items.tabId);
 		toggleColorizer(items.colorize,items.timestamps,items.tabId);	
 		toggleWideChat(items.wideChat,items.tabId);
@@ -201,6 +207,7 @@ function ToggleLastFmButton(){
 }
 
 function save_options(){
+  var n = document.getElementById('cbToggleNightMode').checked;
   var s = document.getElementById('cbToggleShowVideo').checked;
   var wideChat = document.getElementById('cbWideChat').checked;   
   
@@ -236,6 +243,7 @@ function save_options(){
   if(wideChat){thumbs=false;}
   
   chrome.storage.sync.set({
+	nightMode: n,
     showVideo: s,
     colorize: c,
 	tToTop: titleToTop,
@@ -262,7 +270,8 @@ function save_options(){
 function restore_options() {
   // Use default value color = 'red' and likesColor = true.
 	chrome.storage.sync.get({
-    showVideo:false,
+	nightMode:false,
+    showVideo:true,
 	colorize:false,
 	timestamps: false,
 	shuffle:false,
@@ -501,7 +510,8 @@ function OpenSettings(){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-		
+	
+	document.querySelector('#cbToggleNightMode').addEventListener('change', save_options);
 	document.querySelector('#cbToggleShowVideo').addEventListener('change', save_options);
 	document.querySelector('#cbWideChat').addEventListener('change', save_options);
 	

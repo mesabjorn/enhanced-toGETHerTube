@@ -520,7 +520,7 @@ function getHour() {
     min = d.getMinutes();
     if (hour < 10) {hour = "0" + hour;}
     if (min < 10) {min = "0" + min;}
-    return "[" + hour + ":" + min + "]";
+    return " [" + hour + ":" + min + "]";
 }
 
 function IsManualRemoval(string2){
@@ -871,6 +871,7 @@ function SetUpGeth(items){
     observerConfiglist={characterData: true,subtree: true};
     observerlist.observe(listlength, observerConfiglist);
 	
+	toggleNightMode(items.nightMode);
 	toggleVideoShow(items.showVideo);		
 	HandleColorizer(items.colorize,items.timestamps);		
 	toggleWidechat(items.wideChat,items.showVideo);		
@@ -993,10 +994,10 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 			aNode = nodes.childNodes[2];
 			
 			textNodeIndex = nodes.childNodes.length - 2;
-			text = nodes.childNodes[textNodeIndex].innerHTML;
+			text = nodes.childNodes[textNodeIndex].innerText;
 			
 			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
-			name = aNode.childNodes[nodeNumber].innerHTML;
+			name = aNode.childNodes[nodeNumber].innerText;
 			console.log(name);
 			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
@@ -1009,6 +1010,7 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 			if(toggleTimeStamp){
 				if(aNode.nodeType==1){
 					div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";
+					div.style.cursor = "pointer";
 					div.setAttribute('data-reply', "[" + name + ": " + text + "] >> ");
 					div.onclick = function(event) {
 					text = event.target.getAttribute('data-reply');
@@ -1022,6 +1024,16 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 		var observerConfig={childList:true};var chatEntries=document.querySelectorAll(".panel-chat .chatlog");
 		Colorizeobserver.observe(chatEntries[0],observerConfig);	
 		//console.log("Added colorizer:"+toggleColorize+"; timestamps: "+toggleTimeStamp);		
+}
+
+function toggleNightMode(toggle) {	
+  	if(toggle){		
+		document.body.classList.add('nightMode');
+	}
+	else if(!toggle){
+		document.body.classList.remove('nightMode');
+				
+	}  
 }
 
 function toggleVideoShow(toggle) {	
@@ -1205,6 +1217,10 @@ function(request, sender, sendResponse){
 			playlistlength = parseInt(document.getElementsByClassName("badge ng-binding")[0].innerHTML);	
 			for(i=0;i<playlistlength;i++){lastGethPlay[i]=initVidList[i].children[0].getElementsByTagName('h5')[0].innerText.trim();} //set start list as last geth plays too
 			printArrayToConsole(lastGethPlay,'lastGethPlay');
+		}
+		else if (request.greeting == "nightMode"){
+			toggleNightMode(request.toggleNightMode,);	
+			//sendResponse({farewell: "goodbye"});
 		}
 		else if (request.greeting == "color"){
 			HandleColorizer(request.colorize,request.timestamps);	
