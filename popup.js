@@ -1,4 +1,3 @@
-versionString ='Geth V1.53.4';
 function renderStatus(statusText,showtime=750,permanent=false) {
     var status = document.getElementById('status');
     status.textContent = statusText;
@@ -559,6 +558,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}  
 	});
 	
-	document.querySelector('#title').innerText = versionString;		
+	var manifestData = chrome.runtime.getManifest();
+	document.querySelector('#title').innerText = manifestData.version;		
 });
 

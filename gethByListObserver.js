@@ -1,4 +1,5 @@
-versionString ='Geth V1.52.4';
+var manifestData = chrome.runtime.getManifest();
+var versionString = 'Geth V'+manifestData.version;
 
 //Lastfm scrobbling
 EnableScrobbling = true;
@@ -986,12 +987,14 @@ function replyTo(text) {
 
 function HandleColorizer(toggleColorize,toggleTimeStamp){			
 		if((typeof Colorizeobserver !== 'undefined')){Colorizeobserver.disconnect();}		
-		String.prototype.hashCode=function (){var hash=0,i,chr,len;if(this.length===0)return hash;for(i=0,len=this.length;i<len;i++){chr=this.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;};function getHue(text){hash=Math.abs(text.hashCode());hue=Math.floor(hash%360);hash=hash/256;light=Math.floor(hash%40)+30;return "hsl("+hue+",75%,"+light+"%)";}
+		String.prototype.hashCode=function (){var hash=0,i,chr,len;if(this.length===0)return hash;for(i=0,len=this.length;i<len;i++){chr=this.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;};
+		function getHue(text){hash=Math.abs(text.hashCode());hue=Math.floor(hash%360);hash=hash/256;light=Math.floor(hash%40)+30;return "hsl("+hue+",75%,"+light+"%)";}
 		Colorizeobserver = new MutationObserver(function (mutations) {
 		mutations.forEach(function (mutation) {
 		if (mutation.addedNodes.length > 0){
 			nodes = mutation.addedNodes[0];			
 			aNode = nodes.childNodes[2];
+			if(aNode.nodeType!=1){return;} // ignore text nodes and system messages
 			
 			textNodeIndex = nodes.childNodes.length - 2;
 			text = nodes.childNodes[textNodeIndex].innerText;
@@ -1002,32 +1005,27 @@ function HandleColorizer(toggleColorize,toggleTimeStamp){
 			nodes.childNodes[textNodeIndex].innerHTML = html;
 			
 			nodeNumber = getNameNodeNumber(aNode);			//console.log("New NodeNumber: "+nodeNumberNew.toString());
-			name = aNode.childNodes[nodeNumber].innerText;
-			console.log(name);
-			if(toggleColorize){if(aNode.nodeType==1){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}}
+			name = aNode.childNodes[nodeNumber].innerText.slice(0,25);
+			aNode.childNodes[nodeNumber].innerText=name;
+			
+			aNode.style.cursor = "pointer";
+			aNode.setAttribute('data-reply', "[ " + name + ": " + text.replace(regexText, '') + " ] >> ");
+			aNode.onclick = function(event) {
+				text = event.target.parentElement.getAttribute('data-reply');
+				replyTo(text);
+			};			
+			if(toggleColorize){aNode.style.color = getHue(aNode.childNodes[nodeNumber].innerHTML);}
 			checkGethCommands(aNode.parentElement.children[1].innerHTML.trim()); //check if message is a command			
 			HandleChatMessage(aNode.parentElement.children[1]); //trim too long chat messages
-			if(toggleColorize){if(aNode.nodeType==1){
-				if(aNode.childNodes[nodeNumber].innerText.length>25){
-					aNode.childNodes[nodeNumber].innerText=aNode.childNodes[nodeNumber].innerText.slice(0,25);
-				}
-			}}
-			if(toggleTimeStamp){
-				if(aNode.nodeType==1){
-					div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";
-					div.style.cursor = "pointer";
-					div.setAttribute('data-reply', "[ " + name + ": " + text.replace(regexText, '') + " ] >> ");
-					div.onclick = function(event) {
-					text = event.target.getAttribute('data-reply');
-					replyTo(text);
-				};
-				aNode.childNodes[nodeNumber].appendChild(div);}
+			if(toggleTimeStamp){				
+				div = document.createElement("span");div.innerHTML = getHour();	div.style.color = "gray";div.style.fontSize = "70%";
+				aNode.childNodes[nodeNumber].appendChild(div);
 			}
 		}
 		});
 		});		
 		var observerConfig={childList:true};var chatEntries=document.querySelectorAll(".panel-chat .chatlog");
-		Colorizeobserver.observe(chatEntries[0],observerConfig);	
+		Colorizeobserver.observe(chatEntries[0],observerConfig);
 		//console.log("Added colorizer:"+toggleColorize+"; timestamps: "+toggleTimeStamp);		
 }
 
