@@ -1,3 +1,4 @@
+var test = 0;
 var manifestData = chrome.runtime.getManifest();
 var versionString = 'Geth V'+manifestData.version;
 
