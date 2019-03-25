@@ -81,6 +81,70 @@ function ScrobbleTrack(songtitle){
 	else{console.log("Scrobbling failed. No such song in tracks.");}
 }
 
+
+function DownVote(event){
+	var e = event.target;	
+	if(e.getAttribute('data-voted')==0){
+		e.setAttribute('data-voted',1);
+		e.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/downvote.png"
+	}
+	else{
+		e.setAttribute('data-voted',0);
+		e.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/downvote-empty.png"
+	}	
+	chrome.runtime.sendMessage({greeting: "vote",direction:e}, function(response){
+		//console.log(response.farewell);
+	});	
+}
+
+function UpVote(event){
+	var e = event.target;	
+	if(e.getAttribute('data-voted')==0){
+		e.setAttribute('data-voted',1);
+	}
+	else{
+		e.setAttribute('data-voted',0);
+	}	
+	
+	chrome.runtime.sendMessage({greeting: "vote",direction:e}, function(response){
+		//console.log(response.farewell);
+	});	
+}
+
+function AddUpvoteButtons(){
+	d=document.createElement('div');
+	s=document.createElement('span');
+	b1=document.createElement('span');
+	b1.className="votebutton";
+	
+	b1.style.marginRight="16pt";
+	b1.style.cursor = "pointer";
+
+	b1.innerText="-";
+
+	b1.setAttribute('data-vote',-1);b1.setAttribute('data-voted',0);
+	b1.addEventListener('click',DownVote);
+	
+	b2=document.createElement('span');
+	b2.className="votebutton";
+	b2.innerText="+";b2.style.cursor = "pointer";
+	//b2.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/upvote-empty.png";
+	
+	b2.setAttribute('data-vote',1);b2.setAttribute('data-voted',0);
+	b2.addEventListener('click',UpVote);
+	
+	s2=document.createElement('span');
+	s2.innerText = -4;
+	s.appendChild(b1);
+	s.appendChild(b2);
+	s.appendChild(s2);
+	d.appendChild(s);
+	d.className='col-xs-8';
+	target=document.getElementsByClassName('row')[1]
+	c1=target.firstChild;
+	target.insertBefore(d, c1);
+}
+AddUpvoteButtons();
 //RNG
 function RNG(seed) {
   // LCG using GCC's constants

@@ -17,15 +17,22 @@
     {
       "matches": ["https://togethertube.com/rooms/*"],
 	  "exclude_matches": ["https://togethertube.com/rooms"],
-	  "js": ["jquery-2.2.3.min.js","md5.js","gethByListObserver.js"],
-	  "css": ["nightmode.css"],
+	  "js": ["jquery-2.2.3.min.js","md5.js","gethByListObserver.js","upvoting.js"],
+	  "css": ["nightmode.css","main.css"],
 	  "run_at":"document_end"
     }
   ],
+	"background": {
+	"page": "background.html"
+  },  
   "permissions": [
 	"activeTab",
 	"storage",
 	"tabs",
 	"https://togethertube.com/rooms/crarmy"	
-  ]
+  ],
+  "web_accessible_resources": [
+	"figs/*.png"
+  ],
+   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'; connect-src 'self' wss://*.firebaseio.com;"
 }

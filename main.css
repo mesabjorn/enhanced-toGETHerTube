@@ -1,0 +1,19 @@
+.votebutton{
+	  font-size: 40px;
+
+}
+
+
+.votebutton[data-vote="1"]:hover{
+
+color:green;
+
+
+}
+
+.votebutton[data-vote="-1"]:hover{
+
+color:red;
+
+
+} 
