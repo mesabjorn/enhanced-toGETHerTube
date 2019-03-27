@@ -6,6 +6,7 @@ EnableScrobbling = true;
 APIKEY		=	'';
 APISecret 	=	'';
 
+
 function getUrlParameter(sParam){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -85,14 +86,12 @@ function ScrobbleTrack(songtitle){
 function DownVote(event){
 	var e = event.target;	
 	if(e.getAttribute('data-voted')==0){
-		e.setAttribute('data-voted',1);
-		e.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/downvote.png"
+		e.setAttribute('data-voted',1);		
 	}
 	else{
-		e.setAttribute('data-voted',0);
-		e.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/downvote-empty.png"
+		e.setAttribute('data-voted',0);		
 	}	
-	chrome.runtime.sendMessage({greeting: "vote",direction:e}, function(response){
+	chrome.runtime.sendMessage({greeting: "vote",username:username,direction:-1}, function(response){
 		//console.log(response.farewell);
 	});	
 }
@@ -106,7 +105,7 @@ function UpVote(event){
 		e.setAttribute('data-voted',0);
 	}	
 	
-	chrome.runtime.sendMessage({greeting: "vote",direction:e}, function(response){
+	chrome.runtime.sendMessage({greeting: "vote",username:username,direction:1}, function(response){
 		//console.log(response.farewell);
 	});	
 }
@@ -1206,6 +1205,15 @@ function initplaylists(items,findid){
 }
 chrome.storage.local.get({playlists:[],playlistIDs:[],blacklist:[],playlistNames:[]},function(items){initplaylists(items);});
 
+var username = "";
+setTimeout(function(){
+	var systemmessage0=document.getElementsByClassName('entry ng-scope systemEntry')[0].innerText;
+	var usernameidx = systemmessage0.indexOf("username is");
+	var endusernameidx = systemmessage0.indexOf("and can be");
+	username =systemmessage0.substr(usernameidx+12,endusernameidx-(usernameidx+13));
+	console.log(username);},3000);
+
+
 chrome.storage.sync.get({
 		showVideo:false,
 		hideThumbs:false,
@@ -1225,6 +1233,7 @@ chrome.storage.sync.get({
 		minListLength:10		
 		}, function(items){
 			console.log("loaded geth");			
+		
 			var disconntype = getUrlParameter("disconnected");
 			if(items.RunAtStartup || disconntype>0){
 				SetUpGeth(items);
