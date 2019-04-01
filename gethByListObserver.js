@@ -770,15 +770,10 @@ function AddPlayerConnErrorWatcher(){
 				disconnecttype = "disconnected=2";
 			}				
 			
-			if(cururl.indexOf('disconnected')>-1){
+			if(cururl.indexOf('disconnected')>-1){ //disconnected already in url, keep doing the same
 				location.replace(cururl);
 			}else{
-				if(newpar){
-					location.replace(cururl+disconnecttype);
-				}
-				else{
-					location.replace(cururl+disconnecttype);
-				}
+				location.replace(cururl+"&"+disconnecttype);				
 			}			
 		}
 	});   
