@@ -85,8 +85,13 @@ function ScrobbleTrack(songtitle){
 
 function DownVote(event){
 	var e = event.target;	
-	if(e.getAttribute('data-voted')==0){
-		e.setAttribute('data-voted',1);		
+	if(e.getAttribute('data-voted')==0){ //unvoted
+		e.setAttribute('data-voted',1); //mark vote
+		d = document.getElementById('upvotebtn'); //unmark upvote
+		if(d.getAttribute('data-voted')==1){
+			d.setAttribute('data-voted',0);
+			chrome.runtime.sendMessage({greeting: "removevote",username:username,direction:1}, function(response){});	
+		}
 	}
 	else{
 		e.setAttribute('data-voted',0);		
@@ -94,12 +99,18 @@ function DownVote(event){
 	chrome.runtime.sendMessage({greeting: "vote",username:username,direction:-1}, function(response){
 		//console.log(response.farewell);
 	});	
+
 }
 
 function UpVote(event){
 	var e = event.target;	
 	if(e.getAttribute('data-voted')==0){
-		e.setAttribute('data-voted',1);
+		e.setAttribute('data-voted',1); //mark vote
+		d = document.getElementById('downvotebtn'); //unmark upvote
+		if(d.getAttribute('data-voted')==1){
+			d.setAttribute('data-voted',0);
+			chrome.runtime.sendMessage({greeting: "removevote",username:username,direction:-1}, function(response){});	
+		}
 	}
 	else{
 		e.setAttribute('data-voted',0);
@@ -115,8 +126,8 @@ function AddUpvoteButtons(){
 	s=document.createElement('span');
 	b1=document.createElement('span');
 	b1.className="votebutton";
+	b1.id = "downvotebtn";
 	
-	b1.style.marginRight="16pt";
 	b1.style.cursor = "pointer";
 
 	b1.innerText="-";
@@ -127,13 +138,13 @@ function AddUpvoteButtons(){
 	b2=document.createElement('span');
 	b2.className="votebutton";
 	b2.innerText="+";b2.style.cursor = "pointer";
-	//b2.src="chrome-extension://hhcemcacpgkdmlbiannpekbfegbjopep/figs/upvote-empty.png";
+	b2.id = "upvotebtn";
 	
 	b2.setAttribute('data-vote',1);b2.setAttribute('data-voted',0);
 	b2.addEventListener('click',UpVote);
 	
 	s2=document.createElement('span');
-	s2.innerText = -4;
+	s2.innerText = "0 votes.";
 	s.appendChild(b1);
 	s.appendChild(b2);
 	s.appendChild(s2);
@@ -1330,6 +1341,9 @@ function(request, sender, sendResponse){
 		else if (request.greeting == "toggleChatCommands"){AllowChatCommands = request.allowChatCommands;}
 		else if (request.greeting == "toggleDiscoveryMode"){DiscoveryMode=request.discoveryMode;}
 		else if (request.greeting == "whatchaplayin"){sendResponse({currentlyPlaying: thisPagePlaylistID});}
+		else if (request.greeting == "updatevotes"){
+			document.getElementById('votestr').innerText=request.votestr;			
+		}
 		else if (request.greeting == "reset"){
 			logArray=[];
 			//chrome.storage.local.set({logArray: logArray}, function(){});
