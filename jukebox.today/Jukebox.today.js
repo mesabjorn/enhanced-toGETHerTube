@@ -155,7 +155,15 @@ function AddSong(songToAdd=""){
 	var searchbar = document.getElementsByClassName('search__box')[0].children[1].click();	
 }
 
-//f=setInterval(function(){AddSong();}, 180000);
+
+function AddTitleClickForVideoToggle(){
+	var target = document.getElementsByClassName('current__title js-title')[0];
+	target.style.cursor="pointer";
+	target.addEventListener('click',function(){ToggleVideo();});
+}
+
 ToggleVideo();
 AddListObserver();
 AddChatObserver();
+AddTitleClickForVideoToggle();
+
