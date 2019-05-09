@@ -101,6 +101,9 @@ function replyTo(message) {
 
 mut=[];
 var regexText = /\[(.*?)\] >>/;
+var regexurl = /http[s]?:\/\/www[0-9a-zA-Z./?=&-]*/;
+var regexurlnowww = /http[s]?:\/\/[0-9a-zA-Z./?=&-]*/;
+
 function AddChatObserver(){
 	var target = document.getElementsByClassName('js-feed-list feed__list allow-highlight')[0];
 	
@@ -113,7 +116,22 @@ function AddChatObserver(){
 				var msgText = msgTexts[msgTexts.length-1].trim();
 				var name=msgTexts[0];
 				
-				m.addedNodes[0].style.cursor = "pointer";
+				if(msgText.indexOf("www.")>-1){ //urlwith www
+					matches = msgText.match(regexurl);
+					for(var i =0;i<matches.length;i++){
+						var newmsgtext = msgText.replace(matches[i],"<a href='"+matches[i]+"' target=_blank>"+matches[i]+"</a>");
+						m.addedNodes[0].children[0].innerHTML=newmsgtext;
+					}					
+				}
+				else if(msgText.indexOf("http")>-1){ //url){
+					matches = msgText.match(regexurlnowww);
+					for(var i =0;i<matches.length;i++){
+						var newmsgtext = msgText.replace(matches[i],"<a href='"+matches[i]+"' target=_blank>"+matches[i]+"</a>");
+						m.addedNodes[0].children[0].innerHTML=newmsgtext;
+					}					
+				}
+				else{				
+					m.addedNodes[0].style.cursor = "pointer";
 					m.addedNodes[0].setAttribute('data-reply', "[ " + name + ": " + msgText.replace(regexText, '') + " ] >> ");
 					m.addedNodes[0].onclick = function(e) {
 						ev=e;
@@ -128,6 +146,7 @@ function AddChatObserver(){
 					};
 				
 				checkGethCommands(msgText);
+				}
 			}
 		});
 	});  
