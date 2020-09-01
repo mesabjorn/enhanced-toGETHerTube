@@ -14,17 +14,17 @@ function WriteMessage(message,success){
 	setTimeout(function(){errorbar = document.getElementById("errorbar");errorbar.style.display="none";},3000);	
 }
 
-function GetJSONExportString(playlists,listnames){
+function GetJSONExportString(playlists){
 	jsonstring='{"playlists":[{'
 	for(i=0;i<playlists.length;i++){
 		curpl = playlists[i];
-		jsonstring+='"'+listnames[i]+'":[';
-		for(j=0;j<curpl.length;j++){
-			if(j<curpl.length-1){
-				jsonstring+='"'+curpl[j]+'",';
+		jsonstring+='"'+playlists[i].name+'":[';
+		for(j=0;j<curpl.tracks.length;j++){
+			if(j<curpl.tracks.length-1){
+				jsonstring+='"'+curpl.tracks[j]+'",';
 			}
 			else{
-				jsonstring+='"'+curpl[j]+'"';
+				jsonstring+='"'+curpl.tracks[j]+'"';
 			}		
 		}
 		jsonstring+=']';
@@ -36,35 +36,18 @@ function GetJSONExportString(playlists,listnames){
 return jsonstring;
 }
 
-function runExport(playlistNames=""){
-	chrome.storage.local.get({playlists:[],playlistNames:[],blacklist:[]}, function(items){
-		
-		if(typeof(items.blacklist)!=="undefined"){ //blacklist = empty?
-			items.playlists[items.playlists.length]=items.blacklist;		
-			items.playlistNames[items.playlistNames.length]="blacklist";
+function runExport(){
+	chrome.storage.local.get({playlists:[],blacklist:[]}, function(items){
+		playlists=items.playlists; //all
+		if(typeof(items.blacklist)!=="undefined"){ //blacklist != empty?
+			blacklist = [];
+			blacklist.name="blacklist";
+			blacklist.tracks=items.blacklist;
+			playlists.push(blacklist);
+			
 		}
-		playlists=[];
-		if(playlistNames==""){
-			playlists=items.playlists; //all
-			playlistNames = items.playlistNames;
-		}else{ // manual selection
-		console.log("using manually selected playlists to export!");
-			for(i=0;i<playlistNames.length;i++){
-				for(j=0;j<items.playlistNames.length;j++){
-					console.log("Check box playlist name:" + playlistNames[i] +" vs " + items.playlistNames[j]);
-					if(items.playlistNames[j]==playlistNames[i]){		
-						console.log(playlistNames[i] +"==" + items.playlistNames[j]);
-						playlists[playlists.length] = items.playlists[j];
-						console.log();						
-						break;
-					}
-				}
-			}
-		}		
-		//document.getElementById('resultText').value = GetJSONExportString(items.playlists,items.playlistNames);
-		document.getElementById('resultText').value = GetJSONExportString(playlists,playlistNames);
+		document.getElementById('resultText').value = GetJSONExportString(playlists);
 		console.log("Exporting..");
-		ParseJSON();
 	});	
 }
 
@@ -297,6 +280,7 @@ function getDateString(d){
 
 showSuggested=1;showDiscoveries=1;showTechnical=1;eventLog=[];
 function eventLogBuilder(){
+	console.log("building event log..");
 	log = document.getElementById("eventlog");
 	while (log.firstChild) {log.removeChild(log.firstChild);}
 	for (i=0;i<eventLog.length;i++){
@@ -304,9 +288,10 @@ function eventLogBuilder(){
 		datestr = getDateString(new Date(eventLog[i][0]));		
 		
 		content = eventLog[i][1];
-		isSuggestion = content.indexOf('Suggested:')==0;
-		isTech = content.indexOf('System:')==0;
-		isDisc = content.indexOf('*')>0;
+		console.log(content);
+		isSuggestion = content.indexOf('Suggested')==0;
+		isTech = content.indexOf('System')==0;
+		isDisc = content.indexOf('Discovered')>-1;
 		
 		if((isSuggestion && showSuggested==1)||(isTech && showTechnical==1)||(isDisc && showDiscoveries==1)){
 			s.innerHTML=datestr+" "+eventLog[i][1]+"</br>";
@@ -379,59 +364,87 @@ function CheckLastFmInput(){
 	}	
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-	document.getElementById('rExport').checked=true;
-	document.getElementById('rExport').addEventListener('click', ParseJSON);
-	document.getElementById('rImport').addEventListener('click', ParseJSON);
-	document.getElementById('resultText').addEventListener('keyup', ParseJSON);	
+function responseJson(response) {
+	if (!response.ok)
+	  throw new Error(response.status + " " + response.statusText);
+	return response.json();
+ }
 
-	document.getElementById('resultText').style.float='left';
-	document.getElementById('resultText').cols=72;
-	document.getElementById('resultText').style.marginRight='40px';
-	document.getElementById('importHandler').style.display='block';
-	document.getElementById('importHandler').style.height="400px";
-	
-	fItems = document.getElementsByClassName('filterItem');
-	fItems[0].addEventListener('click',function(){ToggleFilter(event)});
-	fItems[1].addEventListener('click',function(){ToggleFilter(event)});
-	fItems[2].addEventListener('click',function(){ToggleFilter(event)});	
-		
-	document.getElementById('btnCopy').addEventListener('click',CopyToClipboard);	
-	
-	document.getElementById('lfmkey').addEventListener('keyup',CheckLastFmInput);
-	document.getElementById('lfmsecret').addEventListener('keyup',CheckLastFmInput);
-	document.getElementById('ind_approve').addEventListener('click',SaveLFMCredentials);	
-	document.getElementById('ind_approve').addEventListener('mouseover',function(){this.width="28";this.height="28";});	
-	document.getElementById('ind_approve').addEventListener('mouseout',function(){this.width="24";this.height="24";});	
-
-	document.getElementById('btnSynch').addEventListener('click',synchlists);	 // synch lists online btn	
-	
-	var foldables=document.getElementsByClassName('foldable');
-	for(var i=0;i<foldables.length;i++){
-		var children = foldables[i].children;
-		for(j=1;j<children.length;j++){
-			children[j].style.display='none'; //console.log('child '+ j + 'set to none');			
+ async function GetLists() {
+	return new Promise((resolve, rejects) => {
+	  fetch(chrome.runtime.getURL("./playlists/jsonlist_youtubeid.json")).then(
+		(resp) => {
+		  console.log("Parsing json");
+		  responseJson(resp).then((d) => {
+			//   console.log(d);
+			resolve(d);
+		  });
 		}
-		foldables[i].addEventListener('click',function(){ToggleFold(event)});	
-	}
-	
-	runExport();
-	chrome.storage.local.get({eventLog:[]}, function(items){
-		eventLog = typeof items.eventLog !== 'undefined' ? items.eventLog : [];
-		eventLog.reverse();
-		eventLogBuilder();		
+	  );
 	});
-			
-	chrome.storage.sync.get({lastFmKey:[]}, function(items){
-		//console.log(typeof(items.lastFmKey.key)=="undefined");
-		if(typeof(items.lastFmKey.key)!="undefined"){//key exists
-			document.getElementById('lfmkey').value = items.lastFmKey.key;
-			document.getElementById('lfmsecret').value = items.lastFmKey.secret;
-		}
-		else{
-			document.getElementById('lfmkey').placeholder = "Enter 32 char key.";
-			document.getElementById('lfmsecret').placeholder = "Enter 32 char secret.";
-		}		
-	});	
-	fItems[0].click();	fItems[1].click();	fItems[2].click();
+  }
+
+document.addEventListener('DOMContentLoaded', function() {
+
+	
+	chrome.tabs.create({ url: "listviewer.html" });	
+
 });
+  
+
+	  
+
+	// document.getElementById('rExport').checked=true;
+	// document.getElementById('rExport').addEventListener('click', ParseJSON);
+	// document.getElementById('rImport').addEventListener('click', ParseJSON);
+	// document.getElementById('resultText').addEventListener('keyup', ParseJSON);	
+
+	// document.getElementById('resultText').style.float='left';
+	// document.getElementById('resultText').cols=72;
+	// document.getElementById('resultText').style.marginRight='40px';
+	// document.getElementById('importHandler').style.display='block';
+	// document.getElementById('importHandler').style.height="400px";
+	
+	// fItems = document.getElementsByClassName('filterItem');
+	// fItems[0].addEventListener('click',function(){ToggleFilter(event)});
+	// fItems[1].addEventListener('click',function(){ToggleFilter(event)});
+	// fItems[2].addEventListener('click',function(){ToggleFilter(event)});	
+		
+	// document.getElementById('btnCopy').addEventListener('click',CopyToClipboard);	
+	
+	// document.getElementById('lfmkey').addEventListener('keyup',CheckLastFmInput);
+	// document.getElementById('lfmsecret').addEventListener('keyup',CheckLastFmInput);
+	// document.getElementById('ind_approve').addEventListener('click',SaveLFMCredentials);	
+	// document.getElementById('ind_approve').addEventListener('mouseover',function(){this.width="28";this.height="28";});	
+	// document.getElementById('ind_approve').addEventListener('mouseout',function(){this.width="24";this.height="24";});	
+
+	// document.getElementById('btnSynch').addEventListener('click',synchlists);	 // synch lists online btn	
+	
+	// var foldables=document.getElementsByClassName('foldable');
+	// for(var i=0;i<foldables.length;i++){
+	// 	var children = foldables[i].children;
+	// 	for(j=1;j<children.length;j++){
+	// 		children[j].style.display='none'; //console.log('child '+ j + 'set to none');			
+	// 	}
+	// 	foldables[i].addEventListener('click',function(){ToggleFold(event)});	
+	// }
+	
+	// runExport();
+	// chrome.storage.local.get({eventLog:[]}, function(items){
+	// 	eventLog = typeof items.eventLog !== 'undefined' ? items.eventLog : [];
+	// 	eventLog.reverse();		
+	// 	eventLogBuilder();		
+	// });
+			
+	// chrome.storage.sync.get({lastFmKey:[]}, function(items){
+	// 	//console.log(typeof(items.lastFmKey.key)=="undefined");
+	// 	if(typeof(items.lastFmKey.key)!="undefined"){//key exists
+	// 		document.getElementById('lfmkey').value = items.lastFmKey.key;
+	// 		document.getElementById('lfmsecret').value = items.lastFmKey.secret;
+	// 	}
+	// 	else{
+	// 		document.getElementById('lfmkey').placeholder = "Enter 32 char key.";
+	// 		document.getElementById('lfmsecret').placeholder = "Enter 32 char secret.";
+	// 	}		
+	// });	
+	// fItems[0].click();	fItems[1].click();	fItems[2].click();

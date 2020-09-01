@@ -59,14 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<form>
 	<fieldset>
 	<legend>Visuals:</legend>
-	<label><span title="Check to go into nightmode"><input type="checkbox" id="cbToggleNightMode">Night Mode</span></label>
-	<label><span title="Check to show the videos"><input type="checkbox" id="cbToggleShowVideo">Show Video</span></label>
-	<label><span title="Check to widen chat and hide video"><input type="checkbox" id="cbWideChat">Wide chat</span></label></br>
-	<label><span title="Check to colorize usernames"><input type="checkbox" id="cbColorizer">Colorize chat</span></label>	
-	<label><span title="Check to add timestamps"><input type="checkbox" id="cbTimestamper">Add chat timestamps</span></label></br>
-	<label><span title="Check to minimize listview"><input type="checkbox" id="cbHideThumbs" >Minimal Layout</span></label></br>
 	<label><span title="Check to show playing song in the chat"><input type="checkbox" id="cbTogglePlaysInChat">Show playing song in chat</span></label></br>
-	<label><span title="Check to show playing songs above video"><input type="checkbox" id="cbTogglePlaysOverVid">Show playing song above video</span></label></br>
 	<label><span title="Check to enable radio mode"><input type="checkbox" id="cbradio">Radio mode</span></label></br>
 	</fieldset>
 	<fieldset id="radiofieldset">
@@ -92,13 +85,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<span id="editplaylist"><img src="figs/pencil.png" title="Edit playlist" height="16" width="16" style="cursor: pointer;"></span>
 		<span id="clearplaylist"><img src="figs/cross.png" title="Clear playlist" height="16" width="16" style="cursor: pointer;"></span>
 	</div>
-	<label><input title ="Pause when alone" type="checkbox" id="cbpausealone" value="value">Pause when alone</label>
 	<label><input type="checkbox" id="cbDiscovery">Discovery mode</span></label>
 	<label><input type="checkbox" id="cbChatCommands">Allow chat commands</span><br />
-	<span title="Add songs when playlist gets shorter than this number">Min. playlist length (mod only):
-	<input type="text" id="txtMinPlaylistLength" placeholder="10" size="3"></span></br>
-	<span title="Don't suggest and autoremove songs longer than this number (minutes)" >Maximal song duration (mod only): 
-	<input type="text" id="txtMaxSongLength" placeholder="30" value="30" size="3"></span></br>
+	<span title="Add songs when playlist gets shorter than this number">Min. playlist length:
+	<input type="text" id="txtMinPlaylistLength" placeholder="10" size="3"></span></br>	
 	<span>
 	<input type="button" id="btnEditBanned" value="Manage blacklist" title="Manage blacklist">
 	<input type="button" id="btnClearLog" value="Clear LogArray" title="Clear played list.">

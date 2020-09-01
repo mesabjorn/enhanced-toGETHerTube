@@ -1,35 +1,30 @@
 <html>
 <head>
 <style>
-#menu
-{
-    position: fixed;
-    top: 0px;
-	width:100%;
-	background-color: #c3c3c3;	
-	margin-left:0px;	
-	padding:10px;
+
+body{
+	margin-left:20%;
+	margin-top:5%;
+	width:60%;
 }
 
-body {
-	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-	font-size: 100%;	
-	margin-top:20%;
-	margin-left:0px;
-}      
-#texthelper{
-	background-color: red;
-	color:white;
+tr:hover {
+	background-color: #c3c3c3;
 }
-#listcontainer{
-	margin-left:25px;
-	margin-top:0;
+
+tr:nth-child(even):hover{
+	background-color: #c3c3c3;
 }
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
 #searchbar{
 	position: fixed;
 	top: 90%;
-	left:90%;
-	width:8%;
+	left:85%;
+	width:12%;
 	border:solid 1px black;
 	background-color: #c3c3c3;	
 	margin-left:0px;	
@@ -41,18 +36,30 @@ body {
 <script src="loadpage.js"></script>
 </head>
 <body>
-<div id="menu">
+<!-- <div id="menu">
 	<span>
 		<textarea id="addinputtext" placeholder="Add more... (comma seperated)" cols="100" rows="5"></textarea><br />
 		<input id="addbutton" type="button" value="Add more">
 		<input id="savebutton" type="button" value="Save">
-	</span>
+	</span> 
 	
 	<div id="texthelper"></div>
 	<div><h4 id="title">Playlist contents:</h4></div>
-</div>
+</div> -->
 <span id="searchbar">Search:<input id="searchfield" style="width:100%" type="text" placeholder="Search.."></span>
-<div id="listcontainer"></div>
+<!-- <div id="listcontainer"></div> -->
+
+<table id="listcontainer" style="width:100%">
+	<thead style="text-align: left;">
+		<tr>
+		<th>#</th>
+	  	<th>Artist</th>
+	  	<th>Song</th>
+	 	<th>Youtube ID</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
 
 </body>
 </html>

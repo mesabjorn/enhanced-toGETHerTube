@@ -1,31 +1,28 @@
 {
   "manifest_version": 2,
-
-  "name": "Enhanced ToGETHerTube",
-  "description": "",
-  "version": "1.53",
+  "name": "Enhanced Cytube V2",
+  "description": "Add broadcasting and quality of life features to Cytube rooms.",
+  "version": "2.00",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
-	"default_title": "Enhanced ToGETHerTube"
-  }, 
-  "icons": {"16": "icon16.png",
-			"48": "icon48.png",
-			"128": "icon128.png" },  
+    "default_title": "Enhanced Cytube"
+  },
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
   "content_scripts": [
     {
-      "matches": ["https://togethertube.com/rooms/*"],
-	  "exclude_matches": ["https://togethertube.com/rooms"],
-	  "js": ["jquery-2.2.3.min.js","md5.js","gethByListObserver.js"],
-	  "css": ["nightmode.css"],
-	  "run_at":"document_end"
+      "matches": ["https://cytu.be/r/*"],
+      "js": [
+        "md5.js",
+        "lastfmhandler.js",
+        "jquery-3.5.1.min.js",
+		"customrng.js",
+        "aNewGeth.js"
+      ],
+      "run_at": "document_end"
     }
   ],
-  "permissions": [
-	"activeTab",
-	"storage",
-	"tabs",
-	"https://togethertube.com/rooms/crarmy"	
-  ]
+  "permissions": ["activeTab", "storage", "tabs"],
+  "web_accessible_resources": ["playlists/*.json"]
 }
