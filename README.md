@@ -8,8 +8,12 @@ Instruction and demo of use:
 " target="_blank"><img src="http://img.youtube.com/vi/k-_7ifroYwc/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
-Current version:  1.52.3
+Current version:  2.00
 ## Changes:
+* 01-09-2020 V2.00
+	* Complete overhaul of the radio app and class
+	* Now suggesting fixed youtube id's instead of searching for tracks on youtube.
+	* Bug fixes
 * 22-03-2019 V1.52.3
 	* New Reply Functionality added to the chat (Requires Timestamp to be enabled)
 	* You can now click on the timestamp to reply to that message
