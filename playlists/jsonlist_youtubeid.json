@@ -80,8 +80,8 @@
     "listname": "The%20Who%20-%20The%20Real%20Me"
   },
   {
-    "name": "The Moody Blues   Ride My See Saw   1968  Stereo",
-    "id": "mIavaAdzNK0",
+    "name": "The Moody Blues - Ride My See-Saw",
+    "id": "Iss9xKyqAeA",
     "listname": "The%20Moody%20Blues%20-%20Ride%20My%20See%20Saw"
   },
   {
@@ -120,8 +120,8 @@
     "listname": "Status%20Quo%20-%20Pictures%20of%20Matchstick%20Men"
   },
   {
-    "name": "U2 - Pride (In The Name Of Love) (Live)",
-    "id": "49ND7S3F9Ps",
+    "name": "U2 - Pride (In The Name Of Love)",
+    "id": "LHcP4MWABGY",
     "listname": "U2%20-%20Pride%20%28In%20the%20Name%20of%20Love%29"
   },
   {
@@ -200,8 +200,8 @@
     "listname": "The%20Rolling%20Stones%20-%20She%20Was%20Hot"
   },
   {
-    "name": "Nirvana - About A Girl (Live On MTV Unplugged, 1993 / Unedited)",
-    "id": "_24pJQUj7zg",
+    "name": "Nirvana - About A Girl (MTV Unplugged)",
+    "id": "AhcttcXcRYY",
     "listname": "Nirvana%20-%20About%20a%20Girl"
   },
   {
@@ -310,8 +310,8 @@
     "listname": "Moxy%20-%20Midnight%20Flight"
   },
   {
-    "name": "Pearl Jam - INDIFFERENCE, Prague 2018 (COMPLETE)",
-    "id": "4Bia3D_njQk",
+    "name": "Pearl Jam - Indifference",
+    "id": "EmL8XbC6Zmo",
     "listname": "Pearl%20Jam%20-%20Indifference"
   },
   {
@@ -325,9 +325,9 @@
     "listname": "Mot%F6rhead%20-%20Heroes"
   },
   {
-    "name": "Mama Kin (Live at the Ritz, New York)",
-    "id": "n342qdMTpJM",
-    "listname": "Guns%20N%27%20Roses%20-%20Mama%20Kin%20%28ritz%29"
+    "name": "Mama Kin",
+    "id": "zP2Kw3xvgYU",
+    "listname": "Guns%20N%27%20Roses%20-%20Mama%20Kin"
   },
   {
     "name": "Freedom Rider",
@@ -340,8 +340,8 @@
     "listname": "Fastball%20-%20The%20Way"
   },
   {
-    "name": "Aerosmith - Eat The Rich (Live 2014)",
-    "id": "McB4yJgXTcQ",
+    "name": "Aerosmith - Eat The Rich (Official Video)",
+    "id": "o-0lAhnoDlU",
     "listname": "Aerosmith%20-%20Eat%20the%20Rich"
   },
   {
@@ -380,8 +380,8 @@
     "listname": "Elvis%20Presley%20-%20Burning%20Love"
   },
   {
-    "name": "Queen - The March Of The Black Queen (Live At The Rainbow, 74) Part 9/24",
-    "id": "4Wsj7ad54eA",
+    "name": "Queen - The March of The Black Queen (Official Lyric Video)",
+    "id": "SoBMhx_ap_g",
     "listname": "Queen%20-%20The%20March%20Of%20The%20Black%20Queen"
   },
   {
@@ -467,9 +467,14 @@
     "listname": "The%20Cult%20-%20Sweet%20Soul%20Sister"
   },
   {
-    "name": "Led Zeppelin - Heartbreaker  Living Loving Maid",
-    "id": "JidA5mfqIps",
-    "listname": "Led%20Zeppelin%20-%20Heartbreaker%20%28/%20Living%20Loving%20Maid%20%28She%27s%20Just%20a%20Woman%29%29"
+    "name": "Led Zeppelin - Heartbreaker (Official Audio)",
+    "id": "e5O4073zCKA",
+    "listname": "Led%20Zeppelin%20-%20Heartbreaker"
+  },
+  {
+    "name": "Led Zeppelin - Living Loving Maid (She's Just a Woman) (Official Audio)",
+    "id": "-8MCijoQpfA",
+    "listname": "Led%20Zeppelin%20-%20Living%20Loving%20Maid%20%28She%27s%20Just%20a%20Woman%29"
   },
   {
     "name": "Rory Gallagher - &quot;Cradle Rock&quot;  ( Irish Tour 1974)",
@@ -487,9 +492,9 @@
     "listname": "The%20Velvet%20Underground%20-%20Venus%20In%20Furs"
   },
   {
-    "name": "Come Together [NY Live] - John Lennon (HD-HQ)",
-    "id": "Zdgw4nJjDaM",
-    "listname": "The%20Beatles%20-%20Come%20Together%20%28John%20Lennon/The%20Beatles%20Live%20In%20New%20York%20City%29"
+    "name": "The Beatles - Come Together",
+    "id": "45cYwDMibGo",
+    "listname": "The%20Beatles%20-%20Come%20Together"
   },
   {
     "name": "Indian Summer",
@@ -502,8 +507,8 @@
     "listname": "Derek%20and%20the%20Dominos%20-%20Bell%20Bottom%20Blues"
   },
   {
-    "name": "Lynyrd Skynyrd - Simple Man - Live At The Florida Theatre / 2015 (Official Video)",
-    "id": "Mqfwbf3X8SA",
+    "name": "Lynyrd Skynyrd - Simple Man",
+    "id": "sMmTkKz60W8",
     "listname": "Lynyrd%20Skynyrd%20-%20Simple%20Man"
   },
   {
@@ -542,8 +547,8 @@
     "listname": "Eric%20Clapton%20-%20If%20I%20Had%20Possession%20Over%20Judgement%20Day"
   },
   {
-    "name": "Free - All Right Now (Doing Their Thing, 1970) Official Live Video",
-    "id": "vqdCZ0yHNa4",
+    "name": "All Right Now",
+    "id": "lSdBtoIIYT4",
     "listname": "Free%20-%20All%20Right%20Now"
   },
   {
@@ -577,8 +582,8 @@
     "listname": "Deep%20Purple%20-%20Black%20Night"
   },
   {
-    "name": "Judas Priest - You&#39;ve Got Another Thing Comin&#39; (Live)",
-    "id": "YPQcBDsnE8c",
+    "name": "Judas Priest - You've Got Another Thing Comin' - Official Remaster",
+    "id": "9QP4a03oFbQ",
     "listname": "Judas%20Priest%20-%20You%27ve%20Got%20Another%20Thing%20Comin%27"
   },
   {
@@ -589,7 +594,7 @@
   {
     "name": "I&#39;m so Afraid (Live at the Forum, Los Angeles, CA October 21-22, 1982) (2016 Remaster)",
     "id": "fkwIxrbNkFg",
-    "listname": "Fleetwood%20Mac%20-%20I%27m%20So%20Afraid%20%28mirage%20live%29"
+    "listname": "Fleetwood%20Mac%20-%20I%27m%20So%20Afraid"
   },
   {
     "name": "The Kinks - Plastic Man (1969)",
@@ -697,8 +702,8 @@
     "listname": "Aerosmith%20-%20Bone%20To%20Bone"
   },
   {
-    "name": "The Letter The Box Tops HD {Stereo}",
-    "id": "HbkaKxFn0xw",
+    "name": "The Box Tops - The Letter (Upbeat 1967)",
+    "id": "HIWY8UyW9bw",
     "listname": "The%20Box%20Tops%20-%20The%20Letter"
   },
   {
@@ -882,8 +887,8 @@
     "listname": "Supertramp%20-%20The%20Logical%20Song"
   },
   {
-    "name": "The Jimi Hendrix Experience - I Dont Live Today",
-    "id": "hoB79vW7O_g",
+    "name": "The Jimi Hendrix Experience - I Don't Live Today (Iowa 1968)",
+    "id": "ukrEWJiWVM0",
     "listname": "Jimi%20Hendrix%20-%20I%20Don%27t%20Live%20Today"
   },
   {
@@ -1033,7 +1038,7 @@
   },
   {
     "name": "The Hollies - He ain&#39;t heavy, he&#39;s my brother (video/audio edited &amp; restored) HQ/HD",
-    "id": "1pfUqhV_OyI",
+    "id": "Jl5vi9ir49g",
     "listname": "The%20Hollies%20-%20He%20Aint%20Heavy%20He%27s%20My%20Brother"
   },
   {
@@ -1077,8 +1082,8 @@
     "listname": "Vinnie%20Moore%20-%20Panic%20Attack"
   },
   {
-    "name": "Lynyrd Skynyrd &quot;Sweet Home Alabama&quot; (Live In Atlantic City) - Album OUT NOW!",
-    "id": "Zup5Pg98m5U",
+    "name": "Lynyrd Skynyrd Sweet Home Alabama",
+    "id": "ye5BuYf8q4o",
     "listname": "Lynyrd%20Skynyrd%20-%20Sweet%20Home%20Alabama"
   },
   {
@@ -1122,8 +1127,8 @@
     "listname": "Supertramp%20-%20Goodbye%20Stranger"
   },
   {
-    "name": "Queens of the Stone Age - Burn The Witch (Live Rock Werchter 2018)",
-    "id": "lLcQuUFv4xI",
+    "name": "Queens Of The Stone Age - Burn The Witch (Official Music Video)",
+    "id": "v7c187E5BxY",
     "listname": "Queens%20of%20the%20Stone%20Age%20-%20Burn%20the%20Witch"
   },
   {
@@ -1132,8 +1137,8 @@
     "listname": "Foghat%20-%20Slow%20Ride"
   },
   {
-    "name": "Loverboy, Turn Me Loose, Live 2014",
-    "id": "NSx4A3Dipp0",
+    "name": "Loverboy - Turn Me Loose (Video)",
+    "id": "TnHm4ro_l8s",
     "listname": "Loverboy%20-%20Turn%20Me%20Loose"
   },
   {
@@ -1208,13 +1213,13 @@
     "listname": "Good%20Rats%20-%20Anybody%20Got%20the%20Time"
   },
   {
-    "name": "Queen - We Will Rock You Live at Wembley Stadium 1986[HQ Sound] Lyrics",
-    "id": "dHEGOxVeYaM",
+    "name": "Queen - We Will Rock You (Live at Wembley 11.07.1986)",
+    "id": "FtyZSWJkFXU",
     "listname": "Queen%20-%20We%20Will%20Rock%20You"
   },
   {
-    "name": "Eric Clapton - Got To Get Better In A Little While - San Diego 2007",
-    "id": "DkSPCduxWU4",
+    "name": "Eric Clapton - Got To Get Better [Live at Crossroads 2013]",
+    "id": "efFo-Clq844",
     "listname": "Eric%20Clapton%20-%20Got%20to%20Get%20Better%20in%20a%20Little%20While"
   },
   {
@@ -1298,8 +1303,8 @@
     "listname": "Guns%20N%27%20Roses%20-%20You%20Could%20Be%20Mine"
   },
   {
-    "name": "Nirvana - Dumb (Live On MTV Unplugged, 1993 / Unedited)",
-    "id": "GtBhclCigH0",
+    "name": "Nirvana - Dumb",
+    "id": "4xRuxuHjBY4",
     "listname": "Nirvana%20-%20Dumb"
   },
   {
@@ -1393,8 +1398,8 @@
     "listname": "Scorpions%20-%20The%20Zoo"
   },
   {
-    "name": "Supertramp - Take The Long Way Home (1979)",
-    "id": "7btmeE8Ewa8",
+    "name": "Supertramp - Take The Long Way Home (BEST QUALITY SOUND)",
+    "id": "LPRrHyXchEY",
     "listname": "Supertramp%20-%20Take%20the%20Long%20Way%20Home"
   },
   {
@@ -1418,8 +1423,8 @@
     "listname": "Rainbow%20-%20Lady%20of%20the%20Lake"
   },
   {
-    "name": "G3   Live In Tokyo",
-    "id": "dIzObVL7140",
+    "name": "Foxey Lady (Live at the Tokyo Forum, Tokyo, Japan - May 2005)",
+    "id": "-QWTHY2_gDA",
     "listname": "G3%20-%20Foxey%20Lady%20%28Live%20in%20Tokyo%29"
   },
   {
@@ -1515,7 +1520,7 @@
   },
   {
     "name": "Shattered (Remastered)",
-    "id": "3_Y5J0ka4_k",
+    "id": "EJsRBa01xoE",
     "listname": "The%20Rolling%20Stones%20-%20Shattered"
   },
   {
@@ -1675,8 +1680,8 @@
     "listname": "Johnny%20Cash%20-%20Personal%20Jesus"
   },
   {
-    "name": "U2 - Bad (Live Aid 1985)",
-    "id": "HvBgRSSlVBA",
+    "name": "Bad (Remastered 2009)",
+    "id": "LCdltGg4EzM",
     "listname": "U2%20-%20Bad"
   },
   {
@@ -1720,8 +1725,8 @@
     "listname": "Led%20Zeppelin%20-%20Stairway%20To%20Heaven"
   },
   {
-    "name": "ZZ Top - Got Me Under Pressure (Live)",
-    "id": "ISveIzgq_kQ",
+    "name": "ZZ Top - Got me under Pressure [HD] [Studio Version]",
+    "id": "cZVLp19jang",
     "listname": "ZZ%20Top%20-%20Got%20Me%20Under%20Pressure"
   },
   {
@@ -1790,8 +1795,8 @@
     "listname": "Pink%20Floyd%20-%20Have%20A%20Cigar"
   },
   {
-    "name": "The Doors - Back Door Man (Live)",
-    "id": "E9n3v4Wr-JI",
+    "name": "The Doors - Back Door Man",
+    "id": "uxX18WZ6Glw",
     "listname": "The%20Doors%20-%20Back%20Door%20Man"
   },
   {
@@ -1820,8 +1825,8 @@
     "listname": "Journey%20-%20Any%20Way%20You%20Want%20It"
   },
   {
-    "name": "Pink Floyd - The Great Gig in the Sky (Live)",
-    "id": "_1jL8A20H_k",
+    "name": "[HD] Pink Floyd - The Great Gig In The Sky",
+    "id": "cVBCE3gaNxc",
     "listname": "Pink%20Floyd%20-%20The%20Great%20Gig%20in%20the%20Sky"
   },
   {
@@ -1880,8 +1885,8 @@
     "listname": "Creedence%20Clearwater%20Revival%20-%20I%20Put%20A%20Spell%20On%20You"
   },
   {
-    "name": "Fire on the Mountain (Live at Winterland, December 31, 1978)",
-    "id": "H6244sbhkGY",
+    "name": "Grateful Dead - Fire On The Mountain (Studio Version)",
+    "id": "YAhEi7W1ib0",
     "listname": "Grateful%20Dead%20-%20Fire%20on%20the%20Mountain"
   },
   {
@@ -1905,8 +1910,8 @@
     "listname": "The%20Rolling%20Stones%20-%20Let%20it%20Bleed%20%28lyrics%29"
   },
   {
-    "name": "Jethro Tull - Heavy Horses / Moths - 1978 - Promo Videos (Remastered)",
-    "id": "_GL6F2M7-gA",
+    "name": "Jethro Tull - Heavy Horses",
+    "id": "vRHATZzMh-g",
     "listname": "Jethro%20Tull%20-%20Heavy%20Horses%20%281978%20Widescreen%29"
   },
   {
@@ -2100,8 +2105,8 @@
     "listname": "Queen%20-%20Under%20Pressure"
   },
   {
-    "name": "Gerry Rafferty - Right Down The Line - ( Remastered ) HD",
-    "id": "ZUdb7dQP9ac",
+    "name": "Gerry Rafferty - Right Down the Line",
+    "id": "NSfOB8ANdWU",
     "listname": "Gerry%20Rafferty%20-%20Right%20Down%20the%20Line"
   },
   {
@@ -2265,8 +2270,8 @@
     "listname": "Pink%20Floyd%20-%20Cirrus%20Minor"
   },
   {
-    "name": "Pearl Jam - Jeremy (lyrics)",
-    "id": "2yzgO4MIYGo",
+    "name": "Pearl Jam - Jeremy",
+    "id": "oNO6pAJBCs4",
     "listname": "Pearl%20Jam%20-%20Jeremy"
   },
   {
@@ -2295,8 +2300,8 @@
     "listname": "The%20Rolling%20Stones%20-%20Rock%20And%20A%20Hard%20Place"
   },
   {
-    "name": "Kina - Can We Kiss Forever? (ft. Adriana Proenza)",
-    "id": "qz7tCZE_3wA",
+    "name": "Kiss - Forever",
+    "id": "d_RKO5ozLVo",
     "listname": "KISS%20-%20Forever"
   },
   {
@@ -2305,8 +2310,8 @@
     "listname": "Led%20Zeppelin%20-%20What%20Is%20and%20What%20Should%20Never%20Be"
   },
   {
-    "name": "FREE - FIRE AND WATER (1970 Beat Club)",
-    "id": "Y-s3rGFthJQ",
+    "name": "Free - Fire And Water (1970)",
+    "id": "q13EUUsIsFE",
     "listname": "Free%20-%20Fire%20and%20Water"
   },
   {
@@ -2891,8 +2896,8 @@
     "listname": "Aerosmith%20-%20Outta%20Your%20Head"
   },
   {
-    "name": "Joe Cocker - With a Little Help from My Friends (Official Live)",
-    "id": "ZdfQ-fruMdg",
+    "name": "Joe Cocker - With a Little Help from My Friends",
+    "id": "nCrlyX6XbTU",
     "listname": "Joe%20Cocker%20-%20With%20a%20Little%20Help%20From%20My%20Friends"
   },
   {
@@ -3136,13 +3141,13 @@
     "listname": "Peter%20Frampton%20-%20Breaking%20All%20the%20Rules"
   },
   {
-    "name": "King Crimson - Moonchild  1969",
-    "id": "l9x_e0tS3Fc",
+    "name": "King Crimson - Moonchild",
+    "id": "HuSNlVnayXk",
     "listname": "King%20Crimson%20-%20Moonchild"
   },
   {
-    "name": "STEALERS WHEEL  -    Late Again 1972",
-    "id": "xsYI4HIbVY8",
+    "name": "Late Again (Stealers Wheel).avi",
+    "id": "evmsWcFX3Ao",
     "listname": "Stealers%20Wheel%20-%20Late%20Again"
   },
   {
@@ -3201,13 +3206,13 @@
     "listname": "Golden%20Earing%20-%20When%20The%20Lady%20Smiles"
   },
   {
-    "name": "Komodo - (I Just) Died In Your Arms",
-    "id": "d8OI9FllKfg",
+    "name": "foreigner i just die in your arms tonight",
+    "id": "UxcFZTa-Nbs",
     "listname": "Foreigner%20-%20I%20Just%20Died%20In%20Your%20Arms%20Tonight"
   },
   {
-    "name": "Jefferson Airplane - Somebody to Love (Dick Cavett Show)",
-    "id": "cBYv2wr9co0",
+    "name": "somebody to love-jefferson airplane",
+    "id": "JUbMWtUyIIE",
     "listname": "Jefferson%20Airplane%20-%20Somebody%20to%20Love"
   },
   {
@@ -3286,8 +3291,8 @@
     "listname": "The%20Who%20-%20Acid%20Queen"
   },
   {
-    "name": "Queen - Father to Son (Live at the Rainbow 1974)",
-    "id": "uBoikBIINqw",
+    "name": "Queen - Father To Son (Official Lyric Video)",
+    "id": "4hytYgRmzTs",
     "listname": "Queen%20-%20Father%20to%20Son"
   },
   {
@@ -3296,8 +3301,8 @@
     "listname": "Status%20Quo%20-%20Whatever%20You%20Want"
   },
   {
-    "name": "YES: &quot;SOUTH SIDE OF THE SKY&quot; [WITH LYRICS] - FRAGILE 11-26-1971. (HD HQ 1080p)",
-    "id": "-G-oMib0rU4",
+    "name": "South Side of the Sky (2008 Remaster)",
+    "id": "hBAauFYod80",
     "listname": "Yes%20-%20South%20Side%20of%20the%20Sky"
   },
   {
@@ -3412,8 +3417,8 @@
     "listname": "Lynyrd%20Skynyrd%20-%20What%27s%20Your%20Name"
   },
   {
-    "name": "Yes - Sweet Dreams - Live at QPR 1975 - Relayer Tour",
-    "id": "m6-5DfNslts",
+    "name": "Sweet Dreams (2003 Remaster)",
+    "id": "N8v_VihauxI",
     "listname": "Yes%20-%20Sweet%20Dreams"
   },
   {
@@ -3452,8 +3457,8 @@
     "listname": "Buddy%20Holly%20-%20Peggy%20Sue"
   },
   {
-    "name": "The Kinks   Victoria  1969  Stereo",
-    "id": "4o9vvXjhuaY",
+    "name": "The Kinks - Victoria",
+    "id": "z2GHlcwlT1Y",
     "listname": "The%20Kinks%20-%20Victoria"
   },
   {
@@ -3567,8 +3572,8 @@
     "listname": "The%20Beatles%20-%20Lady%20Madonna"
   },
   {
-    "name": "IRON MAIDEN-Alexander The Great",
-    "id": "5ggxDQRzZGo",
+    "name": "Iron Maiden - Alexander The Great (with lyrics)",
+    "id": "1oTEQf1d9Iw",
     "listname": "Iron%20Maiden%20-%20Alexander%20the%20Great"
   },
   {
@@ -3672,8 +3677,8 @@
     "listname": "Uriah%20Heep%20-%20Fallen%20Angel"
   },
   {
-    "name": "Kiss MTV Unplugged Goin Blind",
-    "id": "gTw2GpzRGbg",
+    "name": "Goin' Blind (Live)",
+    "id": "ZMtOQMByDQo",
     "listname": "KISS%20-%20Goin%20Blind"
   },
   {
@@ -3767,8 +3772,8 @@
     "listname": "Iron%20Butterfly%20-%20You%20Can%27t%20Win"
   },
   {
-    "name": "Iron Maiden - Running Free (Live 1988)",
-    "id": "LQibaENT86U",
+    "name": "Iron Maiden - Running Free",
+    "id": "80Hyz4pOXtE",
     "listname": "Iron%20Maiden%20-%20Running%20Free"
   },
   {
@@ -3967,8 +3972,8 @@
     "listname": "Billy%20Idol%20-%20Sweet%20Sixteen"
   },
   {
-    "name": "Yes - Starship Trooper (Live)",
-    "id": "Uf_IT54ABY4",
+    "name": "Yes - Starship Trooper",
+    "id": "DKftiJS30Cs",
     "listname": "Yes%20-%20Starship%20Trooper"
   },
   {
@@ -4012,8 +4017,8 @@
     "listname": "Red%20Hot%20Chili%20Peppers%20-%20Breaking%20the%20Girl"
   },
   {
-    "name": "Peter Frampton - Baby I Love Your Way (Live Acoustic)",
-    "id": "I4x3yFVV-LI",
+    "name": "Peter Frampton - Baby I Love Your Way",
+    "id": "m0nc-hh9viQ",
     "listname": "Peter%20Frampton%20-%20Baby%20I%20Love%20Your%20Way"
   },
   {
@@ -4067,13 +4072,13 @@
     "listname": "The%20Rolling%20Stones%20-%20Little%20Red%20Rooster"
   },
   {
-    "name": "The White Stripes   Seven Nation Army Live at Rock Am Ring 2007 1",
-    "id": "DKdmdCtPtnQ",
+    "name": "The White Stripes - Seven Nation Army (Official Video)",
+    "id": "0J2QdDbelmY",
     "listname": "The%20White%20Stripes%20-%20Seven%20Nation%20Army"
   },
   {
-    "name": "Marooned (1 hour version)  - Pink Floyd",
-    "id": "ePmiIM59ook",
+    "name": "Marooned (Extended) - Pink Floyd",
+    "id": "MKY_t0hCwm4",
     "listname": "Pink%20Floyd%20-%20Marooned"
   },
   {
@@ -4167,8 +4172,8 @@
     "listname": "Kansas%20-%20Dust%20in%20the%20Wind"
   },
   {
-    "name": "Dire Straits - Sultans Of Swing (Live Aid 1985)",
-    "id": "JVZTP_kX5BE",
+    "name": "Dire Straits - Sultans Of Swing (Alchemy Live)",
+    "id": "8Pa9x9fZBtY",
     "listname": "Dire%20Straits%20-%20Sultans%20of%20Swing"
   },
   {
@@ -4277,8 +4282,8 @@
     "listname": "Pink%20Floyd%20-%20Is%20There%20Anybody%20Out%20There%3F"
   },
   {
-    "name": "The Eagles - &quot;I Can&#39;t Tell You Why&quot;",
-    "id": "HvesXV7CW78",
+    "name": "Eagles 1979 I Can't Tell You Why (Official Video) #Remastered In HD",
+    "id": "jTejseilE-Y",
     "listname": "Eagles%20-%20I%20Can%27t%20Tell%20You%20Why"
   },
   {
@@ -4307,8 +4312,8 @@
     "listname": "The%20Kinks%20-%20Dedicated%20Follower%20of%20Fashion"
   },
   {
-    "name": "Led Zeppelin - Rock and Roll Live Video (Madison Square Garden 1973) Original Records",
-    "id": "IbW5K2F1N28",
+    "name": "LED ZEPPELIN - Rock And Roll",
+    "id": "lncr2g9XJHU",
     "listname": "Led%20Zeppelin%20-%20Rock%20and%20Roll"
   },
   {
@@ -4457,8 +4462,8 @@
     "listname": "Whitesnake%20-%20Best%20Years"
   },
   {
-    "name": "Stone Temple Pilots - Down - #01",
-    "id": "gmTjfNN7D9I",
+    "name": "Stone Temple Pilots - Down",
+    "id": "KO4gvhtlQP4",
     "listname": "Stone%20Temple%20Pilots%20-%20Down"
   },
   {
@@ -4622,8 +4627,8 @@
     "listname": "Aerosmith%20-%20Ragdoll"
   },
   {
-    "name": "Yes - Don&#39;t Go (Symphonic Live DVD)",
-    "id": "5lohudKx-50",
+    "name": "Yes - Don't Go",
+    "id": "TwXoCF9N-js",
     "listname": "Yes%20-%20Don%27t%20Go"
   },
   {
@@ -4967,8 +4972,8 @@
     "listname": "The%20Rolling%20Stones%20-%20Street%20Fighting%20Man"
   },
   {
-    "name": "Pearl Jam - Sirens (Pittsburgh &#39;13)",
-    "id": "QTA0ieJe3fU",
+    "name": "Pearl Jam - Sirens",
+    "id": "4jZBwyG7HPs",
     "listname": "Pearl%20Jam%20-%20Sirens"
   },
   {
@@ -5017,8 +5022,8 @@
     "listname": "Whitesnake%20-%20Still%20of%20the%20Night"
   },
   {
-    "name": "Loverboy - &quot;Working For The Weekend&quot; Drum Cover (Old Throwback Video)",
-    "id": "JO8a9JP-tpU",
+    "name": "Loverboy - Working for the Weekend (Official Video)",
+    "id": "dsgBpsNPQ50",
     "listname": "Loverboy%20-%20Working%20For%20The%20Weekend%20%28copyright%29"
   },
   {
@@ -5027,8 +5032,8 @@
     "listname": "Iron%20Maiden%20-%20Blood%20Brothers"
   },
   {
-    "name": "Joy Division - Disorder (Trainspotting)",
-    "id": "BSjjIuK7vJM",
+    "name": "Joy Division - Disorder (Official Reimagined Video)",
+    "id": "galUy3gMWpM",
     "listname": "Joy%20Division%20-%20Disorder"
   },
   {
@@ -5107,8 +5112,8 @@
     "listname": "Deep%20Purple%20-%20Woman%20From%20Tokyo"
   },
   {
-    "name": "Drifting (June 25, 1970 outtake) - Jimi Hendrix (Cover)",
-    "id": "O-V0-ZdcpnY",
+    "name": "Drifting, Jimi Hendrix",
+    "id": "P9SnhHA16yc",
     "listname": "Jimi%20Hendrix%20-%20Drifting"
   },
   {
@@ -5282,8 +5287,8 @@
     "listname": "The%20Rolling%20Stones%20-%20Ruby%20Tuesday"
   },
   {
-    "name": "Don&#39;t Be Cruel Elvis Presley 4K-HD - Official DES Audio {Stereo}",
-    "id": "NQyROuH1450",
+    "name": "Elvis Presley - Don't Be Cruel ('68 Comeback Special 50th Anniversary HD Remaster)",
+    "id": "xe_ikmZq33M",
     "listname": "Elvis%20Presley%20-%20Don%27t%20Be%20Cruel"
   },
   {
@@ -5323,8 +5328,8 @@
     "listname": "Pat%20Benatar-%20Hit%20Me%20With%20Your%20Best%20Shot%20%28lyrics%29"
   },
   {
-    "name": "Blue Öyster Cult - Astronomy - Live 1976",
-    "id": "NzRVm65lNdU",
+    "name": "Blue Öyster Cult - Astronomy",
+    "id": "7heNQmPkpWA",
     "listname": "Blue%20%D6yster%20Cult%20-%20Astronomy%28live%29"
   },
   {
@@ -5338,8 +5343,8 @@
     "listname": "Jethro%20Tull%20-%20Back%20to%20the%20Family"
   },
   {
-    "name": "Focus - Sylvia / Hocus Pocus - Live at BBC Old Grey Whistle Test 1972 (Remastered)",
-    "id": "nO9OFxPpSYs",
+    "name": "Focus - Sylvia",
+    "id": "uHDVz9JZt0U",
     "listname": "Focus%20-%20Sylvia"
   },
   {
@@ -5353,8 +5358,8 @@
     "listname": "Grand%20Funk%20Railroad%20-%20Locomotion"
   },
   {
-    "name": "Blue Oyster Cult - Don&#39;t Fear The Reaper",
-    "id": "q-XHvZKsLcY",
+    "name": "Blue Oyster Cult - (Don't Fear) The Reaper (Audio)",
+    "id": "Dy4HA3vUv2c",
     "listname": "Blue%20%D6yster%20Cult%20-%20%28Don%27t%20Fear%29%20The%20Reaper"
   },
   {
@@ -5465,16 +5470,16 @@
   {
     "name": "Pearl jam - Yellow Ledbetter subtitulada en español",
     "id": "uxF9ddQyfwY",
-    "listname": "Pearl%20Jam%20-%20Yellow%20Ledbetter%20%28uxF9ddQyfwY%29"
+    "listname": "Pearl%20Jam%20-%20Yellow%20Ledbetter"
   },
   {
-    "name": "Rory Gallagher - Too Much Alcohol - Montreux 1979",
-    "id": "BmbQOzvrcqc",
+    "name": "Rory Gallagher - Too Much Alcohol",
+    "id": "z1zsRRt1FWE",
     "listname": "Rory%20Gallagher%20-%20Too%20Much%20Alcohol"
   },
   {
-    "name": "Fleetwood Mac - Albatross (1 Hour Loop)",
-    "id": "UkHgUc6bOgU",
+    "name": "Fleetwood Mac - Albatross",
+    "id": "QooCN5JbOkU",
     "listname": "Fleetwood%20Mac%20-%20Albatros"
   },
   {
@@ -5483,8 +5488,8 @@
     "listname": "Eddie%20Vedder%20-%20No%20More"
   },
   {
-    "name": "Black Sabbath - God is Dead? (Gathered in Their Masses)",
-    "id": "ZTAmnHaOCBM",
+    "name": "Black Sabbath - God is Dead? (Official Video)",
+    "id": "OhhOU5FUPBE",
     "listname": "Black%20Sabbath%20-%20God%20Is%20Dead%3F"
   },
   {
@@ -5513,13 +5518,13 @@
     "listname": "KISS%20-%20Firehouse"
   },
   {
-    "name": "Live - Dolphins Cry + Run To The Water - Live at Pinkpop 2017",
-    "id": "IVKQY8qALUs",
+    "name": "Live - Run To The Water",
+    "id": "TB1zPYKQCCY",
     "listname": "Live%20-%20Run%20to%20the%20Water"
   },
   {
-    "name": "Bon Jovi - It&#39;s My Life (Live from Home 2020)",
-    "id": "xeu5CLX8ngY",
+    "name": "Bon Jovi - It's my life w/ lyrics",
+    "id": "9SKFwtgUJHs",
     "listname": "Bon%20Jovi%20-%20It%27s%20My%20Life"
   },
   {
@@ -5618,8 +5623,8 @@
     "listname": "David%20Gilmour%20-%20Wot%27s...uh%20the%20Deal"
   },
   {
-    "name": "The Rolling Stones - Angie (1973) (Original Video) MUSIC LEGENDS",
-    "id": "GlSbQNHHy50",
+    "name": "The Rolling Stones - Angie - OFFICIAL PROMO (Version 1)",
+    "id": "RcZn2-bGXqQ",
     "listname": "The%20Rolling%20Stones%20-%20Angie"
   },
   {
@@ -5814,7 +5819,7 @@
   },
   {
     "name": "The Hollies - The air that I breathe (video/audio edited &amp; restored) HQ/HD",
-    "id": "Cwt65tG2GI8",
+    "id": "HydvceA1PAI",
     "listname": "The%20Hollies%20-%20The%20Air%20That%20I%20Breath"
   },
   {
@@ -5883,8 +5888,8 @@
     "listname": "Grand%20Funk%20Railroad%20-%20Shinin%27%20On"
   },
   {
-    "name": "Guns N&#39; Roses - November Rain (Audio) HQ",
-    "id": "Elr2KQs9Ffk",
+    "name": "Guns N' Roses - November Rain",
+    "id": "8SbUC-UaAxE",
     "listname": "Guns%20N%27%20Roses%20-%20November%20Rain"
   },
   {
@@ -5998,8 +6003,8 @@
     "listname": "The%20Raconteurs%20-%20Consolers%20of%20the%20Lonely"
   },
   {
-    "name": "Eagles - Lyin&#39; Eyes - ( Remastered ) HD",
-    "id": "0q7kAVk66m4",
+    "name": "Eagles - Lying Eyes -HD",
+    "id": "5-NlR54PqLw",
     "listname": "Eagles%20-%20Lyin%27%20Eyes"
   },
   {
@@ -6463,8 +6468,8 @@
     "listname": "Judas%20Priest%20-%20Diamonds%20and%20Rust"
   },
   {
-    "name": "Don Henley-Boys of Summer HD/HQ 1984+Info✔",
-    "id": "gb1wYslTBk8",
+    "name": "Don Henley - The Boys Of Summer (HD)",
+    "id": "tlFIE-6sadI",
     "listname": "Don%20Henley%20-%20The%20Boys%20Of%20Summer"
   },
   {
@@ -6563,8 +6568,8 @@
     "listname": "The%20Police%20-%20King%20of%20Pain"
   },
   {
-    "name": "Billy Joel - Piano Man (live)",
-    "id": "1pf9q9ADrKM",
+    "name": "Billy Joel - Piano Man",
+    "id": "gxEPV4kolz0",
     "listname": "Billy%20Joel%20-%20Piano%20Man"
   },
   {
@@ -6618,13 +6623,13 @@
     "listname": "Aerosmith%20-%20Sunshine"
   },
   {
-    "name": "T. Rex Bang A Gong (Get It On) Live 1971",
-    "id": "A4o4Q9sd_y4",
+    "name": "T. Rex - Get It On (1971) HD 0815007",
+    "id": "wZkTh_T75QY",
     "listname": "T.%20Rex%20-%20Bang%20a%20Gong%20%28Get%20It%20On%29"
   },
   {
-    "name": "Richard Ashcroft - The Drugs Don&#39;t Work (Live on The Chris Evans Breakfast Show with Sky)",
-    "id": "FLbsciv73D0",
+    "name": "The Verve - The Drugs Don't Work (Official Video)",
+    "id": "ToQ0n3itoII",
     "listname": "The%20Verve%20-%20The%20Drugs%20Don%27t%20Work"
   },
   {
@@ -6783,8 +6788,8 @@
     "listname": "Camel%20-%20Never%20Let%20Go"
   },
   {
-    "name": "John Riley (instrumental version 1)",
-    "id": "jzbxCkAZNOo",
+    "name": "The Byrds John Riley (Instrumental)",
+    "id": "DV-f4BNxAng",
     "listname": "The%20Byrds%20-%20John%20Riley%20%28Instrumental%29"
   },
   {
@@ -6833,7 +6838,7 @@
     "listname": "Chris%20Read%20-%20On%20the%20Beach"
   },
   {
-    "name": "001 Pearl Jam with Neil Young   Rockin in the free world Toronto 2011 COMPLETE",
+    "name": "001 Pearl Jam with Neil Young Rockin in the free world Toronto 2011 COMPLETE",
     "id": "RZZb_wxC1JA",
     "listname": "Pearl%20Jam%20with%20Neil%20Young%20-%20Rockin%20in%20the%20free%20world%20%28Toronto%202011%20COMPLETE%29"
   },
@@ -6853,8 +6858,8 @@
     "listname": "The%20Rolling%20Stones%20-%20Mother%27s%20Little%20Helper%20%28HQ%29"
   },
   {
-    "name": "The Who - Real Good Looking Boy",
-    "id": "aCYCPGHvOmo",
+    "name": "Real Good Looking Boy",
+    "id": "ldJGfKl8gmk",
     "listname": "The%20Who%20-%20Real%20Good%20Looking%20Boy"
   },
   {
@@ -6883,8 +6888,8 @@
     "listname": "Elton%20John%20-%20Rocket%20Man%20%28Studio%20Version%20with%20Lyrics%29"
   },
   {
-    "name": "Bohemian Rhapsody - I&#39;m In Love With My Car Scene (Rami Malek/Freddie Mercury)",
-    "id": "aFt9C9brQY8",
+    "name": "Queen - I'm In Love With My Car (Official Video)",
+    "id": "oaEM4JYFPfw",
     "listname": "Queen%20-%20I%27m%20In%20Love%20With%20My%20Car"
   },
   {
@@ -6903,8 +6908,8 @@
     "listname": "Fleetwood%20Mac%20-%20Hold%20Me"
   },
   {
-    "name": "billy idol &quot;tomorrow never knows&quot; butcherin the beatles-2006",
-    "id": "fRI0ygMtCiQ",
+    "name": "Billy Idol Tomorrow Never Knows",
+    "id": "eWD2kdu0H54",
     "listname": "Billy%20Idol%20-%20Tomorrow%20Never%20Knows"
   },
   {
@@ -6973,8 +6978,8 @@
     "listname": "John%20Lennon%20-%20Give%20Peace%20a%20Chance"
   },
   {
-    "name": "The Kinks VS Green Day [Picture Book/Warning",
-    "id": "32UAys9VaaI",
+    "name": "The Kinks - Picture Book (Official Audio)",
+    "id": "B7encWb7lNQ",
     "listname": "The%20Kinks%20-%20Picturebook"
   },
   {
@@ -7174,7 +7179,7 @@
   },
   {
     "name": "Eagles - The Last Resort",
-    "id": "NY5Nc5MHZvc",
+    "id": "p4zR9r9olOg",
     "listname": "Eagles%20-%20Last%20Resort"
   },
   {
@@ -7248,8 +7253,8 @@
     "listname": "Aphrodite%27s%20Child%20-%20The%20Beast"
   },
   {
-    "name": "Velvet Revolver - Slither -  Live Rock Am Ring 2007",
-    "id": "HeTFBvfrenE",
+    "name": "Velvet Revolver - Slither",
+    "id": "BKz2U4fvA4U",
     "listname": "Velvet%20Revolver%20-%20Slither"
   },
   {
@@ -7365,7 +7370,7 @@
   },
   {
     "name": "Gerry Rafferty - City To City .( City To City 1978)",
-    "id": "my5TIZiwomQ",
+    "id": "z3xfq0_n94U",
     "listname": "Gerry%20Rafferty%20-%20City%20to%20City%20%281978%29"
   },
   {
@@ -7574,8 +7579,8 @@
     "listname": "Johnny%20Cash%20-%20Ring%20of%20Fire"
   },
   {
-    "name": "Mr. Tambourine Man The Byrds HD {Stereo}",
-    "id": "gYLKlgalHMs",
+    "name": "The Byrds Mr Tambourine Man Remastered",
+    "id": "NyOzGPbn2tg",
     "listname": "The%20Byrds%20-%20Mr.%20Tambourine%20Man"
   },
   {
@@ -7629,8 +7634,8 @@
     "listname": "David%20Bowie%20-%20Lazarus"
   },
   {
-    "name": "ZZtop &quot;Burgerman&quot; music video cover",
-    "id": "EjsaHq1mhec",
+    "name": "ZZ TOP - Burger Man",
+    "id": "V0TATbhvSu4",
     "listname": "ZZ%20Top%20-%20Burger%20Man"
   },
   {
@@ -7739,8 +7744,8 @@
     "listname": "Rush%20-%20Red%20Barchetta"
   },
   {
-    "name": "NEW * Eight Miles High The Byrds HD Remaster {Stereo}",
-    "id": "9ztmhIFRXeY",
+    "name": "The Byrds- Eight Miles High (HQ)",
+    "id": "J74ttSR8lEg",
     "listname": "The%20Byrds%20-%20Eight%20Miles%20High"
   },
   {
@@ -7819,8 +7824,8 @@
     "listname": "Stevie%20Ray%20Vaughan%20-%20The%20House%20is%20Rocking"
   },
   {
-    "name": "Turn Turn Turn The Byrds HD {Stereo}",
-    "id": "BPbR3uovtf8",
+    "name": "The Byrds - Turn! Turn! Turn!",
+    "id": "W4ga_M5Zdn4",
     "listname": "The%20Byrds%20-%20Turn%21%20Turn%21%20Turn%21%20%28To%20Everything%20There%20Is%20a%20Season%29"
   },
   {
@@ -8075,8 +8080,8 @@
     "listname": "Survivor%20-%20The%20Search%20is%20Over"
   },
   {
-    "name": "The Doobie Brothers   Long Train Running   1973",
-    "id": "BlbuHQa_cs4",
+    "name": "The Doobie Brothers - Long Train Running",
+    "id": "m4tJSn0QtME",
     "listname": "The%20Doobie%20Brothers%20-%20Long%20train%20running%20%2860s%29"
   },
   {
@@ -8155,8 +8160,8 @@
     "listname": "Aerosmith%20-%20Hoodoo/%20Voodoo%20Medicine%20Man"
   },
   {
-    "name": "The Doors - Texas radio &amp; big beat / Love me two times (  Copenhagen Sept 18th 1968 Stereo Edition )",
-    "id": "yJ9777QBR2s",
+    "name": "The Wasp (Texas Radio And The Big Beat) - The Doors (lyrics)",
+    "id": "01jcJK6v0Go",
     "listname": "The%20Doors%20-%20The%20W.A.S.P.%20Radio%20Texas"
   },
   {
@@ -8296,8 +8301,8 @@
     "listname": "Rory%20Gallagher%20-%20Loanshark%20Blues"
   },
   {
-    "name": "Bad Company - How About That",
-    "id": "2HrMSgB3TUU",
+    "name": "Bad Company - How About That / HQ Lyrics",
+    "id": "ExqE4SPrK0Y",
     "listname": "Bad%20Company%20-%20How%20About%20that"
   },
   {
@@ -8608,8 +8613,8 @@
     "listname": "Thin%20Lizzy%20-%20The%20Sun%20Goes%20Down"
   },
   {
-    "name": "Manfred Mann&#39;s Earth Band - The Road To Babylon Lyrics",
-    "id": "aFaDGenG_rU",
+    "name": "Manfred Mann's Earth Band - The Road to Babylon",
+    "id": "LgDpFzUGN-A",
     "listname": "Manfred%20Mann%27s%20Earth%20Band%20-%20The%20Road%20To%20Babylon%20%28lyrics%29"
   },
   {
@@ -8633,13 +8638,13 @@
     "listname": "Judas%20Priest%20-%20Living%20After%20Midnight"
   },
   {
-    "name": "Salisbury",
-    "id": "ukxSaP2cCLc",
+    "name": "Uriah Heep - Salisbury",
+    "id": "asM5m0i-_OE",
     "listname": "Uriah%20Heep%20-%20Salisbury"
   },
   {
-    "name": "((((((( HENDRIX - MACHINE GUN )))))))((((((( LIVE COPENHAGEN ))))))) ((((((( 1970 )))))))",
-    "id": "dzjGLFpdj7Q",
+    "name": "Jimi Hendrix - Machine Gun (Live Copenhagen 1970)",
+    "id": "qc2gZmcCAEk",
     "listname": "Jimi%20Hendrix%20-%20Machine%20Gun%20%28live%20copenhagen%201970%29"
   },
   {
@@ -8683,8 +8688,8 @@
     "listname": "Styx%20-%20Father%20O.S.A"
   },
   {
-    "name": "The Alan Parsons Project - I Robot (1977) (2016 RM, MFSL UDSACD-2174)",
-    "id": "8ng6N5oXZ9M",
+    "name": "The Alan Parsons Project ‎- I Robot",
+    "id": "u7oAuba3Ekg",
     "listname": "The%20Alan%20Parsons%20Project%20-%20I%20Robot"
   },
   {
@@ -8739,7 +8744,7 @@
   },
   {
     "name": "Kayak - Merlin (1981)",
-    "id": "E46JBZg_7Eo",
+    "id": "0siEExxUiic",
     "listname": "Kayak%20-%20Merlin"
   },
   {
@@ -8921,12 +8926,7 @@
     "name": "Down Down",
     "id": "vPiMuwOdQEE",
     "listname": "Bachman%20Turner%20Overdrive%20-%20Down%20Down"
-  },
-  {
-    "name": "King Crimson - I Talk To The Wind",
-    "id": "sjq298rlLWQ",
-    "listname": "King%20Crimson%20-%20I%20Talk%20to%20the%20Wind"
-  },
+  },  
   {
     "name": "Queens of the Stone Age - Go With The Flow (Live Rock Werchter 2018)",
     "id": "M49z0rBBcjw",
@@ -9319,8 +9319,8 @@
     "listname": "Steppenwolf%20-%20Rock%20Me"
   },
   {
-    "name": "Bus Stop The Hollies HD {Stereo}",
-    "id": "YCFvXAbSXUQ",
+    "name": "Bus Stop- The Hollies - 1966",
+    "id": "It75wQ0JypA",
     "listname": "The%20Hollies%20-%20Bus%20Stop"
   },
   {
@@ -9344,8 +9344,8 @@
     "listname": "King%20Crimson%20-%20One%20Time%20%28Live%20In%20Japan%29"
   },
   {
-    "name": "manfred manns earth band   joy bringer  1973",
-    "id": "T_o6UQI2jI8",
+    "name": "Manfred Mann`s Earth Band - Joybringer",
+    "id": "ThSIVW6eb58",
     "listname": "Manfred%20Mann%27s%20Earth%20Band%20-%20Joybringer"
   },
   {
@@ -9369,9 +9369,9 @@
     "listname": "Manowar%20-%20The%20Crown%20and%20the%20Ring"
   },
   {
-    "name": "Eric Clapton VERY RARE Circus left town LIVE in 2016. April 13. Budokan, JAPAN",
-    "id": "AbElZqjcwBo",
-    "listname": "Eric%20Clapton%20-%20Circus%20Left%20Town%20%28RARE%29"
+    "name": "Eric Clapton - Circus Left Town (RARE)",
+    "id": "veGF9Vjo_IE",
+    "listname": "Eric%20Clapton%20-%20Circus%20Left%20Town"
   },
   {
     "name": "Jefferson Airplane - She Has Funny Cars (Audio)",
@@ -9424,8 +9424,8 @@
     "listname": "Paul%20McCartney%20-%20Beautiful%20Night"
   },
   {
-    "name": "Gary Moore - I Love You More Than You&#39;ll Ever Know (Live, TVRip)",
-    "id": "o0UW1izy7Y0",
+    "name": "Gary Moore I Love You More Than You'll Ever Know",
+    "id": "sq_x9_4GAJA",
     "listname": "Gary%20Moore%20-%20I%20Love%20You%20More%20Than%20You%27ll%20Ever%20Know%20%28HD%29"
   },
   {
@@ -9494,13 +9494,13 @@
     "listname": "Bruce%20Springsteen%20-%20My%20City%20Of%20Ruins%20%28With%20Lyrics%29"
   },
   {
-    "name": "The Kinks - The Kinks Are the Village Green Preservation Society - Vintage Music Songs",
-    "id": "q4p3RRHKUxw",
+    "name": "The Kinks - The Village Green Preservation Society",
+    "id": "lc7dmu4G8oc",
     "listname": "The%20Kinks%20-%20The%20Village%20Green%20Preservation%20Society"
   },
   {
-    "name": "Glenn Hughes - Nights In White Satin / A Whiter Shade Of Pale - Live 2007 ᴴᴰ",
-    "id": "Hu5dKwfFZ7s",
+    "name": "Glenn Hughes - Nights in white satin (The Moody Blues cover)",
+    "id": "bOzo3aQgAxQ",
     "listname": "Glenn%20Hughes%20-%20Nights%20In%20White%20Satin"
   },
   {
@@ -9529,8 +9529,8 @@
     "listname": "Cream%20-%20Rollin%27%20and%20Tumblin"
   },
   {
-    "name": "NEW * Hold Your Head Up Argent 4K-HD Remaster {Stereo}",
-    "id": "T33JAlkznTI",
+    "name": "Hold Your Head Up-Argent-1972-(Long Version)",
+    "id": "FBnSWJHawQQ",
     "listname": "Argent%20-%20Hold%20Your%20Head%20Up"
   },
   {
@@ -9569,8 +9569,8 @@
     "listname": "The%20Troggs%20-%20Wild%20Thing"
   },
   {
-    "name": "Porch - Late Show With David Letterman - Pearl Jam",
-    "id": "MRsTWrzdVcw",
+    "name": "Pearl Jam - Porch",
+    "id": "EXtAm7QbwMc",
     "listname": "Pearl%20Jam%20-%20Porch"
   },
   {
@@ -9694,8 +9694,8 @@
     "listname": "Cream%20-%20Stormy%20Monday"
   },
   {
-    "name": "Rush - La Villa Strangiato (Live from R30)",
-    "id": "9bFhh6LkRl8",
+    "name": "Rush - La Villa Strangiato (Official Music Video)",
+    "id": "eK1hmDpa8bo",
     "listname": "Rush%20-%20La%20Villa%20Strangiato"
   },
   {
@@ -9906,7 +9906,7 @@
   },
   {
     "name": "Journey To The Center Of The Mind Amboy Dukes {Stereo}",
-    "id": "u_m82tjPff8",
+    "id": "Beh1ipK3hN0",
     "listname": "The%20Amboy%20Dukes%20-%20Journey%20to%20the%20Center%20of%20the%20Mind"
   },
   {
@@ -10055,8 +10055,8 @@
     "listname": "Love%20-%20Alone%20again%20or%20%28original%29"
   },
   {
-    "name": "Circle of Hands",
-    "id": "_931bHJHPAU",
+    "name": "Uriah Heep - Circle of Hands",
+    "id": "Vsfc5GjEtys",
     "listname": "Uriah%20Heep%20-%20Circle%20Of%20Hands"
   },
   {
@@ -10258,7 +10258,7 @@
   {
     "name": "Night of Prog 2  Tribute to King Crimson &#39;Easy Money&#39;",
     "id": "1oYKWQklXBY",
-    "listname": "King%20Crimson%20-%20Book%20of%20Saturday%20%28Alternate%20Take%201973.1-2%20Command%20Studios%20London%20UK%29"
+    "listname": "King%20Crimson%20-%20Book%20of%20Saturday"
   },
   {
     "name": "House Of Lords- Love Don&#39;t Lie",
@@ -10301,8 +10301,8 @@
     "listname": "Johnny%20Cash%20-%20Ghost%20Riders%20in%20the%20Sky"
   },
   {
-    "name": "Harry Styles Covers Peter Gabriel’s “Sledgehammer” Live on the Howard Stern Show",
-    "id": "Tqm7-zN5s8k",
+    "name": "Peter Gabriel - Sledgehammer (HD version)",
+    "id": "OJWJE0x7T4Q",
     "listname": "Peter%20Gabriel%20-%20Sledgehammer"
   },
   {
@@ -10326,8 +10326,8 @@
     "listname": "Omega%20-%20The%20Girl%20With%20The%20Pearl%27s%20Hair"
   },
   {
-    "name": "10cc - I&#39;m not in love (complete version) (video/audio edited &amp; restored) HQ/HD",
-    "id": "Ki78MK9JywE",
+    "name": "10cc - I'm not in love",
+    "id": "STugQ0X1NoI",
     "listname": "10cc%20-%20I%27m%20Not%20in%20Love"
   },
   {
@@ -10511,8 +10511,8 @@
     "listname": "Joe%20Walsh%20-%20Life%27s%20Been%20Good"
   },
   {
-    "name": "Eagles - Hotel California (Lyrics)",
-    "id": "EqPtz5qN7HM",
+    "name": "Eagles - Hotel California",
+    "id": "811QZGDysx0",
     "listname": "Eagles%20-%20Hotel%20California"
   },
   {
@@ -10521,8 +10521,8 @@
     "listname": "Journey%20-%20Lovin%27%20Touchin%20%27%20Squeezin%27"
   },
   {
-    "name": "CSNY Love The One You&#39;re With 1974",
-    "id": "Xiz2yZgD9B0",
+    "name": "Love the One You're With",
+    "id": "SY4HI_vqf0c",
     "listname": "Stephen%20Stills%20-%20Love%20The%20One%20You%27re%20With"
   },
   {
@@ -10971,8 +10971,8 @@
     "listname": "Dio%20-%20Holy%20Diver"
   },
   {
-    "name": "Pure Prarie League - &quot;Amie&quot;",
-    "id": "Wrmrjx66_T8",
+    "name": "Pure Prarie League - Amie",
+    "id": "SPyBGQtpTCo",
     "listname": "Pure%20Prairie%20League%20-%20Amie"
   },
   {
@@ -11031,8 +11031,8 @@
     "listname": "Steppenwolf%20-%20Ride%20With%20Me"
   },
   {
-    "name": "Blooze",
-    "id": "AHouiyc8MEU",
+    "name": "Friendly Fire",
+    "id": "OHN8IF82muQ",
     "listname": "Peter%20Frampton%20-%20Friendly%20Fire"
   },
   {
@@ -11136,9 +11136,9 @@
     "listname": "Elton%20John%20-%20Goodbye%20Yellow%20Brick%20road"
   },
   {
-    "name": "Run for your Life Beatles mizo vocals lyrics chords cover",
-    "id": "ALYDD4XBing",
-    "listname": "The%20Beatles%20-%20Run%20For%20Your%20Life%20%28mizo%29"
+    "name": "Run For Your Life (Remastered 2009)",
+    "id": "yzHXtxcIkg4",
+    "listname": "The%20Beatles%20-%20Run%20For%20Your%20Life"
   },
   {
     "name": "ELOY - Land of nobody",
@@ -11226,8 +11226,8 @@
     "listname": "Def%20Leppard%20-%20Armageddon%20it"
   },
   {
-    "name": "Doctor Please",
-    "id": "qtuSHJr3JLw",
+    "name": "Blue cheer-Doctor Please",
+    "id": "AR7StZUsc8o",
     "listname": "Blue%20Cheer%20-%20Doctor%20Please"
   },
   {
@@ -11478,8 +11478,8 @@
     "listname": "The%20Who%20-%20Amazing%20Journey"
   },
   {
-    "name": "NEW * I Am A Rock Simon &amp; Garfunkel HQ Remaster {Stereo}",
-    "id": "Vs_YYf-snz0",
+    "name": "Simon & Garfunkel - I Am A Rock",
+    "id": "JKlSVNxLB-A",
     "listname": "Simon%20and%20Garfunkel%20-%20I%20Am%20A%20Rock"
   },
   {
@@ -11722,5 +11722,29 @@
     "name": "White Lion - Wait (1987) (Music Video) WIDESCREEN 720p",
     "id": "vkuki5AyBHs",
     "listname": "White%20Lion%20-%20Wait"
+  },
+  {
+	"name": "Windows of My Eyes by Cuby & Blizzards",
+    "id": "s2KSJ0ld5Ls",
+    "listname": "Cuby%20and%20the%20Blizzards%20-%20Window%20of%20My%20Eyes"
+  },
+  { "name": "Cuby + Blizzards - AppleKnockers Flophouse",
+    "id": "n1pCWToiDL8",
+    "listname": "Cuby%20and%20the%20Blizzards%20-%20Appleknockers%20Flophouse"
+  },
+  {
+	"name": "Telegram to Monica",
+    "id": "J0_VU8Nxqs4",
+    "listname": "Manfred%20Man's%20Earth%20Band%20-%20Telegram%20to%20Monica"  
+  },
+  {
+	"name": "THINNY LIZZ kings call",
+    "id": "CiMFtrgd2xU",
+    "listname": "Thin%20Lizzy%20-%20King%20Call"  
+  },
+  {
+	"name": "The Great Curve (2005 Remaster)",
+    "id": "3N5qQrGSuJ4",
+    "listname": "Talking%20Heads%20-%20The%20Great%20Curve"
   }
 ]

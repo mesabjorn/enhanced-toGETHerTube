@@ -4,10 +4,9 @@ function responseJson(response) {
   return response.json();
 }
 
-async function GetLists() {
+async function GetLists(filename) {
   return new Promise((resolve, rejects) => {
-    fetch(chrome.runtime.getURL("./playlists/jsonlist_youtubeid.json")).then(
-      (resp) => {
+    fetch(chrome.runtime.getURL(`./playlists/${filename}`)).then((resp) => {
         console.log("Parsing json");
         responseJson(resp).then((d) => {
           //   console.log(d);
@@ -21,7 +20,7 @@ async function GetLists() {
 class CytubePlayer {
   constructor() {
     this.tracks = [];
-    GetLists().then((d) => {
+    GetLists("jsonlist_youtubeid.json").then((d) => {
       this.tracks = d;
       console.log(`Loaded playlist with ${this.tracks.length} track(s).`);
     });
@@ -32,12 +31,12 @@ class CytubePlayer {
       REPEAT_ALL:2
     }
 	
-	  this.rng = new RNG(new Date().getMilliseconds()); // set up rng
+	this.rng = new RNG(new Date().getMilliseconds()); // set up rng
 
     this.isPlaying=true;
 
     this.trackind = 0;
-    this.playmode = this.PLAYMODES.REPEAT_ALL;
+    this.playmode = this.PLAYMODES.SHUFFLE;
     this.vid = document.getElementById("videowrap");
 
     //mode = yt search
@@ -158,25 +157,31 @@ class CytubePlayer {
   
   getRandomTrack() {
     if (this.tracks.length == 0) return;
-    //return Math.floor(Math.random() * this.tracks.length);
-	  return this.rng.choice(this.tracks);	
+	//this.rng = new RNG(new Date().getMilliseconds()); // set up rng
+	return this.rng.choice(this.tracks);
   }
 
   setIsPlaying(isplaying){
     this.isPlaying = isplaying;
-  } 
+  }
+  
+  getFilteredList(filter){
+	  
+	  return this.tracks.filter((v)=>{
+		  return v.name.indexOf(filter)>-1;
+	  });
+	  
+  }
 
-  AddSong() {	
+  AddSong() {
     if(parseInt(document.getElementById("plcount").innerText.replace(" items", ""))>=this.options.minimumListLength){return;}
     
     if(this.isPlaying){
-      let randTrack = this.tracks[this.getRandomTrack()];
+      let randTrack = this.getRandomTrack();
       if(this.playmode==this.PLAYMODES.REPEAT_ALL){
         randTrack = this.tracks[this.trackind];
-        this.trackind +=1;
-        if(this.trackind==this.tracks.length){
-          this.trackind=0;
-        }
+        this.trackind += 1;
+        this.trackind %= this.tracks.length;
       }
       this.urlsearch.value = `https://www.youtube.com/watch?v=${randTrack.id}`;
       this.urlsearchbutton.click();
@@ -414,6 +419,12 @@ class CytubePlayer {
       return t.id.indexOf(id) > -1;
     });
   }
+  
+  getListPosByID(id){
+    return C.tracks.map((v,i)=>{
+		return v.id==id
+		}).indexOf(true);
+	}
 }
 
 C = new CytubePlayer();
