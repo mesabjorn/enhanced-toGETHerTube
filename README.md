@@ -1,12 +1,7 @@
 # Enhanced-toGETHerTube
 
 ## Getting Started
-Chrome extension to change visuals and broadcast on togethertube.com
-Instruction and demo of use:
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=k-_7ifroYwc
-" target="_blank"><img src="http://img.youtube.com/vi/k-_7ifroYwc/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+Chrome extension to change visuals and broadcast on cytu.be.com
 
 Current version:  2.00
 ## Changes:
