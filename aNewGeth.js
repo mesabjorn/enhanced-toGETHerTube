@@ -165,13 +165,22 @@ class CytubePlayer {
     this.isPlaying = isplaying;
   }
   
-  getFilteredList(filter){
-	  
-	  return this.tracks.filter((v)=>{
-		  return v.name.indexOf(filter)>-1;
-	  });
-	  
-  }
+	getFilteredList(filter){	  
+		return this.tracks.filter((v)=>{
+			return decodeURI(v.name).toLowerCase().indexOf(filter)>-1;
+		});
+	}
+	
+	setStaticList(filter){
+		//finds subset of the list and plays it integrally
+		this.tracks = this.tracks.filter((v)=>{
+			return decodeURI(v.name).toLowerCase().indexOf(filter)>-1;
+		});
+		
+		this.playmode = this.PLAYMODES.REPEAT_ALL;
+		this.trackind=0;	  
+	}
+  
 
   AddSong() {
     if(parseInt(document.getElementById("plcount").innerText.replace(" items", ""))>=this.options.minimumListLength){return;}
