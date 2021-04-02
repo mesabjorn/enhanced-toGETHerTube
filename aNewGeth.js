@@ -36,7 +36,7 @@ class CytubePlayer {
     this.isPlaying=true;
 
     this.trackind = 0;
-    this.playmode = this.PLAYMODES.SHUFFLE;
+    this.playmode = this.PLAYMODES.REPEAT_ALL;//this.PLAYMODES.SHUFFLE;
     this.vid = document.getElementById("videowrap");
 
     //mode = yt search
@@ -90,9 +90,37 @@ class CytubePlayer {
       );
     // end side-by-side setup
 
-    $("#controlsrow").insertAfter($(".container-fluid"));
-    $("#currenttitle").insertBefore($(".container-fluid"));
+    //$("#controlsrow").insertAfter($(".container-fluid"));
+    //$("#currenttitle").insertBefore($(".container-fluid"));
     $("#videowrap").insertBefore($("#resizewrap"));
+	
+	
+	$(".container-fluid").prepend($("#currenttitle"));
+	$(".container-fluid").prepend($("#controlsrow"));
+	
+	$("#videowrap-header").remove();
+	
+	// floating video
+	
+	$("#videowrap").removeClass("col-lg-7 col-md-7");
+	$("#videowrap").css("position","fixed")
+	.css("width","250px")
+	.css("right","100px")
+	.css("bottom","0px")
+	.css("height","250px")
+	.css("width","250px");
+	
+	setTimeout(()=>{
+		$("#userlist").css("height","500px");
+		$("#messagebuffer").css("height","500px");		
+	},3000);
+	
+	window.addEventListener('resize', ()=>{
+		
+		$("#userlist").css("height","500px");
+		$("#messagebuffer").css("height","500px");
+		
+	});	
   }
 
   AddPlaylistObserver() {
@@ -116,7 +144,7 @@ class CytubePlayer {
             currentPlaylistLength < parent.prevPlaylistLength ||
             currentPlaylistLength == 0
           ) {
-            console.log("Observed playlist reduction!");
+            //console.log("Observed playlist reduction!");
             setTimeout(() => {
               //AddDummyChatMessage("Now Playing: "+GetCurrentPlayingTrack());
               //if(options.EnableScrobbling){ScrobbleTrack(GetCurrentPlayingTrack());}
@@ -136,10 +164,10 @@ class CytubePlayer {
 	  let observer = new MutationObserver((mutations) => {
 		mutations.forEach((m) => {
 			if(m.addedNodes.length > 0) {
-        console.log({mnodetype:m.addedNodes[0].nodeType});
+        //console.log({mnodetype:m.addedNodes[0].nodeType});
         
         if(m.addedNodes[0].nodeType==3){//text node
-          console.log({nodeinnertext:m.addedNodes[0].innerText});
+          //console.log({nodeinnertext:m.addedNodes[0].innerText});
           parent.AddSong();
         }
         else if(m.addedNodes[0].nodeType==1){          
@@ -421,6 +449,39 @@ class CytubePlayer {
         .getElementsByClassName("embed-responsive embed-responsive-16by9")[0]
         .remove();
     });
+	
+	//playmode dropdown menu
+	//https://stackoverflow.com/questions/57189122/how-to-add-item-to-dropdowns-using-javascript-and-bootstrap/57189207
+	n = document.createElement("li");
+	n.className="dropdown";
+	n.addEventListener("click",function(e){
+		$(e.target.parentNode).addClass("open");
+	});	
+	
+    a = document.createElement("a");
+	a.className="dropdown-toggle";
+	a.innerText="Playmode";
+	let c=document.createElement("b");
+	c.className="caret";
+	a.appendChild(c);
+	n.appendChild(a);
+	let ul=document.createElement("ul");
+	ul.className="dropdown-menu";
+	
+	let opt1 = document.createElement("li");
+	opt1.innerHTML="<a>Shuffle</a>";
+	let opt2 = document.createElement("li");
+	opt2.innerHTML="<a>Repeat all</a>";
+	let opt3 = document.createElement("li");
+	opt3.innerHTML="<a>Repeat one</a>";
+	
+	ul.appendChild(opt1);
+	ul.appendChild(opt2);
+	ul.appendChild(opt3);
+
+	n.appendChild(ul);
+    b.appendChild(n);    
+	
   }
 
   GetTrackById(id) {
