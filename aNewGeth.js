@@ -30,13 +30,25 @@ class CytubePlayer {
       REPEAT_ONE:1,
       REPEAT_ALL:2
     }
+
+    this.commands = [
+      "?",
+      "help",
+      "progress",
+      "nuke",
+      "new",
+      "shuffle",
+      "testnuke",
+      "inplaylist",
+      "clap",
+    ];
 	
-	this.rng = new RNG(new Date().getMilliseconds()); // set up rng
+	  this.rng = new RNG(new Date().getMilliseconds()); // set up rng
 
     this.isPlaying=true;
 
     this.trackind = 0;
-    this.playmode = this.PLAYMODES.REPEAT_ALL;//this.PLAYMODES.SHUFFLE;
+    this.playmode = this.PLAYMODES.REPEAT_ALL;        //this.PLAYMODES.SHUFFLE;
     this.vid = document.getElementById("videowrap");
 
     //mode = yt search
@@ -115,11 +127,9 @@ class CytubePlayer {
 		$("#messagebuffer").css("height","500px");		
 	},3000);
 	
-	window.addEventListener('resize', ()=>{
-		
+	window.addEventListener('resize', ()=>{		
 		$("#userlist").css("height","500px");
-		$("#messagebuffer").css("height","500px");
-		
+		$("#messagebuffer").css("height","500px");		
 	});	
   }
 
@@ -239,7 +249,7 @@ class CytubePlayer {
           this.SubmitAChatMessage(
             "[Geth]: Monitored by " +
               this.versionString +
-              ". Allowed commands: /?, /help, and /new"
+              ". Allowed commands: /?, /help, /inplaylist and /new"
           );
           break;
         case 2: // /progress
@@ -266,8 +276,22 @@ class CytubePlayer {
           //HandleNuke();
           //SubmitAChatMessage('[Geth]: Nuking suggestions.');
           break;
-        case 7: // /inplaylist
-          //TestIfCurrentTrackIsInPlaylist();
+        case 7: ///inplaylist
+          try{
+            let id = $(".queue_active a").attr("href").replace("https://youtube.com/watch?v=","")
+            let inPlaylist = this.GetTrackById(id);
+            if(inPlaylist.length>0){
+              this.SubmitAChatMessage(`[Geth]: Track found in playlist as: ${unescape(inPlaylist[0].listname)}.`);
+            }
+            else{
+              this.SubmitAChatMessage(`[Geth]: Track not found in playlist.`);
+            }
+          }
+          catch(e){
+            console.log("An error occured during the parsing of the command.");
+            console.log(e)
+          }
+          
           break;
         case 8: // /top500
           //GetTop500Track();
@@ -286,35 +310,32 @@ class CytubePlayer {
     }
   }
 
+  
+
   checkGethCommands(command) {
-    let commands = [
-      "?",
-      "help",
-      "progress",
-      "nuke",
-      "new",
-      "shuffle",
-      "testnuke",
-      "inplaylist",
-      "clap",
-    ];
-    let longestCommand = 10;
-    console.log("Checking if '" + command + "'  is a command.");
-    if (command.indexOf("/") == 0) {
-      command = command.toLowerCase();
-      command = command.slice(1, longestCommand + 1); //trim string to prevent injection
-      for (let i = 0; i < commands.length; i++) {
-        //go through command list
-        if (
-          commands[i] === command &&
-          new Date() - this.LastCommandDate > 3000
-        ) {
-          //allow commands every 3s
-          this.handleCommand(i);
-          return;
-        }
-      }
+    let cmdIndex = this.commands.indexOf(command.slice(1));
+    
+    if(cmdIndex>-1 && new Date() - this.LastCommandDate > 3000){
+      this.handleCommand(cmdIndex);  
     }
+    // console.log(cmdIndex) ;
+    // let longestCommand = 10;
+    // // console.log("Checking if '" + command + "'  is a command.");
+    // if (command.indexOf("/") == 0) {
+    //   command = command.toLowerCase();
+    //   command = command.slice(1, longestCommand + 1);         //trim string to prevent injection
+    //   for (let i = 0; i < commands.length; i++) {
+    //     //go through command list
+    //     if (
+    //       commands[i] === command &&
+    //       new Date() - this.LastCommandDate > 3000
+    //     ) {
+    //       //allow commands every 3s
+    //       this.handleCommand(i);
+    //       return;
+    //     }
+    //   }
+    // }
   }
 
   replyTo(message) {
