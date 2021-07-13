@@ -150,8 +150,8 @@
     "listname": "Jimi%20Hendrix%20-%20Bold%20as%20Love"
   },
   {
-    "name": "Crosby, Stills, Nash &amp; Young - Ohio",
-    "id": "gajEmrJR03c",
+    "name": "Ohio",
+    "id": "l1PrUU2S_iw",
     "listname": "Crosby%20Stills%20Nash%20%26%20Young%20-%20Ohio"
   },
   {
@@ -632,8 +632,8 @@
     "listname": "Creedence%20Clearwater%20Revival%20-%20Have%20You%20Ever%20Seen%20The%20Rain"
   },
   {
-    "name": "Queen - Breakthru",
-    "id": "8GxJv0FbYyg",
+    "name": "Queen - Breakthru (Official Video)",
+    "id": "CEjU9KVABao",
     "listname": "Queen%20-%20Breakthru"
   },
   {
@@ -652,8 +652,8 @@
     "listname": "Queen%20-%20Kind%20of%20Magic"
   },
   {
-    "name": "All Along The Watchtower",
-    "id": "PWSMeK28x3E",
+    "name": "The Jimi Hendrix Experience - All Along The Watchtower (Official Audio)",
+    "id": "TLV4_xaYynY",
     "listname": "Jimi%20Hendrix%20-%20All%20Along%20The%20Watchtower"
   },
   {
@@ -913,8 +913,9 @@
   },
   {
     "name": "Traveller in Time",
-    "id": "vg7zEmX09Us",
-    "listname": "Uriah%20Heep%20-%20Traveller%20in%20Time"
+    "id": "6Pdi4HHVBVM",
+    "listname": "Uriah%20Heep%20-%20Traveller%20in%20Time",
+	"changed":"19-April-2021"
   },
   {
     "name": "Nirvana - Polly (Live On MTV Unplugged, 1993 / Unedited)",
@@ -933,8 +934,9 @@
   },
   {
     "name": "King Crimson - The Court Of The Crimson King",
-    "id": "8xYExeTUA70",
-    "listname": "King%20Crimson%20-%20The%20Court%20Of%20The%20Crimson%20King"
+    "id": "gvCmtHDDuu0",
+    "listname": "King%20Crimson%20-%20The%20Court%20Of%20The%20Crimson%20King",
+	"changed":"19-April-2021"
   },
   {
     "name": "Creedence Clearwater Revival - Tombstone Shadow",
@@ -947,8 +949,8 @@
     "listname": "Small%20Faces%20-%20Lazy%20Sunday"
   },
   {
-    "name": "Jethro Tull - Bungle in the Jungle",
-    "id": "0Rxyn-9kWJI",
+    "name": "Bungle in the Jungle (2002 Remaster)",
+    "id": "ha7HY1DtZtw",
     "listname": "Jethro%20Tull%20-%20Bungle%20in%20the%20Jungle"
   },
   {
@@ -1049,7 +1051,7 @@
   {
     "name": "Take It Easy",
     "id": "s0ZZHNRHA2g",
-    "listname": "The%20Eagles%20-%20Take%20It%20Easy"
+    "listname": "Eagles%20-%20Take%20It%20Easy"
   },
   {
     "name": "California Dreamin&#39;",
@@ -1112,8 +1114,8 @@
     "listname": "Frank%20Zappa%20%26%20Captain%20Beefheart%20-%20Muffin%20Man"
   },
   {
-    "name": "Lola - The Kinks 1970",
-    "id": "NFwP2huyNzg",
+    "name": "The Kinks - Lola (Official Audio)",
+    "id": "LemG0cvc4oU",
     "listname": "The%20Kinks%20-%20Lola"
   },
   {
@@ -1398,8 +1400,8 @@
     "listname": "Scorpions%20-%20The%20Zoo"
   },
   {
-    "name": "Supertramp - Take The Long Way Home (BEST QUALITY SOUND)",
-    "id": "LPRrHyXchEY",
+    "name": "Take the Long Way Home - Written and Composed by Roger Hodgson (Supertramp)",
+    "id": "qmWC5dGVvH4",
     "listname": "Supertramp%20-%20Take%20the%20Long%20Way%20Home"
   },
   {
@@ -1686,7 +1688,7 @@
   },
   {
     "name": "Sweet Lorraine (2017 Remastered)",
-    "id": "haUiygv5QQg",
+    "id": "ELbVGxve-Ec",
     "listname": "Uriah%20Heep%20-%20Sweet%20Lorraine"
   },
   {
@@ -1745,8 +1747,8 @@
     "listname": "Live%20-%20All%20Over%20You"
   },
   {
-    "name": "Easy Livin&#39;",
-    "id": "MNRlCrI_Q-s",
+    "name": "Uriah Heep - Easy Living. 1972",
+    "id": "6c7ceMUZZl8",
     "listname": "Uriah%20Heep%20-%20Easy%20Livin%27"
   },
   {
@@ -1805,8 +1807,8 @@
     "listname": "The%20Police%20-%20Mother"
   },
   {
-    "name": "Fly Like An Eagle",
-    "id": "mvTdwxlo3Dc",
+    "name": "Steve Miller Band - Fly Like An Eagle",
+    "id": "6zT4Y-QNdto",
     "listname": "Steve%20Miller%20Band%20-%20Fly%20Like%20an%20Eagle"
   },
   {
@@ -2365,8 +2367,8 @@
     "listname": "Led%20Zeppelin%20-%20The%20Girl%20I%20Love%20She%20Got%20Long%20Black%20Wavy%20Hair"
   },
   {
-    "name": "Deep Purple / Stormbringer / Live  in Hamburg 1975 (HQ)",
-    "id": "Mblenx6tCZc",
+    "name": "Deep Purple-Stormbringer",
+    "id": "4C2K889u_90",
     "listname": "Deep%20Purple%20-%20Stormbringer"
   },
   {
@@ -2375,8 +2377,8 @@
     "listname": "Queensr%FFche%20-%20Eyes%20Of%20A%20Stranger"
   },
   {
-    "name": "China Town",
-    "id": "HC-8hYV4qw0",
+    "name": "Van Halen - China Town",
+    "id": "-Cl1f_6FYQo",
     "listname": "Van%20Halen%20-%20China%20Town"
   },
   {
@@ -2807,7 +2809,7 @@
   },
   {
     "name": "Guns N&#39; Roses - Paradise City",
-    "id": "hzXg_D1kCz0",
+    "id": "Rbm6GXllBiw",
     "listname": "Guns%20N%27%20Roses%20-%20Paradise%20City"
   },
   {
@@ -3351,8 +3353,8 @@
     "listname": "Queen%20-%20You%27re%20My%20Best%20Friend"
   },
   {
-    "name": "Whitesnake - Ain&#39;t No Love in the Heart of the City The Purple Tour, Live  2018",
-    "id": "1Atai1Ftj7w",
+    "name": "Whitesnake - Ain't No Love In the Heart Of The City",
+    "id": "MA3DNlBMNL0",
     "listname": "Whitesnake%20-%20Ain%27t%20No%20Love%20in%20the%20Heart%20of%20the%20City"
   },
   {
@@ -3467,8 +3469,8 @@
     "listname": "AC/DC%20-%20Dirty%20Deeds%20Done%20Dirt%20Cheap"
   },
   {
-    "name": "Sweet - Fox On The Run (Official Video)",
-    "id": "VP2umy6TdEU",
+    "name": "Sweet - Fox On The Run - Promo Clip (OFFICIAL)",
+    "id": "qBdFA6sI6-8",
     "listname": "Sweet%20-%20Fox%20On%20The%20Run"
   },
   {
@@ -3887,8 +3889,8 @@
     "listname": "Free%20-%20My%20Brother%20Jake"
   },
   {
-    "name": "Sweet - Hell Raiser (ZDF Disco 23.06.1973)",
-    "id": "RiQjOeWQhM0",
+    "name": "Sweet - Hell Raiser - Disco 23.06.1973 (OFFICIAL)",
+    "id": "7yYifj6IsUQ",
     "listname": "Sweet%20-%20Hell%20Raiser"
   },
   {
@@ -4057,8 +4059,8 @@
     "listname": "Fleetwood%20Mac%20-%20Sara"
   },
   {
-    "name": "Eagles James Dean Live In Summit, Houston, Texas November 6, 1976",
-    "id": "8DS4fyukpTk",
+    "name": "James Dean - The Eagles",
+    "id": "q1Syd7kRIuk",
     "listname": "Eagles%20-%20James%20Dean"
   },
   {
@@ -4202,8 +4204,8 @@
     "listname": "Steely%20Dan%20-%20Do%20It%20Again"
   },
   {
-    "name": "Marillion - Kayleigh (Extended Versión)  (1985) HD",
-    "id": "OQ4oaLUilBc",
+    "name": "Marillion - Kayleigh",
+    "id": "NumChJYENJk",
     "listname": "Marillion%20-%20Kayleigh"
   },
   {
@@ -4282,8 +4284,8 @@
     "listname": "Pink%20Floyd%20-%20Is%20There%20Anybody%20Out%20There%3F"
   },
   {
-    "name": "I Can't Tell You Why (Eagles) - Studio Version 1979",
-    "id": "UL0xjvn-1j0",
+    "name": "I Can't Tell You Why (2013 Remaster)",
+    "id": "YWkkZcQcb5Q",
     "listname": "Eagles%20-%20I%20Can%27t%20Tell%20You%20Why"
   },
   {
@@ -4437,8 +4439,8 @@
     "listname": "Jon%20Bon%20Jovi%20-%20Blaze%20of%20Glory"
   },
   {
-    "name": "Supertramp/  It&#39;s Raining Again",
-    "id": "2xyY3NfTGf4",
+    "name": "Supertramp - It's Raining Again",
+    "id": "YZUE4_PtOk0",
     "listname": "Supertramp%20-%20It%27s%20Raining%20Again"
   },
   {
@@ -4517,8 +4519,8 @@
     "listname": "Pearl%20Jam%20-%20Alive"
   },
   {
-    "name": "Alice Cooper   Elected",
-    "id": "cSvy8HpxFxo",
+    "name": "Alice Cooper - Elected (Official Video)",
+    "id": "LiQW1TlDZMU",
     "listname": "Alice%20Cooper%20-%20Elected"
   },
   {
@@ -5092,8 +5094,8 @@
     "listname": "Metallica%20-%20Enter%20Sandman"
   },
   {
-    "name": "SUPERTRAMP School (lyrics)",
-    "id": "xaGwEe1VqwQ",
+    "name": "Supertramp School",
+    "id": "zli47IGeSUc",
     "listname": "Supertramp%20-%20School"
   },
   {
@@ -5103,8 +5105,9 @@
   },
   {
     "name": "Look at Yourself (2017 Remastered)",
-    "id": "IuKBkYumXZk",
-    "listname": "Uriah%20Heep%20-%20Look%20at%20Yourself"
+    "id": "FpKfNxp5W3Q",
+    "listname": "Uriah%20Heep%20-%20Look%20at%20Yourself",
+	"changed":"19-April-2021"
   },
   {
     "name": "Woman From Tokyo (Remastered 2000)",
@@ -5117,8 +5120,8 @@
     "listname": "Jimi%20Hendrix%20-%20Drifting"
   },
   {
-    "name": "Janis Joplin - Kozmic Blues lyrics",
-    "id": "IDfD9UwnafQ",
+    "name": "Janis Joplin - Kozmic Blues",
+    "id": "nLN72sR9w0M",
     "listname": "Janis%20Joplin%20-%20Kosmic%20Blues"
   },
   {
@@ -5363,8 +5366,8 @@
     "listname": "Blue%20%D6yster%20Cult%20-%20%28Don%27t%20Fear%29%20The%20Reaper"
   },
   {
-    "name": "AC DC Highway to hell Lyrics Letra",
-    "id": "SMaVii7nnj4",
+    "name": "AC/DC - Highway to Hell (Official Video)",
+    "id": "l482T0yNkeo",
     "listname": "AC/DC%20-%20Highway%20to%20Hell"
   },
   {
@@ -5833,8 +5836,8 @@
     "listname": "Pink%20Floyd%20-%20Another%20Brick%20In%20The%20Wall"
   },
   {
-    "name": "Bullethead",
-    "id": "B2kholsC1I4",
+    "name": "van halen bullethead",
+    "id": "Aas1sQLJL8A",
     "listname": "Van%20Halen%20-%20Bullethead"
   },
   {
@@ -5843,8 +5846,8 @@
     "listname": "David%20Bowie%20-%20Rebel%20Rebel"
   },
   {
-    "name": "Love Me Like a Reptile",
-    "id": "D-WMnV7hikI",
+    "name": "Motorhead - Love me Like a Reptile",
+    "id": "Kd6dtkuKvao",
     "listname": "Mot%F6rhead%20-%20Love%20me%20like%20a%20reptile"
   },
   {
@@ -6053,8 +6056,8 @@
     "listname": "Foo%20Fighters%20-%20Come%20Alive"
   },
   {
-    "name": "Yes - Roundabout",
-    "id": "VYfPACiJ6ew",
+    "name": "Roundabout (2003 Remaster)",
+    "id": "DwPWGUhEtP0",
     "listname": "Yes%20-%20Roundabout"
   },
   {
@@ -6220,7 +6223,7 @@
   {
     "name": "Desperado - Eagles",
     "id": "hhe0ULrAHIw",
-    "listname": "The%20Eagles%20-%20Desperado"
+    "listname": "Eagles%20-%20Desperado"
   },
   {
     "name": "Mr. Pleasant",
@@ -6358,9 +6361,10 @@
     "listname": "Creedence%20Clearwater%20Revival%20-%20Suzie%20Q"
   },
   {
-    "name": "Bird of Prey (2016 - Remaster)",
-    "id": "KH_-Uvhktyk",
-    "listname": "Uriah%20Heep%20-%20Bird%20of%20Prey"
+    "name": "Bird of Prey",
+    "id": "jAeq_7xAh-Q",
+    "listname": "Uriah%20Heep%20-%20Bird%20of%20Prey",
+	"changed":"19-April-2021"
   },
   {
     "name": "Jenny Don&#39;t Mind (2016 Remastered)",
@@ -6468,8 +6472,8 @@
     "listname": "Judas%20Priest%20-%20Diamonds%20and%20Rust"
   },
   {
-    "name": "Don Henley - The Boys Of Summer ('84)",
-    "id": "hIxEU1pARwM",
+    "name": "[HD 720p] The Boys of Summer (1984) - Music Video - Sung by Don Henley",
+    "id": "DtxlvQqvDQs",
     "listname": "Don%20Henley%20-%20The%20Boys%20Of%20Summer"
   },
   {
@@ -6633,8 +6637,8 @@
     "listname": "The%20Verve%20-%20The%20Drugs%20Don%27t%20Work"
   },
   {
-    "name": "Aphrodite&#39;s Child - The Four Horsemen (HQ)",
-    "id": "6wUX4qUwYpI",
+    "name": "Aphrodite's Child - The Four Horsemen (video)",
+    "id": "3KCbqhJt16k",
     "listname": "Aphrodite%27s%20Child%20-%20The%20Four%20Horsemen"
   },
   {
@@ -6983,8 +6987,8 @@
     "listname": "The%20Kinks%20-%20Picturebook"
   },
   {
-    "name": "Ike &amp; Tina Turner - Proud Mary 1973",
-    "id": "tERczqYMMbo",
+    "name": "Ike And Tina Turner - Proud Mary",
+    "id": "TwpVpUYO3MM",
     "listname": "Ike%20%26%20Tina%20Turner%20-%20Proud%20Mary"
   },
   {
@@ -7789,8 +7793,8 @@
     "listname": "The%20Byrds%20-%20I%27ll%20Feel%20a%20Whole%20Lot%20Better"
   },
   {
-    "name": "JANIS JOPLIN   MERCEDES BENZ",
-    "id": "zAyOUTTsyZo",
+    "name": "Mercedes Benz",
+    "id": "-H7YULkiLIA",
     "listname": "Janis%20Joplin%20-%20Mercedes%20Benz"
   },
   {
@@ -8080,9 +8084,9 @@
     "listname": "Survivor%20-%20The%20Search%20is%20Over"
   },
   {
-    "name": "The Doobie Brothers - Long Train Running",
-    "id": "m4tJSn0QtME",
-    "listname": "The%20Doobie%20Brothers%20-%20Long%20train%20running%20%2860s%29"
+    "name": "Doobie Brothers - Long Train Running",
+    "id": "HP_NE4XZGAc",
+    "listname": "The%20Doobie%20Brothers%20-%20Long%20train%20running"
   },
   {
     "name": "Joker And The Thief",
@@ -8793,8 +8797,8 @@
     "listname": "Manfred%20Mann%27s%20Earth%20Band%20-%20For%20You"
   },
   {
-    "name": "So Far Away (Full Version)",
-    "id": "2c1FqqNF7O8",
+    "name": "Dire Straits - So Far Away",
+    "id": "IHXK9glwFBg",
     "listname": "Dire%20Straits%20-%20So%20Far%20Away"
   },
   {
@@ -8878,8 +8882,8 @@
     "listname": "Camel%20-%20Nimrodel"
   },
   {
-    "name": "Your Latest Trick",
-    "id": "OUZDkBjIPS0",
+    "name": "Your Latest Trick - Dire Straits",
+    "id": "e7ZM4mjgrFw",
     "listname": "Dire%20Straits%20-%20Your%20Latest%20Trick"
   },
   {
@@ -9684,8 +9688,8 @@
     "listname": "Mud%20-%20Tiger%20Feet"
   },
   {
-    "name": "Sweet Emotion",
-    "id": "S8QlwE24ci0",
+    "name": "Aerosmith - Sweet Emotion (Official Music Video)",
+    "id": "82cJgPXU-ik",
     "listname": "Aerosmith%20-%20Sweet%20Emotion"
   },
   {
@@ -9900,13 +9904,13 @@
     "listname": "Night%20Ranger%20-%20Sing%20Me%20Away"
   },
   {
-    "name": "Traffic - The Low Spark Of High Heeled Boys",
-    "id": "t_OIGgsTe70",
+    "name": "TRAFFIC - THE LOW SPARK OF HIGH-HEELED BOYS - The Low Spark Of High-Heeled Boys (1971) :: SOTW #22",
+    "id": "rEZH0t5Yozw",
     "listname": "Traffic%20-%20The%20Low%20Spark%20Of%20High%20Heeled%20Boys"
   },
   {
-    "name": "Journey To The Center Of The Mind Amboy Dukes {Stereo}",
-    "id": "Beh1ipK3hN0",
+    "name": "The Amboy Dukes - Journey to the Center of the Mind (Official Audio)",
+    "id": "_onagRhKN5E",
     "listname": "The%20Amboy%20Dukes%20-%20Journey%20to%20the%20Center%20of%20the%20Mind"
   },
   {
@@ -10105,8 +10109,8 @@
     "listname": "Jethro%20Tull%20-%20Nothing%20Is%20Easy"
   },
   {
-    "name": "Heartattack And Vine",
-    "id": "0qH9iQy-Rjc",
+    "name": "Tom Waits - Heartattack And Vine",
+    "id": "lbIi8ZiW5qI",
     "listname": "Tom%20Waits%20-%20Heartattack%20And%20Vine"
   },
   {
@@ -10115,8 +10119,8 @@
     "listname": "Steely%20Dan%20-%20Reelin%20in%20the%20Years"
   },
   {
-    "name": "The Herd - I Don&#39;t Want Our Loving To Die",
-    "id": "ISFywATPgTY",
+    "name": "I Don't Want Our Loving To Die",
+    "id": "4yIZGJQwkj0",
     "listname": "The%20Herd%20-%20I%20Don%27t%20Want%20Our%20Lovin%27%20To%20Die"
   },
   {
@@ -10162,7 +10166,7 @@
   },
   {
     "name": "Alan Parsons Project - Breakdown",
-    "id": "al03NL2R4zQ",
+    "id": "KJBTOC3Mfpk",
     "listname": "The%20Alan%20Parsons%20Project%20-%20Breakdown"
   },
   {
@@ -10406,8 +10410,8 @@
     "listname": "Van%20Morrison%20-%20Caravan"
   },
   {
-    "name": "Electric Light Orchestra, BBC Concert Orchestra - Livin&#39; Thing",
-    "id": "MxjcUtSoWlU",
+    "name": "Electric Light Orchestra - Livin' Thing (Official Video)",
+    "id": "lvBOZCrJsAI",
     "listname": "Electric%20Light%20Orchestra%20-%20Livin%27%20Thing"
   },
   {
@@ -10511,8 +10515,8 @@
     "listname": "Joe%20Walsh%20-%20Life%27s%20Been%20Good"
   },
   {
-    "name": "Eagles - Hotel California",
-    "id": "811QZGDysx0",
+    "name": "Eagles -- Hotel California Live Video HQ",
+    "id": "vydym4wh9Qo",
     "listname": "Eagles%20-%20Hotel%20California"
   },
   {
@@ -10571,8 +10575,8 @@
     "listname": "Montrose%20-%20Rock%20Candy"
   },
   {
-    "name": "Ripple (2001 Remaster)",
-    "id": "GrjUtFfRY_E",
+    "name": "Grateful Dead - Ripple (Official Music Video)",
+    "id": "QmMjY6tXaEo",
     "listname": "Grateful%20Dead%20-%20Ripple"
   },
   {
@@ -10651,8 +10655,8 @@
     "listname": "The%20Faces%20-%20Stay%20With%20Me"
   },
   {
-    "name": "Aphrodite&#39;s Child - Do It (HQ)",
-    "id": "zWmfYfOA_Ig",
+    "name": "Aphrodite's Child – The battle of the locusts / Do it (Greek Version LP) HQ",
+    "id": "datCygb40kE",
     "listname": "Aphrodites%20Child%20-%20Do%20It"
   },
   {
@@ -10797,7 +10801,7 @@
   },
   {
     "name": "High Priestess",
-    "id": "eFBtGsaCVXE",
+    "id": "mrVUok4YRfI",
     "listname": "Uriah%20Heep%20-%20High%20Priestess"
   },
   {
@@ -10811,8 +10815,8 @@
     "listname": "Eddie%20Vedder%20-%20Guaranteed"
   },
   {
-    "name": "Fool&#39;s Overture - Supertramp",
-    "id": "17xrwEc0oqI",
+    "name": "Supertramp Fool's Overture",
+    "id": "9NxgmmaNAbQ",
     "listname": "Supertramp%20-%20Fool%27s%20Overture"
   },
   {
@@ -10976,9 +10980,9 @@
     "listname": "Pure%20Prairie%20League%20-%20Amie"
   },
   {
-    "name": "Take Me For A Little While",
-    "id": "sIAqB6pzF0A",
-    "listname": "Coverdale/Page%20-%20Take%20me%20for%20a%20little%20while"
+    "name": "Coverdale & Page - Take me for a little while",
+    "id": "KZ16UF7BS4E",
+    "listname": "Coverdale%20and%20Page%20-%20Take%20me%20for%20a%20little%20while"
   },
   {
     "name": "Dancing With The Moonlight Knight",
@@ -11031,11 +11035,6 @@
     "listname": "Steppenwolf%20-%20Ride%20With%20Me"
   },
   {
-    "name": "Friendly Fire",
-    "id": "OHN8IF82muQ",
-    "listname": "Peter%20Frampton%20-%20Friendly%20Fire"
-  },
-  {
     "name": "Motörhead – Overkill (Official Video)",
     "id": "MlzTET_8SQg",
     "listname": "Mot%F6rhead%20-%20Overkill"
@@ -11046,8 +11045,8 @@
     "listname": "Mot%F6rhead%20-%20Killed%20by%20Death"
   },
   {
-    "name": "...Roadcrew - Crew Nation - Global Relief Fund",
-    "id": "_yRysQzuFOw",
+    "name": "Motörhead - (We Are) The Road Crew",
+    "id": "MQ9V5cRSOPg",
     "listname": "Mot%F6rhead%20-%20We%20Are%20the%20Road%20Crew"
   },
   {
@@ -11072,7 +11071,7 @@
   },
   {
     "name": "Damage Case",
-    "id": "GUJv08p0Yvw",
+    "id": "nnqQ6DgrssY",
     "listname": "Mot%F6rhead%20-%20Damage%20Case"
   },
   {
@@ -11132,7 +11131,7 @@
   },
   {
     "name": "Goodbye Yellow Brick Road (Remastered 2014)",
-    "id": "Vgy6ANiEaY8",
+    "id": "DDOL7iY8kfo",
     "listname": "Elton%20John%20-%20Goodbye%20Yellow%20Brick%20road"
   },
   {
@@ -11251,8 +11250,8 @@
     "listname": "Def%20Leppard%20-%20Rocket"
   },
   {
-    "name": "Kansas - Miracles Out of Nowhere (Live)",
-    "id": "0GqxX15M7Oc",
+    "name": "Kansas - Miracles Out of Nowhere",
+    "id": "jseTa7HUIDU",
     "listname": "Kansas%20-%20Miracles%20Out%20Of%20Nowhere"
   },
   {
@@ -11650,7 +11649,7 @@
   },
   {
     "name": "The Police - So Lonely",
-    "id": "fXcbDEczwwc",
+    "id": "MX6MvV8cbh8",
     "listname": "The%20Police%20-%20So%20Lonely"
   },
   {
@@ -11746,5 +11745,30 @@
 	"name": "The Great Curve (2005 Remaster)",
     "id": "3N5qQrGSuJ4",
     "listname": "Talking%20Heads%20-%20The%20Great%20Curve"
+  },
+    {
+	"name": "The Thrills That Come Along with the Landing of a Flying Saucer",
+    "id": "4Yjqwf8zHnU",
+    "listname": "DeWolff%20-%20The%20Thrills%20That%20Come%20Along%20with%20the%20Landing%20of%20a%20Flying%20Saucer"
+  },
+  {
+	"name": "Yellow Rat Magic Blues",
+    "id": "H1UPvtHGcjs",
+    "listname": "DeWolff%20-%20Yellow%20Rat%20Magic%20Blues"  
+  },
+   {
+	"name": "Fishing Night at Noon",
+    "id": "f8EP7IGWzSQ",
+    "listname": "DeWolff%20-%20Fishing%20Night%20At%20Noon"  
+  },
+  {
+	"name":"Red Hot Chili Peppers - Brendan's Death Song [Extended Music Video]",
+	"id":"X6YbVCyXs98",
+	"listname":"Red%20Hot%20Chili%20Peppers%20-%20Brendan27s%20Death%20Song"
+  },
+    {
+	"name":"After the Fox Intro (The Hollies & Peter Sellers)",
+	"id":"zbFFdvXIta0",
+	"listname":"The Hollies - After the Fox"
   }
 ]

@@ -290,20 +290,35 @@ function searchInTracks(){
 }
 
 
-class ListViewer{	
+class ListViewer{
 	constructor(){
 		this.GetLists().then((d) => {
 			//printItems(d,0,d.length,true);
 			
 			this.tracks = d;
-			this.showTracks(this.tracks);
+			this.lowerCaseTracks = this.tracks.map((v)=>{return unescape(v.listname).toLowerCase()});
+			this.filteredTracks=this.tracks;
+			
+			this.query="";
+			this.showTracks();		
 			console.log(`Loaded playlist with ${this.tracks.length} track(s).`);
 		});
 
-
 		this.searchbar = document.getElementById("searchbar");
 		this.searchbar.addEventListener("keyup",()=>{
-			this.filterTracks();
+			this.query = document.getElementById("searchbar").value.toLowerCase().trim();
+			console.log(this.query);
+			
+			let temp = [];
+			for (let i=0;i<this.tracks.length;i++){
+				if(this.lowerCaseTracks[i].indexOf(this.query)>-1){
+					temp.push(this.tracks[i]);
+				}
+			}
+			this.filteredTracks=temp;
+			
+			
+			this.showTracks();
 		});
 
 	}
@@ -326,15 +341,15 @@ class ListViewer{
 	});
 	}
 
-	showTracks(subset_of_tracks){
-	
+	showTracks(){
+		
 	let list = document.getElementsByTagName("tbody")[0];
 	list.innerHTML="";
 
-	for(let i= 0; i<subset_of_tracks.length; i++){
+	for(let i= 0; i<this.filteredTracks.length; i++){
 		var row = list.insertRow(-1);
-				
-		let track = unescape(subset_of_tracks[i].listname).split("-")
+		row.setAttribute("scope","row");	
+		let track = unescape(this.filteredTracks[i].listname).split("-")
 		
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
@@ -352,7 +367,7 @@ class ListViewer{
 		cell1.innerHTML = i+1;
 		cell2.innerHTML = track[0];
 		cell3.innerHTML = track[1];
-		cell4.innerHTML = `<a target='_blank' href="https://www.youtube.com/watch?v=${subset_of_tracks[i].id}">${subset_of_tracks[i].id}</a>`;
+		cell4.innerHTML = `<a target='_blank' href="https://www.youtube.com/watch?v=${this.filteredTracks[i].id}">${this.filteredTracks[i].id}</a>`;
 		
 		// cell5.appendChild(img1);
 		// cell5.appendChild(img2);				
@@ -363,7 +378,6 @@ class ListViewer{
 	filterTracks(){
 		
 		var results = 0;
-		let query = document.getElementById("searchfield").value.toLowerCase().trim();
 		let UserIsSearching=true;
 		// if(query.length==0){UserIsSearching=false;printItems(tracks,0,100,true);}
 		if(query.length==0){this.showTracks(this.tracks);return;}

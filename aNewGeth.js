@@ -48,7 +48,7 @@ class CytubePlayer {
     this.isPlaying=true;
 
     this.trackind = 0;
-    this.playmode = this.PLAYMODES.REPEAT_ALL;        //this.PLAYMODES.SHUFFLE;
+    this.playmode = this.PLAYMODES.SHUFFLE;        //this.PLAYMODES.SHUFFLE;
     this.vid = document.getElementById("videowrap");
 
     //mode = yt search
@@ -218,7 +218,13 @@ class CytubePlayer {
 		this.playmode = this.PLAYMODES.REPEAT_ALL;
 		this.trackind=0;	  
 	}
-  
+
+	setPlayMode(mode,optionbutton){
+		this.playmode=mode;
+		console.log("Set playmode to "+mode); 
+		$('li.dropdown.open')[0].classList.remove("open");
+		optionbutton.classList.add("active");
+	}
 
   AddSong() {
     if(parseInt(document.getElementById("plcount").innerText.replace(" items", ""))>=this.options.minimumListLength){return;}
@@ -309,8 +315,6 @@ class CytubePlayer {
       console.log("Chat commands disabled.");
     }
   }
-
-  
 
   checkGethCommands(command) {
     let cmdIndex = this.commands.indexOf(command.slice(1));
@@ -487,14 +491,17 @@ class CytubePlayer {
 	a.appendChild(c);
 	n.appendChild(a);
 	let ul=document.createElement("ul");
-	ul.className="dropdown-menu";
+	ul.className="dropdown-menu playmode";
 	
 	let opt1 = document.createElement("li");
 	opt1.innerHTML="<a>Shuffle</a>";
+	opt1.addEventListener("click",()=>C.setPlayMode(C.PLAYMODES.SHUFFLE,opt1));
 	let opt2 = document.createElement("li");
 	opt2.innerHTML="<a>Repeat all</a>";
+	opt2.addEventListener("click",()=>C.setPlayMode(C.PLAYMODES.REPEAT_ALL,opt2));
 	let opt3 = document.createElement("li");
 	opt3.innerHTML="<a>Repeat one</a>";
+	opt3.addEventListener("click",()=>C.setPlayMode(C.PLAYMODES.REPEAT_ONE,opt3));
 	
 	ul.appendChild(opt1);
 	ul.appendChild(opt2);
